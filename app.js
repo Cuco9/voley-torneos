@@ -1,38 +1,35 @@
-// =====================
-// ESTADO GLOBAL
-// =====================
+// ══════════════════════════════════════
+// ESTADO
+// ══════════════════════════════════════
 let torneoActual = null;
 let partidoActual = null;
-let tipoSeleccionado = null;
-let normasSeleccionadas = [];
-let timerInterval = null;
-let timerSegundos = 0;
-let timerActivo = false;
-let modalConfirmFn = null;
-let torneoHistorialSeleccionado = null;
+let tipoSel = null;
+let normasSel = [];
+let timerSeg = 0;
+let timerOn = false;
+let timerInt = null;
+let modalFn = null;
+let histSel = null;
+let tabActual = 0;
 
-// =====================
+// ══════════════════════════════════════
 // STORAGE
-// =====================
-function guardarTorneos(lista) {
-  localStorage.setItem('vt_torneos', JSON.stringify(lista));
-}
-function cargarTorneos() {
-  try { return JSON.parse(localStorage.getItem('vt_torneos')) || []; }
-  catch(e) { return []; }
-}
-function guardarTorneoActual() {
-  if (!torneoActual) return;
-  const lista = cargarTorneos();
-  const idx = lista.findIndex(t => t.id === torneoActual.id);
-  if (idx >= 0) lista[idx] = torneoActual;
-  else lista.push(torneoActual);
-  guardarTorneos(lista);
-}
+// ══════════════════════════════════════
+const LS = {
+  get: () => { try { return JSON.parse(localStorage.getItem('vt2') || '[]'); } catch(e){ return []; } },
+  set: (d) => localStorage.setItem('vt2', JSON.stringify(d)),
+  save: () => {
+    if (!torneoActual) return;
+    const lista = LS.get();
+    const i = lista.findIndex(t => t.id === torneoActual.id);
+    if (i >= 0) lista[i] = torneoActual; else lista.push(torneoActual);
+    LS.set(lista);
+  }
+};
 
-// =====================
-// PANTALLAS
-// =====================
+// ══════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -41,525 +38,396 @@ function showScreen(id) {
   if (id === 'screen-torneo') renderTorneo();
 }
 
-function showTab(id) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  const idx = ['tab-calendario','tab-tabla','tab-stats'].indexOf(id);
-  document.querySelectorAll('.tab')[idx].classList.add('active');
+function showTab(id, idx) {
+  document.querySelectorAll('#screen-torneo .tab-content').forEach(c => c.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+  document.querySelectorAll('#torneo-nav .nav-item').forEach((n,i) => n.classList.toggle('active', i === idx));
+  tabActual = idx;
   if (id === 'tab-tabla') renderTabla();
   if (id === 'tab-stats') renderStats();
   if (id === 'tab-calendario') renderCalendario();
 }
 
-// =====================
+// ══════════════════════════════════════
 // HOME
-// =====================
+// ══════════════════════════════════════
 function renderHome() {
-  const cont = document.getElementById('torneos-activos-home');
-  const torneos = cargarTorneos().filter(t => !t.finalizado);
-  if (torneos.length === 0) { cont.innerHTML = ''; return; }
-  cont.innerHTML = '<p style="color:var(--gray);font-size:0.8rem;margin-bottom:0.5rem">Torneos activos:</p>' +
-    torneos.map(t => `
-      <div class="torneo-activo-btn" onclick="abrirTorneo('${t.id}')">
-        🏐 ${t.nombre}
-        <div class="meta">${t.tipo === 'sala' ? 'Sala' : 'Playa'} · ${t.equipos.length} equipos</div>
+  const cont = document.getElementById('active-torneos-home');
+  const activos = LS.get().filter(t => !t.finalizado);
+  if (!activos.length) { cont.innerHTML = ''; return; }
+  cont.innerHTML = '<div class="active-torneos-label">Torneos activos</div>' +
+    activos.map(t => `
+      <div class="torneo-resume-pill" onclick="abrirTorneo('${t.id}')">
+        <div class="pill-icon">${t.tipo === 'sala' ? '🏟️' : '🏖️'}</div>
+        <div>
+          <div class="pill-name">${t.nombre}</div>
+          <div class="pill-meta">${t.equipos.length} equipos · ${t.tipo === 'sala' ? 'Sala' : 'Playa'}</div>
+        </div>
       </div>`).join('');
 }
 
 function abrirTorneo(id) {
-  const lista = cargarTorneos();
-  torneoActual = lista.find(t => t.id === id);
+  torneoActual = LS.get().find(t => t.id === id);
   if (!torneoActual) return;
-  tipoSeleccionado = torneoActual.tipo;
+  tipoSel = torneoActual.tipo;
   showScreen('screen-torneo');
 }
 
-// =====================
-// SELECCIÓN TIPO
-// =====================
+// ══════════════════════════════════════
+// TIPO
+// ══════════════════════════════════════
 function selectType(tipo) {
-  tipoSeleccionado = tipo;
-  normasSeleccionadas = [];
-  const label = document.getElementById('tipo-label');
-  label.textContent = tipo === 'sala' ? '(Voleibol de Sala)' : '(Voleibol de Playa)';
+  tipoSel = tipo;
+  normasSel = [];
   renderNormas();
   showScreen('screen-normas');
 }
 
+// ══════════════════════════════════════
+// NORMAS
+// ══════════════════════════════════════
 function renderNormas() {
-  const normas = tipoSeleccionado === 'sala' ? NORMAS_SALA : NORMAS_PLAYA;
-  const cont = document.getElementById('normas-lista');
-  cont.innerHTML = normas.map(n => `
-    <div class="norma-item ${normasSeleccionadas.includes(n.id) ? 'selected' : ''}" onclick="toggleNorma('${n.id}')" id="norma-${n.id}">
-      <span class="norma-badge ${n.badge}">${n.badge === 'oficial' ? '⚡ Oficial FIVB' : '🔧 Alternativa'}</span>
-      <h4>${n.titulo}</h4>
-      <p>${n.descripcion}</p>
+  const lista = tipoSel === 'sala' ? NORMAS_SALA : NORMAS_PLAYA;
+  document.getElementById('normas-lista').innerHTML = lista.map(n => `
+    <div class="norma-card ${normasSel.includes(n.id) ? 'sel' : ''}" onclick="toggleNorma('${n.id}')" id="nc-${n.id}">
+      <div class="norma-head">
+        <div class="norma-check" id="chk-${n.id}">${normasSel.includes(n.id) ? '✓' : ''}</div>
+        <div class="norma-info">
+          <span class="norma-badge ${n.badge === 'oficial' ? 'badge-oficial' : 'badge-alt'}">
+            ${n.badge === 'oficial' ? '⚡ Oficial FIVB' : '🔧 Alternativa'}
+          </span>
+          <div class="norma-title">${n.titulo}</div>
+          <div class="norma-desc">${n.descripcion}</div>
+        </div>
+      </div>
     </div>`).join('');
 }
 
 function toggleNorma(id) {
-  const el = document.getElementById('norma-' + id);
-  if (normasSeleccionadas.includes(id)) {
-    normasSeleccionadas = normasSeleccionadas.filter(n => n !== id);
-    el.classList.remove('selected');
+  if (normasSel.includes(id)) {
+    normasSel = normasSel.filter(n => n !== id);
   } else {
-    normasSeleccionadas.push(id);
-    el.classList.add('selected');
+    normasSel.push(id);
   }
+  renderNormas();
 }
 
 function confirmarNormas() {
-  if (normasSeleccionadas.length === 0) {
-    showToast('Selecciona al menos una norma');
-    return;
-  }
-  actualizarCamposEquipos();
+  if (!normasSel.length) { toast('Selecciona al menos una norma'); return; }
+  actualizarEquipos();
+  document.getElementById('fecha-torneo').value = new Date().toISOString().slice(0, 10);
   showScreen('screen-config');
 }
 
-// =====================
-// CONFIGURAR TORNEO
-// =====================
-function actualizarCamposEquipos() {
+// ══════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════
+function actualizarEquipos() {
   const n = parseInt(document.getElementById('num-equipos').value) || 4;
   const cont = document.getElementById('equipos-inputs');
-  cont.innerHTML = '';
-  for (let i = 1; i <= n; i++) {
-    const row = document.createElement('div');
-    row.className = 'equipo-input-row';
-    row.innerHTML = `<span class="equipo-num">${i}.</span>
-      <input type="text" placeholder="Nombre equipo ${i}" id="equipo-${i}" style="flex:1">`;
-    cont.appendChild(row);
-  }
+  cont.innerHTML = Array.from({length: n}, (_, i) => `
+    <div class="equipo-row">
+      <div class="equipo-num">${i+1}</div>
+      <input type="text" class="form-input" id="eq-${i+1}" placeholder="Nombre del equipo ${i+1}" style="flex:1">
+    </div>`).join('');
 }
 
-function generarId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2);
-}
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
 
 function crearTorneo() {
   const nombre = document.getElementById('nombre-torneo').value.trim();
-  const numEq = parseInt(document.getElementById('num-equipos').value);
-  const formato = document.getElementById('formato-torneo').value;
   const sede = document.getElementById('sede-torneo').value.trim();
   const fecha = document.getElementById('fecha-torneo').value;
+  const formato = document.getElementById('formato-torneo').value;
+  const n = parseInt(document.getElementById('num-equipos').value);
 
-  if (!nombre) { showToast('Escribe el nombre del torneo'); return; }
-  if (numEq < 2) { showToast('Mínimo 2 equipos'); return; }
-
+  if (!nombre) { toast('Escribe el nombre del torneo'); return; }
   const equipos = [];
-  for (let i = 1; i <= numEq; i++) {
-    const inp = document.getElementById('equipo-' + i);
-    const nom = inp ? inp.value.trim() : '';
-    if (!nom) { showToast(`Escribe el nombre del equipo ${i}`); return; }
-    equipos.push({ id: 'eq' + i, nombre: nom });
+  for (let i = 1; i <= n; i++) {
+    const v = document.getElementById('eq-' + i)?.value.trim();
+    if (!v) { toast(`Escribe el nombre del equipo ${i}`); return; }
+    equipos.push({ id: 'eq' + i, nombre: v });
   }
 
   torneoActual = {
-    id: generarId(),
-    nombre,
-    tipo: tipoSeleccionado,
-    formato,
-    sede: sede || 'Sin especificar',
-    fecha: fecha || new Date().toISOString().slice(0,10),
-    equipos,
-    normas: normasSeleccionadas,
-    partidos: [],
-    finalizado: false,
+    id: uid(), nombre, tipo: tipoSel, formato,
+    sede: sede || 'Sin especificar', fecha,
+    equipos, normas: normasSel,
+    partidos: [], finalizado: false,
     creadoEn: new Date().toISOString()
   };
 
   generarCalendario();
-  guardarTorneoActual();
+  LS.save();
   showScreen('screen-torneo');
-  showToast('¡Torneo creado!');
+  toast('¡Torneo creado! 🏐');
 }
 
-// =====================
+// ══════════════════════════════════════
 // CALENDARIO
-// =====================
+// ══════════════════════════════════════
 function generarCalendario() {
   const { equipos, formato } = torneoActual;
   torneoActual.partidos = [];
-  let jornada = 1;
 
   if (formato === 'liga') {
-    // Round-robin
-    for (let i = 0; i < equipos.length; i++) {
-      for (let j = i + 1; j < equipos.length; j++) {
-        torneoActual.partidos.push({
-          id: generarId(),
-          jornada: calcJornada(i, j, equipos.length),
-          local: equipos[i].id,
-          visitante: equipos[j].id,
-          estado: 'pendiente',
-          sets: [],
-          duracion: null,
-          ganador: null
-        });
+    const partidos = [];
+    for (let i = 0; i < equipos.length; i++)
+      for (let j = i+1; j < equipos.length; j++)
+        partidos.push({ id: uid(), local: equipos[i].id, visitante: equipos[j].id, estado: 'pendiente', sets: [], duracion: null, ganador: null });
+    // Asignar jornadas round-robin
+    const pendientes = [...partidos];
+    let jornada = 1;
+    while (pendientes.length) {
+      const usados = new Set();
+      let i = 0;
+      while (i < pendientes.length) {
+        const p = pendientes[i];
+        if (!usados.has(p.local) && !usados.has(p.visitante)) {
+          p.jornada = jornada; usados.add(p.local); usados.add(p.visitante);
+          torneoActual.partidos.push(p); pendientes.splice(i, 1);
+        } else i++;
       }
+      jornada++;
     }
-    // Asignar jornadas equitativas
-    asignarJornadas();
   } else if (formato === 'eliminacion') {
-    generarBracket();
-  } else if (formato === 'grupos') {
-    generarFaseGrupos();
-  }
-}
-
-function calcJornada(i, j, n) {
-  return Math.floor((i + j) / 2) + 1;
-}
-
-function asignarJornadas() {
-  const partidos = torneoActual.partidos;
-  const n = torneoActual.equipos.length;
-  // Algoritmo round-robin simple de asignación de jornadas
-  let jornada = 1;
-  const usados = new Set();
-  const ordenados = [];
-  const pendientes = [...partidos];
-  
-  while (pendientes.length > 0) {
-    const jornadaPartidos = [];
-    const eqUsados = new Set();
-    let i = 0;
-    while (i < pendientes.length) {
-      const p = pendientes[i];
-      if (!eqUsados.has(p.local) && !eqUsados.has(p.visitante)) {
-        p.jornada = jornada;
-        jornadaPartidos.push(p);
-        eqUsados.add(p.local);
-        eqUsados.add(p.visitante);
-        pendientes.splice(i, 1);
-      } else {
-        i++;
-      }
+    const eqs = [...equipos].sort(() => Math.random() - 0.5);
+    for (let i = 0; i < Math.floor(eqs.length / 2); i++)
+      torneoActual.partidos.push({ id: uid(), jornada: 1, fase: 'Primera ronda', local: eqs[i*2].id, visitante: eqs[i*2+1].id, estado: 'pendiente', sets: [], duracion: null, ganador: null });
+    if (eqs.length % 2 === 1) {
+      const bye = eqs[eqs.length-1];
+      torneoActual.partidos.push({ id: uid(), jornada: 1, fase: 'Primera ronda', local: bye.id, visitante: null, estado: 'bye', sets: [], duracion: null, ganador: bye.id });
     }
-    jornada++;
-  }
-}
-
-function generarBracket() {
-  const equipos = [...torneoActual.equipos];
-  // Mezclar equipos aleatoriamente
-  for (let i = equipos.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [equipos[i], equipos[j]] = [equipos[j], equipos[i]];
-  }
-  // Generar partidos de primera ronda
-  for (let i = 0; i < Math.floor(equipos.length / 2); i++) {
-    torneoActual.partidos.push({
-      id: generarId(),
-      jornada: 1,
-      fase: 'Octavos / Primera ronda',
-      local: equipos[i*2].id,
-      visitante: equipos[i*2+1].id,
-      estado: 'pendiente',
-      sets: [], duracion: null, ganador: null
+  } else {
+    const mitad = Math.ceil(equipos.length / 2);
+    const gA = equipos.slice(0, mitad), gB = equipos.slice(mitad);
+    [['A', gA], ['B', gB]].forEach(([g, grupo]) => {
+      for (let i = 0; i < grupo.length; i++)
+        for (let j = i+1; j < grupo.length; j++)
+          torneoActual.partidos.push({ id: uid(), jornada: i+1, fase: `Grupo ${g}`, local: grupo[i].id, visitante: grupo[j].id, estado: 'pendiente', sets: [], duracion: null, ganador: null });
     });
   }
 }
 
-function generarFaseGrupos() {
-  const equipos = [...torneoActual.equipos];
-  const mitad = Math.ceil(equipos.length / 2);
-  const grupoA = equipos.slice(0, mitad);
-  const grupoB = equipos.slice(mitad);
-  
-  // Partidos grupo A
-  for (let i = 0; i < grupoA.length; i++) {
-    for (let j = i+1; j < grupoA.length; j++) {
-      torneoActual.partidos.push({
-        id: generarId(), jornada: i+1,
-        fase: 'Grupo A',
-        local: grupoA[i].id, visitante: grupoA[j].id,
-        estado: 'pendiente', sets: [], duracion: null, ganador: null
-      });
-    }
-  }
-  // Partidos grupo B
-  for (let i = 0; i < grupoB.length; i++) {
-    for (let j = i+1; j < grupoB.length; j++) {
-      torneoActual.partidos.push({
-        id: generarId(), jornada: i+1,
-        fase: 'Grupo B',
-        local: grupoB[i].id, visitante: grupoB[j].id,
-        estado: 'pendiente', sets: [], duracion: null, ganador: null
-      });
-    }
-  }
-}
-
-// =====================
+// ══════════════════════════════════════
 // RENDER TORNEO
-// =====================
+// ══════════════════════════════════════
 function renderTorneo() {
   if (!torneoActual) return;
   document.getElementById('torneo-nombre-header').textContent = torneoActual.nombre;
-  renderCalendario();
+  // Mostrar primer tab
+  showTab('tab-calendario', 0);
 }
 
+function nombreEq(id) {
+  if (!torneoActual || !id) return '?';
+  return torneoActual.equipos.find(e => e.id === id)?.nombre || '?';
+}
+
+// ── CALENDARIO ──
 function renderCalendario() {
   if (!torneoActual) return;
-  const cont = document.getElementById('partidos-lista');
+  const cont = document.getElementById('tab-calendario');
   const partidos = torneoActual.partidos;
-  
-  if (partidos.length === 0) {
-    cont.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--gray)">No hay partidos generados.</p>';
-    return;
-  }
+  if (!partidos.length) { cont.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--txt3)">Sin partidos generados</div>'; return; }
 
-  // Agrupar por jornada/fase
   const grupos = {};
   partidos.forEach(p => {
-    const key = p.fase ? p.fase : `Jornada ${p.jornada}`;
-    if (!grupos[key]) grupos[key] = [];
-    grupos[key].push(p);
+    const k = p.fase ? p.fase : `Jornada ${p.jornada}`;
+    if (!grupos[k]) grupos[k] = [];
+    grupos[k].push(p);
   });
 
-  cont.innerHTML = Object.entries(grupos).map(([jornada, ps]) => `
-    <div class="jornada-title">${jornada}</div>
-    ${ps.map(p => renderPartidoCard(p)).join('')}
-  `).join('');
+  cont.innerHTML = Object.entries(grupos).map(([titulo, ps]) => `
+    <div class="jornada-pill">📅 ${titulo}</div>
+    ${ps.map(p => cardPartido(p)).join('')}`).join('');
 }
 
-function nombreEquipo(id) {
-  if (!torneoActual) return id;
-  const eq = torneoActual.equipos.find(e => e.id === id);
-  return eq ? eq.nombre : '?';
-}
+function cardPartido(p) {
+  if (p.estado === 'bye') return `
+    <div class="partido-card" style="margin:0 20px 10px">
+      <div class="partido-body">
+        <div class="partido-team home">${nombreEq(p.local)}</div>
+        <div class="partido-score-box"><div class="partido-score-label">BYE</div></div>
+        <div class="partido-team away" style="color:var(--txt3)">—</div>
+      </div>
+    </div>`;
 
-function renderPartidoCard(p) {
-  const local = nombreEquipo(p.local);
-  const visitante = nombreEquipo(p.visitante);
-  const estadoBadge = { pendiente: 'pendiente', 'en-curso': 'en-curso', terminado: 'terminado' }[p.estado];
-  const estadoLabel = { pendiente: 'Pendiente', 'en-curso': '🔴 En curso', terminado: '✓ Finalizado' }[p.estado];
-  
-  let scoreHtml = '<span class="partido-score">vs</span>';
-  if (p.estado === 'terminado' && p.sets.length > 0) {
-    const setsLocal = p.sets.filter(s => s.local > s.visitante).length;
-    const setsVisitante = p.sets.filter(s => s.visitante > s.local).length;
-    scoreHtml = `<span class="partido-score">${setsLocal} - ${setsVisitante}</span>`;
-  }
-
+  const sL = p.sets.filter(s => s.local > s.visitante).length;
+  const sV = p.sets.filter(s => s.visitante > s.local).length;
   const durStr = p.duracion ? `⏱ ${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}` : '';
-  
-  let botonesHtml = '';
-  if (p.estado === 'pendiente') {
-    botonesHtml = `<button class="btn-partido primary" onclick="iniciarPartido('${p.id}')">▶ Jugar</button>`;
-  } else if (p.estado === 'en-curso') {
-    botonesHtml = `<button class="btn-partido primary" onclick="iniciarPartido('${p.id}')">🔴 Continuar</button>`;
-  } else {
-    botonesHtml = `<button class="btn-partido" onclick="verDetallePartido('${p.id}')">📊 Ver detalle</button>
-                   <button class="btn-partido" onclick="resetearPartido('${p.id}')">↺ Repetir</button>`;
+  const estadoClass = { pendiente:'estado-pendiente', 'en-curso':'estado-curso', terminado:'estado-fin' }[p.estado];
+  const estadoLabel = { pendiente:'Pendiente', 'en-curso':'🔴 En curso', terminado:'✓ Finalizado' }[p.estado];
+
+  let scoreHtml = `<div class="partido-score-box"><div class="partido-score-label">vs</div></div>`;
+  if (p.estado === 'terminado' || p.estado === 'en-curso') {
+    scoreHtml = `<div class="partido-score-box">
+      <div class="partido-score-num">${sL} – ${sV}</div>
+      <div class="partido-score-label">sets</div>
+    </div>`;
   }
+
+  let btns = '';
+  if (p.estado === 'pendiente') btns = `<button class="partido-btn primary" onclick="iniciarPartido('${p.id}')">▶ Jugar ahora</button>`;
+  else if (p.estado === 'en-curso') btns = `<button class="partido-btn primary" onclick="iniciarPartido('${p.id}')">🔴 Continuar</button>`;
+  else btns = `<button class="partido-btn" onclick="detallePartido('${p.id}')">📊 Detalle</button>
+               <button class="partido-btn" onclick="resetPartido('${p.id}')">↺ Repetir</button>`;
 
   return `
     <div class="partido-card">
-      <div class="partido-header">
-        <span class="partido-estado ${estadoBadge}">${estadoLabel}</span>
-        <span class="partido-fecha">${durStr}</span>
+      <div class="partido-top">
+        <span class="estado-badge ${estadoClass}">${estadoLabel}</span>
+        <span class="partido-dur">${durStr}</span>
       </div>
-      <div class="partido-cuerpo">
-        <div class="partido-equipo local">${local}</div>
+      <div class="partido-body">
+        <div class="partido-team home">${nombreEq(p.local)}</div>
         ${scoreHtml}
-        <div class="partido-equipo visitante">${visitante}</div>
+        <div class="partido-team away">${nombreEq(p.visitante)}</div>
       </div>
-      <div class="partido-footer">${botonesHtml}</div>
+      <div class="partido-actions">${btns}</div>
     </div>`;
 }
 
-// =====================
-// TABLA CLASIFICATORIA
-// =====================
-function calcularTabla() {
-  if (!torneoActual) return [];
+// ── TABLA ──
+function calcTabla(t) {
+  t = t || torneoActual;
   const stats = {};
-  torneoActual.equipos.forEach(eq => {
-    stats[eq.id] = { id: eq.id, nombre: eq.nombre, pj:0, pg:0, pp:0, sf:0, sc:0, pf:0, pc:0, pts:0 };
-  });
+  t.equipos.forEach(e => { stats[e.id] = { id:e.id, nombre:e.nombre, pj:0, pg:0, pp:0, sf:0, sc:0, pf:0, pc:0, pts:0 }; });
 
-  const normasPuntos = torneoActual.normas
-    .map(nid => {
-      const normas = torneoActual.tipo === 'sala' ? NORMAS_SALA : NORMAS_PLAYA;
-      return normas.find(n => n.id === nid);
-    })
-    .filter(n => n && n.calcularPuntos);
+  const normas = t.tipo === 'sala' ? NORMAS_SALA : NORMAS_PLAYA;
+  const normaActiva = t.normas.map(nid => normas.find(n => n.id === nid)).find(n => n && n.calcularPuntos);
 
-  const normaActiva = normasPuntos[0]; // Usar la primera norma de puntos seleccionada
-
-  torneoActual.partidos.filter(p => p.estado === 'terminado').forEach(p => {
-    const setsLocal = p.sets.filter(s => s.local > s.visitante).length;
-    const setsVisitante = p.sets.filter(s => s.visitante > s.local).length;
-    const ptsLocal = p.sets.reduce((a, s) => a + s.local, 0);
-    const ptsVisitante = p.sets.reduce((a, s) => a + s.visitante, 0);
-
-    const eqLocal = stats[p.local];
-    const eqVisitante = stats[p.visitante];
-    if (!eqLocal || !eqVisitante) return;
-
-    eqLocal.pj++; eqVisitante.pj++;
-    eqLocal.sf += setsLocal; eqLocal.sc += setsVisitante;
-    eqVisitante.sf += setsVisitante; eqVisitante.sc += setsLocal;
-    eqLocal.pf += ptsLocal; eqLocal.pc += ptsVisitante;
-    eqVisitante.pf += ptsVisitante; eqVisitante.pc += ptsLocal;
-
-    if (setsLocal > setsVisitante) {
-      eqLocal.pg++; eqVisitante.pp++;
-      if (normaActiva) {
-        const resultado = normaActiva.calcularPuntos({ setsG: setsLocal, setsP: setsVisitante });
-        eqLocal.pts += resultado.ganador;
-        eqVisitante.pts += resultado.perdedor;
-      } else {
-        eqLocal.pts += setsLocal; // fallback: sumar sets
-      }
+  (t.partidos || []).filter(p => p.estado === 'terminado').forEach(p => {
+    const sL = p.sets.filter(s => s.local > s.visitante).length;
+    const sV = p.sets.filter(s => s.visitante > s.local).length;
+    const pF = p.sets.reduce((a,s) => a + s.local, 0);
+    const pC = p.sets.reduce((a,s) => a + s.visitante, 0);
+    const eL = stats[p.local], eV = stats[p.visitante];
+    if (!eL || !eV) return;
+    eL.pj++; eV.pj++;
+    eL.sf += sL; eL.sc += sV; eV.sf += sV; eV.sc += sL;
+    eL.pf += pF; eL.pc += pC; eV.pf += pC; eV.pc += pF;
+    if (sL > sV) {
+      eL.pg++; eV.pp++;
+      const r = normaActiva ? normaActiva.calcularPuntos({setsG:sL,setsP:sV}) : {ganador:3,perdedor:0};
+      eL.pts += r.ganador; eV.pts += r.perdedor;
     } else {
-      eqVisitante.pg++; eqLocal.pp++;
-      if (normaActiva) {
-        const resultado = normaActiva.calcularPuntos({ setsG: setsVisitante, setsP: setsLocal });
-        eqVisitante.pts += resultado.ganador;
-        eqLocal.pts += resultado.perdedor;
-      } else {
-        eqVisitante.pts += setsVisitante;
-      }
+      eV.pg++; eL.pp++;
+      const r = normaActiva ? normaActiva.calcularPuntos({setsG:sV,setsP:sL}) : {ganador:3,perdedor:0};
+      eV.pts += r.ganador; eL.pts += r.perdedor;
     }
   });
-
-  // Ordenar: por puntos, diferencia sets, diferencia puntos
-  return Object.values(stats).sort((a, b) => {
-    if (b.pts !== a.pts) return b.pts - a.pts;
-    const diffSetA = a.sf - a.sc;
-    const diffSetB = b.sf - b.sc;
-    if (diffSetB !== diffSetA) return diffSetB - diffSetA;
-    return (b.pf - b.pc) - (a.pf - a.pc);
-  });
+  return Object.values(stats).sort((a,b) => b.pts - a.pts || (b.sf-b.sc) - (a.sf-a.sc) || (b.pf-b.pc) - (a.pf-a.pc));
 }
 
 function renderTabla() {
-  const tabla = calcularTabla();
-  const tbody = document.getElementById('tabla-body');
-  tbody.innerHTML = tabla.map((eq, i) => `
-    <tr class="${i === 0 && eq.pj > 0 ? 'winner-row' : ''}">
-      <td>${i+1}</td>
-      <td>${eq.nombre}${i === 0 && eq.pj > 0 ? ' 🏆' : ''}</td>
-      <td>${eq.pj}</td>
-      <td>${eq.pg}</td>
-      <td>${eq.pp}</td>
-      <td>${eq.sf}</td>
-      <td>${eq.sc}</td>
-      <td>${eq.pf}</td>
-      <td>${eq.pc}</td>
-      <td class="pts">${eq.pts}</td>
-    </tr>`).join('');
+  const data = calcTabla();
+  const cont = document.getElementById('tab-tabla');
+  const posClass = ['pos-1','pos-2','pos-3'];
+  cont.innerHTML = `
+    <div class="sec-header"><div class="sec-title">Clasificación</div></div>
+    <div class="tabla-scroll">
+      <table class="tabla">
+        <thead><tr>
+          <th>#</th><th>Equipo</th><th>PJ</th><th>PG</th><th>PP</th><th>SF</th><th>SC</th><th>Pts</th>
+        </tr></thead>
+        <tbody>
+          ${data.map((eq,i) => `
+            <tr class="${i===0?'row-1':i===1?'row-2':''}">
+              <td><span class="pos-badge ${posClass[i]||''}">${i+1}</span></td>
+              <td>${eq.nombre}${i===0&&eq.pj>0?' 🏆':''}</td>
+              <td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pp}</td>
+              <td>${eq.sf}</td><td>${eq.sc}</td>
+              <td class="td-pts">${eq.pts}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+    <div class="tabla-legend">PJ=Jugados · PG=Ganados · PP=Perdidos · SF/SC=Sets favor/contra</div>`;
 }
 
-// =====================
-// ESTADÍSTICAS
-// =====================
+// ── STATS ──
 function renderStats() {
-  const tabla = calcularTabla();
-  const cont = document.getElementById('stats-content');
-  const partidos = torneoActual.partidos.filter(p => p.estado === 'terminado');
-  
-  if (partidos.length === 0) {
-    cont.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--gray)">Sin partidos jugados aún.</p>';
-    return;
-  }
+  const data = calcTabla();
+  const cont = document.getElementById('tab-stats');
+  const terminados = torneoActual.partidos.filter(p => p.estado === 'terminado');
+  const pendientes = torneoActual.partidos.filter(p => p.estado === 'pendiente').length;
+  const durs = terminados.filter(p => p.duracion).map(p => p.duracion);
+  const durProm = durs.length ? Math.round(durs.reduce((a,b) => a+b,0)/durs.length) : 0;
+  const maxPts = Math.max(...data.map(e => e.pts), 1);
+  const lider = data[0];
 
-  const maxPts = tabla.length > 0 ? Math.max(...tabla.map(e => e.pts), 1) : 1;
-  
-  // Ganador actual
-  const lider = tabla[0];
-  let campeón = '';
-  if (torneoActual.finalizado && lider) {
-    campeón = `<div class="champion-banner">
-      <div class="trophy">🏆</div>
-      <h3>CAMPEÓN: ${lider.nombre}</h3>
+  let campeon = '';
+  if (torneoActual.finalizado && lider && lider.pj > 0) {
+    campeon = `<div class="champion-card">
+      <span class="champion-trophy">🏆</span>
+      <div class="champion-label">Campeón del torneo</div>
+      <div class="champion-name">${lider.nombre}</div>
     </div>`;
   }
 
-  // Duración promedio
-  const durs = partidos.filter(p => p.duracion).map(p => p.duracion);
-  const durProm = durs.length ? Math.round(durs.reduce((a,b) => a+b, 0) / durs.length) : 0;
-  const durMax = durs.length ? Math.max(...durs) : 0;
-
-  cont.innerHTML = campeón + `
-    <div class="stat-card">
-      <h4>Resumen del torneo</h4>
-      <div class="stat-row"><span class="stat-name">Partidos jugados</span><span class="stat-val">${partidos.length}</span></div>
-      <div class="stat-row"><span class="stat-name">Partidos pendientes</span><span class="stat-val">${torneoActual.partidos.filter(p=>p.estado==='pendiente').length}</span></div>
-      <div class="stat-row"><span class="stat-name">Duración promedio</span><span class="stat-val">${Math.floor(durProm/60)}:${String(durProm%60).padStart(2,'0')}</span></div>
-      <div class="stat-row"><span class="stat-name">Partido más largo</span><span class="stat-val">${Math.floor(durMax/60)}:${String(durMax%60).padStart(2,'0')}</span></div>
-    </div>
-    <div class="stat-card">
-      <h4>Clasificación actual</h4>
-      ${tabla.slice(0,5).map((eq, i) => `
-        <div class="stat-row" style="flex-direction:column;align-items:stretch;gap:0.2rem">
-          <div style="display:flex;justify-content:space-between">
-            <span class="stat-name">${i+1}. ${eq.nombre}</span>
-            <span class="stat-val">${eq.pts} pts</span>
-          </div>
-          <div class="stat-bar-wrap">
-            <div class="stat-bar" style="width:${Math.round(eq.pts/maxPts*100)}%"></div>
-          </div>
-        </div>`).join('')}
-    </div>
-    <div class="stat-card">
-      <h4>Mayor goleador (puntos a favor)</h4>
-      ${tabla.sort((a,b) => b.pf-a.pf).slice(0,3).map((eq, i) => `
-        <div class="stat-row">
-          <span class="stat-name">${['🥇','🥈','🥉'][i]} ${eq.nombre}</span>
-          <span class="stat-val">${eq.pf} pts</span>
-        </div>`).join('')}
-    </div>
-    <div class="stat-card">
-      <h4>Opciones del torneo</h4>
-      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.25rem">
-        <button class="btn-warning" onclick="marcarTorneoFinalizado()" style="font-size:0.85rem">
-          ${torneoActual.finalizado ? '✓ Finalizado' : '🏆 Marcar como finalizado'}
-        </button>
+  cont.innerHTML = `<div class="stats-wrap">
+    ${campeon}
+    <div class="stat-hero">
+      <div class="stat-hero-title">Resumen</div>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="stat-val">${terminados.length}</div><div class="stat-lbl">Jugados</div></div>
+        <div class="stat-item"><div class="stat-val">${pendientes}</div><div class="stat-lbl">Pendientes</div></div>
+        <div class="stat-item"><div class="stat-val" style="color:var(--acc2)">${Math.floor(durProm/60)}:${String(durProm%60).padStart(2,'0')}</div><div class="stat-lbl">Duración prom.</div></div>
+        <div class="stat-item"><div class="stat-val" style="color:var(--acc3)">${torneoActual.equipos.length}</div><div class="stat-lbl">Equipos</div></div>
       </div>
-    </div>`;
+    </div>
+    <div class="stat-hero">
+      <div class="stat-hero-title">Posiciones</div>
+      <div class="rank-list">
+        ${data.slice(0,5).map((eq,i) => `
+          <div class="rank-row">
+            <div class="rank-pos">${i+1}</div>
+            <div style="flex:1">
+              <div class="rank-name">${eq.nombre}</div>
+              <div class="rank-bar-wrap"><div class="rank-bar" style="width:${Math.round(eq.pts/maxPts*100)}%"></div></div>
+            </div>
+            <div class="rank-pts">${eq.pts} pts</div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div style="padding:0 0 20px">
+      <button class="btn ${torneoActual.finalizado?'btn-green':'btn-amber'} btn-full" onclick="marcarFinalizado()">
+        ${torneoActual.finalizado ? '✓ Torneo finalizado' : '🏁 Marcar como finalizado'}
+      </button>
+    </div>
+  </div>`;
 }
 
-function marcarTorneoFinalizado() {
+function marcarFinalizado() {
   torneoActual.finalizado = !torneoActual.finalizado;
-  guardarTorneoActual();
-  renderStats();
-  showToast(torneoActual.finalizado ? '¡Torneo marcado como finalizado!' : 'Torneo marcado como activo');
+  LS.save();
+  toast(torneoActual.finalizado ? '¡Torneo finalizado! 🏆' : 'Torneo marcado como activo');
+  if (tabActual === 2) renderStats();
 }
 
-// =====================
+// ══════════════════════════════════════
 // MARCADOR
-// =====================
+// ══════════════════════════════════════
 function iniciarPartido(id) {
   const p = torneoActual.partidos.find(p => p.id === id);
   if (!p) return;
   partidoActual = p;
-  
   if (p.estado === 'pendiente') {
     p.estado = 'en-curso';
     p.sets = [];
     p.duracion = 0;
     p.setActual = { local: 0, visitante: 0 };
     p.setNum = 1;
-    timerSegundos = 0;
+    timerSeg = 0;
   } else {
-    timerSegundos = p.duracion || 0;
+    timerSeg = p.duracion || 0;
   }
-
-  document.getElementById('nombre-local').textContent = nombreEquipo(p.local);
-  document.getElementById('nombre-visitante').textContent = nombreEquipo(p.visitante);
-  
-  timerActivo = false;
-  clearInterval(timerInterval);
+  clearInterval(timerInt);
+  timerOn = false;
   document.getElementById('timer-btn').textContent = '▶ Iniciar';
-  
   actualizarMarcador();
-  guardarTorneoActual();
+  LS.save();
   showScreen('screen-marcador');
 }
 
@@ -568,371 +436,287 @@ function actualizarMarcador() {
   const sa = partidoActual.setActual || { local: 0, visitante: 0 };
   document.getElementById('pts-local').textContent = sa.local;
   document.getElementById('pts-visitante').textContent = sa.visitante;
-  
+  document.getElementById('nombre-local').textContent = nombreEq(partidoActual.local);
+  document.getElementById('nombre-visitante').textContent = nombreEq(partidoActual.visitante);
+
   const regl = REGLAMENTO[torneoActual.tipo];
   const setNum = partidoActual.setNum || 1;
-  const esFinalSet = (torneoActual.tipo === 'sala' && setNum === 5) || (torneoActual.tipo === 'playa' && setNum === 3);
-  const meta = esFinalSet ? regl.puntosFinalSet : regl.puntosSet;
-  document.getElementById('set-info-display').textContent = `Set ${setNum} — Meta: ${meta} puntos (mín. diferencia 2)`;
+  const esFinal = (torneoActual.tipo === 'sala' && setNum === 5) || (torneoActual.tipo === 'playa' && setNum === 3);
+  const meta = esFinal ? regl.puntosFinalSet : regl.puntosSet;
+  document.getElementById('set-meta-info').textContent = `Set ${setNum} de ${regl.sets} — Meta: ${meta} puntos`;
 
-  // Sets ganados
-  const setsLocal = partidoActual.sets.filter(s => s.local > s.visitante).length;
-  const setsVisitante = partidoActual.sets.filter(s => s.visitante > s.local).length;
-  
-  const setsBadges = document.getElementById('marcador-sets-display');
-  setsBadges.innerHTML = `
-    <span class="set-badge ganado-local">${nombreEquipo(partidoActual.local)}: ${setsLocal}</span>
-    <span class="set-badge">Sets</span>
-    <span class="set-badge ganado-visitante">${nombreEquipo(partidoActual.visitante)}: ${setsVisitante}</span>`;
+  const sL = partidoActual.sets.filter(s => s.local > s.visitante).length;
+  const sV = partidoActual.sets.filter(s => s.visitante > s.local).length;
+  const track = document.getElementById('sets-track-display');
+  track.innerHTML = `
+    <div class="set-pill win-home">${nombreEq(partidoActual.local)}: ${sL}</div>
+    <div class="set-pill" style="font-size:11px;color:var(--txt3)">SETS</div>
+    <div class="set-pill win-away">${nombreEq(partidoActual.visitante)}: ${sV}</div>`;
+
+  const m = Math.floor(timerSeg/60), s = timerSeg % 60;
+  document.getElementById('timer-display').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
 function sumarPunto(lado) {
   if (!partidoActual) return;
-  if (!timerActivo) { toggleTimer(); }
+  if (!timerOn) toggleTimer();
   if (!partidoActual.setActual) partidoActual.setActual = { local: 0, visitante: 0 };
   partidoActual.setActual[lado]++;
-  
   const sa = partidoActual.setActual;
   const regl = REGLAMENTO[torneoActual.tipo];
   const setNum = partidoActual.setNum || 1;
-  const esFinalSet = (torneoActual.tipo === 'sala' && setNum === 5) || (torneoActual.tipo === 'playa' && setNum === 3);
-  const meta = esFinalSet ? regl.puntosFinalSet : regl.puntosSet;
-
-  // Verificar si el set terminó
-  const maxPts = Math.max(sa.local, sa.visitante);
-  const minPts = Math.min(sa.local, sa.visitante);
-  if (maxPts >= meta && (maxPts - minPts) >= 2) {
-    // Set terminado automáticamente
-    setTimeout(() => terminarSet(true), 300);
+  const esFinal = (torneoActual.tipo === 'sala' && setNum === 5) || (torneoActual.tipo === 'playa' && setNum === 3);
+  const meta = esFinal ? regl.puntosFinalSet : regl.puntosSet;
+  const mx = Math.max(sa.local, sa.visitante), mn = Math.min(sa.local, sa.visitante);
+  if (mx >= meta && mx - mn >= 2) {
+    actualizarMarcador();
+    setTimeout(() => terminarSet(true), 400);
   } else {
     actualizarMarcador();
-    guardarTorneoActual();
+    LS.save();
   }
 }
 
 function restarPunto(lado) {
-  if (!partidoActual) return;
-  if (!partidoActual.setActual) return;
+  if (!partidoActual || !partidoActual.setActual) return;
   if (partidoActual.setActual[lado] > 0) {
     partidoActual.setActual[lado]--;
     actualizarMarcador();
-    guardarTorneoActual();
+    LS.save();
   }
 }
 
 function terminarSet(auto = false) {
   if (!partidoActual) return;
   const sa = partidoActual.setActual;
-  if (!sa || (sa.local === 0 && sa.visitante === 0)) {
-    if (!auto) showToast('El set no tiene puntos registrados');
+  if (!sa || (sa.local === 0 && sa.visitante === 0 && !auto)) {
+    toast('El set no tiene puntos aún');
     return;
   }
-
-  // Guardar set
-  partidoActual.sets.push({ local: sa.local, visitante: sa.visitante });
-  partidoActual.setActual = { local: 0, visitante: 0 };
-  
+  if (sa) {
+    partidoActual.sets.push({ local: sa.local, visitante: sa.visitante });
+    partidoActual.setActual = { local: 0, visitante: 0 };
+  }
   const regl = REGLAMENTO[torneoActual.tipo];
-  const setsLocal = partidoActual.sets.filter(s => s.local > s.visitante).length;
-  const setsVisitante = partidoActual.sets.filter(s => s.visitante > s.local).length;
-  const setsParaGanar = torneoActual.tipo === 'sala' ? 3 : 2;
-  
-  if (setsLocal >= setsParaGanar || setsVisitante >= setsParaGanar) {
-    // Partido terminado
+  const sL = partidoActual.sets.filter(s => s.local > s.visitante).length;
+  const sV = partidoActual.sets.filter(s => s.visitante > s.local).length;
+  const para = torneoActual.tipo === 'sala' ? 3 : 2;
+  if (sL >= para || sV >= para) {
     terminarPartido(true);
   } else {
     partidoActual.setNum = (partidoActual.setNum || 1) + 1;
     actualizarMarcador();
-    guardarTorneoActual();
-    showToast(`Set ${(partidoActual.setNum || 1) - 1} terminado. Iniciando set ${partidoActual.setNum}`);
+    LS.save();
+    toast(`Set ${partidoActual.setNum - 1} terminado ✓`);
   }
 }
 
 function terminarPartido(auto = false) {
   if (!partidoActual) return;
-  
-  // Si hay puntos en el set actual, incluirlos
   const sa = partidoActual.setActual;
   if (sa && (sa.local > 0 || sa.visitante > 0)) {
     partidoActual.sets.push({ ...sa });
   }
-
-  if (timerActivo) toggleTimer();
-  partidoActual.duracion = timerSegundos;
-
-  const setsLocal = partidoActual.sets.filter(s => s.local > s.visitante).length;
-  const setsVisitante = partidoActual.sets.filter(s => s.visitante > s.local).length;
-  
-  partidoActual.ganador = setsLocal > setsVisitante ? partidoActual.local : partidoActual.visitante;
+  if (timerOn) toggleTimer();
+  partidoActual.duracion = timerSeg;
+  const sL = partidoActual.sets.filter(s => s.local > s.visitante).length;
+  const sV = partidoActual.sets.filter(s => s.visitante > s.local).length;
+  partidoActual.ganador = sL > sV ? partidoActual.local : partidoActual.visitante;
   partidoActual.estado = 'terminado';
   partidoActual.setActual = null;
-
-  guardarTorneoActual();
-  
-  const ganadorNombre = nombreEquipo(partidoActual.ganador);
-  showToast(`🏆 ¡${ganadorNombre} gana el partido!`);
-  
+  LS.save();
+  const ganNombre = nombreEq(partidoActual.ganador);
+  toast(`🏆 ¡${ganNombre} gana!`);
   setTimeout(() => {
     showScreen('screen-torneo');
     renderCalendario();
-  }, 1500);
+  }, 1600);
 }
 
 function volverDePartido() {
-  if (timerActivo) toggleTimer();
-  if (partidoActual) guardarTorneoActual();
+  if (timerOn) toggleTimer();
+  if (partidoActual) LS.save();
   showScreen('screen-torneo');
   renderCalendario();
 }
 
-// TIMER
 function toggleTimer() {
-  if (timerActivo) {
-    clearInterval(timerInterval);
-    timerActivo = false;
+  if (timerOn) {
+    clearInterval(timerInt);
+    timerOn = false;
     document.getElementById('timer-btn').textContent = '▶ Reanudar';
   } else {
-    timerActivo = true;
+    timerOn = true;
     document.getElementById('timer-btn').textContent = '⏸ Pausar';
-    timerInterval = setInterval(() => {
-      timerSegundos++;
-      if (partidoActual) partidoActual.duracion = timerSegundos;
-      const m = Math.floor(timerSegundos / 60);
-      const s = timerSegundos % 60;
+    timerInt = setInterval(() => {
+      timerSeg++;
+      if (partidoActual) partidoActual.duracion = timerSeg;
+      const m = Math.floor(timerSeg/60), s = timerSeg % 60;
       document.getElementById('timer-display').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
     }, 1000);
   }
 }
 
-function resetearPartido(id) {
+function resetPartido(id) {
   const p = torneoActual.partidos.find(p => p.id === id);
   if (!p) return;
-  p.estado = 'pendiente';
-  p.sets = [];
-  p.duracion = null;
-  p.ganador = null;
-  p.setActual = null;
-  p.setNum = 1;
-  guardarTorneoActual();
+  Object.assign(p, { estado:'pendiente', sets:[], duracion:null, ganador:null, setActual:null, setNum:1 });
+  LS.save();
   renderCalendario();
-  showToast('Partido reiniciado');
+  toast('Partido reiniciado');
 }
 
-function verDetallePartido(id) {
+function detallePartido(id) {
   const p = torneoActual.partidos.find(pt => pt.id === id);
   if (!p) return;
-  const local = nombreEquipo(p.local);
-  const visitante = nombreEquipo(p.visitante);
-  const setsStr = p.sets.map((s,i) => `Set ${i+1}: ${s.local}-${s.visitante}`).join(' | ');
+  const setsStr = p.sets.map((s,i) => `Set ${i+1}: ${s.local}–${s.visitante}`).join(' · ');
   const dur = p.duracion ? `${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}` : '—';
-  showModal('Detalle del Partido', `${local} vs ${visitante}\n${setsStr}\nDuración: ${dur}\nGanador: ${nombreEquipo(p.ganador)}`);
+  showModal('Detalle del partido',
+    `${nombreEq(p.local)} vs ${nombreEq(p.visitante)}\n${setsStr}\nDuración: ${dur}`, null);
 }
 
-// =====================
+// ══════════════════════════════════════
 // HISTORIAL
-// =====================
+// ══════════════════════════════════════
 function renderHistorial() {
-  const torneos = cargarTorneos();
+  const lista = LS.get();
   const cont = document.getElementById('historial-lista');
-  
-  if (torneos.length === 0) {
-    cont.innerHTML = `<div class="historial-empty"><div class="icon">📋</div><p>No hay torneos guardados</p></div>`;
-    document.getElementById('historial-actions').style.display = 'none';
+  const bar = document.getElementById('historial-bar');
+  if (!lista.length) {
+    cont.innerHTML = `<div class="historial-empty">
+      <span class="empty-icon">📋</span>
+      <div class="empty-text">No hay torneos guardados</div>
+    </div>`;
+    bar.style.display = 'none';
     return;
   }
-  
-  document.getElementById('historial-actions').style.display = 'block';
-  cont.innerHTML = torneos.slice().reverse().map(t => {
-    const fechaStr = t.fecha ? new Date(t.fecha + 'T00:00:00').toLocaleDateString('es-ES') : '—';
-    const partTerminados = (t.partidos || []).filter(p => p.estado === 'terminado').length;
-    const tabla = calcularTablaParaTorneo(t);
-    const lider = tabla[0];
-    return `
-      <div class="historial-torneo" onclick="verDetalleHistorial('${t.id}')">
-        <span class="hbadge ${t.tipo}">${t.tipo === 'sala' ? '🏟️ Sala' : '🏖️ Playa'}</span>
-        ${t.finalizado ? '<span class="hbadge" style="background:var(--green);color:#1a1a2e">✓ Final</span>' : '<span class="hbadge" style="background:rgba(255,255,255,0.15)">En curso</span>'}
-        <div class="htitle">${t.nombre}</div>
-        <div class="hmeta">${fechaStr} · ${t.equipos.length} equipos · ${partTerminados} partidos jugados</div>
-        ${lider && lider.pj > 0 ? `<div class="hmeta">🏆 Líder: ${lider.nombre} (${lider.pts} pts)</div>` : ''}
-      </div>`;
+  bar.style.display = 'block';
+  cont.innerHTML = lista.slice().reverse().map(t => {
+    const tabla = calcTabla(t);
+    const lider = tabla.find(e => e.pj > 0);
+    const pts = (t.partidos||[]).filter(p => p.estado==='terminado').length;
+    return `<div class="historial-card" onclick="verDetalle('${t.id}')">
+      <div class="hcard-top">
+        <div class="hcard-name">${t.nombre}</div>
+        <div class="hcard-arrow">›</div>
+      </div>
+      <div class="hcard-chips">
+        <span class="hchip ${t.tipo==='sala'?'chip-sala':'chip-playa'}">${t.tipo==='sala'?'🏟 Sala':'🏖 Playa'}</span>
+        <span class="hchip ${t.finalizado?'chip-fin':'chip-act'}">${t.finalizado?'✓ Final':'En curso'}</span>
+      </div>
+      <div class="hcard-meta">${t.equipos.length} equipos · ${pts} partidos · ${t.sede}
+        ${lider ? ' · 🏆 ' + lider.nombre : ''}</div>
+    </div>`;
   }).join('');
 }
 
-function calcularTablaParaTorneo(t) {
-  const stats = {};
-  t.equipos.forEach(eq => {
-    stats[eq.id] = { id: eq.id, nombre: eq.nombre, pj:0, pg:0, pp:0, sf:0, sc:0, pts:0 };
-  });
-  (t.partidos || []).filter(p => p.estado === 'terminado').forEach(p => {
-    const setsLocal = p.sets.filter(s => s.local > s.visitante).length;
-    const setsVisitante = p.sets.filter(s => s.visitante > s.local).length;
-    if (!stats[p.local] || !stats[p.visitante]) return;
-    stats[p.local].pj++; stats[p.visitante].pj++;
-    stats[p.local].sf += setsLocal; stats[p.local].sc += setsVisitante;
-    stats[p.visitante].sf += setsVisitante; stats[p.visitante].sc += setsLocal;
-    if (setsLocal > setsVisitante) {
-      stats[p.local].pg++; stats[p.visitante].pp++;
-      stats[p.local].pts += 3;
-    } else {
-      stats[p.visitante].pg++; stats[p.local].pp++;
-      stats[p.visitante].pts += 3;
-    }
-  });
-  return Object.values(stats).sort((a,b) => b.pts - a.pts);
-}
-
-function verDetalleHistorial(id) {
-  const lista = cargarTorneos();
-  torneoHistorialSeleccionado = lista.find(t => t.id === id);
-  if (!torneoHistorialSeleccionado) return;
-  
-  const t = torneoHistorialSeleccionado;
-  const tabla = calcularTablaParaTorneo(t);
-  const partidos = (t.partidos || []).filter(p => p.estado === 'terminado');
-  
-  const cont = document.getElementById('detalle-historial-content');
-  cont.innerHTML = `
-    <div class="detalle-section">
-      <h3>Información</h3>
-      <div class="stat-card">
-        <div class="stat-row"><span>Tipo</span><span class="stat-val">${t.tipo === 'sala' ? 'Sala' : 'Playa'}</span></div>
-        <div class="stat-row"><span>Sede</span><span class="stat-val">${t.sede}</span></div>
-        <div class="stat-row"><span>Fecha</span><span class="stat-val">${t.fecha || '—'}</span></div>
-        <div class="stat-row"><span>Formato</span><span class="stat-val">${t.formato}</span></div>
-        <div class="stat-row"><span>Estado</span><span class="stat-val">${t.finalizado ? '✓ Finalizado' : 'En curso'}</span></div>
+function verDetalle(id) {
+  histSel = LS.get().find(t => t.id === id);
+  if (!histSel) return;
+  document.getElementById('detalle-title').textContent = histSel.nombre;
+  const tabla = calcTabla(histSel);
+  const terminados = (histSel.partidos||[]).filter(p => p.estado==='terminado');
+  const posClass = ['pos-1','pos-2','pos-3'];
+  document.getElementById('detalle-content').innerHTML = `
+    <div class="sec-header"><div class="sec-title">Información</div></div>
+    <div style="padding:0 20px 16px">
+      <div class="card">
+        <div class="info-rows">
+          <div class="info-row"><span class="lbl">Tipo</span><span class="val">${histSel.tipo==='sala'?'Sala':'Playa'}</span></div>
+          <div class="info-row"><span class="lbl">Sede</span><span class="val">${histSel.sede}</span></div>
+          <div class="info-row"><span class="lbl">Fecha</span><span class="val">${histSel.fecha||'—'}</span></div>
+          <div class="info-row"><span class="lbl">Formato</span><span class="val">${histSel.formato}</span></div>
+          <div class="info-row"><span class="lbl">Estado</span><span class="val" style="color:${histSel.finalizado?'var(--green)':'var(--acc2)'}">${histSel.finalizado?'✓ Finalizado':'En curso'}</span></div>
+        </div>
       </div>
     </div>
-    <div class="detalle-section">
-      <h3>Tabla Final</h3>
-      <div class="tabla-wrap">
-        <table class="tabla-clasificacion">
-          <thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>PG</th><th>PP</th><th>Pts</th></tr></thead>
-          <tbody>${tabla.map((eq,i) => `
-            <tr class="${i===0&&eq.pj>0?'winner-row':''}">
-              <td>${i+1}</td><td>${eq.nombre}${i===0&&eq.pj>0?' 🏆':''}</td>
-              <td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pp}</td>
-              <td class="pts">${eq.pts}</td>
-            </tr>`).join('')}
-          </tbody>
-        </table>
+    <div class="sec-header"><div class="sec-title">Clasificación</div></div>
+    <div style="padding:0 20px 16px">
+      <div class="rank-list">
+        ${tabla.map((eq,i) => `
+          <div class="rank-row">
+            <div class="rank-pos" style="color:${i===0?'var(--acc2)':i===1?'rgba(255,255,255,0.6)':'var(--txt3)'}">${i+1}</div>
+            <div class="rank-name">${eq.nombre}${i===0&&eq.pj>0?' 🏆':''}</div>
+            <div style="text-align:right">
+              <div class="rank-pts">${eq.pts} pts</div>
+              <div style="font-size:11px;color:var(--txt3)">${eq.pg}G ${eq.pp}P</div>
+            </div>
+          </div>`).join('')}
       </div>
     </div>
-    <div class="detalle-section">
-      <h3>Resultados (${partidos.length} partidos)</h3>
-      ${partidos.map(p => {
-        const local = t.equipos.find(e => e.id === p.local)?.nombre || '?';
-        const visitante = t.equipos.find(e => e.id === p.visitante)?.nombre || '?';
-        const setsL = p.sets.filter(s => s.local > s.visitante).length;
-        const setsV = p.sets.filter(s => s.visitante > s.local).length;
-        const dur = p.duracion ? `${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}` : '';
-        return `<div class="stat-card" style="margin-bottom:0.5rem;padding:0.75rem 1rem">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:0.9rem">${local}</span>
-            <span style="font-family:'Bebas Neue',cursive;font-size:1.3rem;color:var(--acc2)">${setsL} - ${setsV}</span>
-            <span style="font-size:0.9rem;text-align:right">${visitante}</span>
+    <div class="sec-header"><div class="sec-title">Resultados (${terminados.length})</div></div>
+    <div style="padding:0 20px 8px">
+      ${terminados.map(p => {
+        const eq = e => histSel.equipos.find(x => x.id === e)?.nombre || '?';
+        const sL = p.sets.filter(s => s.local > s.visitante).length;
+        const sV = p.sets.filter(s => s.visitante > s.local).length;
+        const dur = p.duracion ? `⏱ ${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}` : '';
+        return `<div class="result-row">
+          <div class="result-home">${eq(p.local)}</div>
+          <div style="text-align:center">
+            <div class="result-score">${sL}–${sV}</div>
+            ${dur?`<div class="result-dur">${dur}</div>`:''}
           </div>
-          ${dur ? `<div style="font-size:0.75rem;color:var(--gray);text-align:center;margin-top:0.3rem">⏱ ${dur}</div>` : ''}
+          <div class="result-away">${eq(p.visitante)}</div>
         </div>`;
-      }).join('') || '<p style="color:var(--gray);font-size:0.85rem">Sin partidos registrados</p>'}
+      }).join('') || '<div style="color:var(--txt3);font-size:13px;padding:8px 0">Sin partidos registrados</div>'}
     </div>`;
-  
-  showScreen('screen-detalle-historial');
+  showScreen('screen-detalle');
 }
 
-function borrarTorneoHistorial() {
-  if (!torneoHistorialSeleccionado) return;
-  showModal(
-    '¿Borrar este torneo?',
-    `Se eliminará "${torneoHistorialSeleccionado.nombre}" y todos sus datos permanentemente.`,
-    () => {
-      let lista = cargarTorneos();
-      lista = lista.filter(t => t.id !== torneoHistorialSeleccionado.id);
-      guardarTorneos(lista);
-      torneoHistorialSeleccionado = null;
-      showScreen('screen-historial');
-      showToast('Torneo eliminado');
-    }
-  );
+function pedirBorrarUno() {
+  if (!histSel) return;
+  showModal('¿Borrar este torneo?', `Se eliminará "${histSel.nombre}" con todos sus datos permanentemente.`, () => {
+    LS.set(LS.get().filter(t => t.id !== histSel.id));
+    histSel = null;
+    showScreen('screen-historial');
+    toast('Torneo eliminado');
+  });
 }
 
-function confirmarBorrarHistorial() {
-  showModal(
-    '¿Borrar TODO el historial?',
-    'Esta acción eliminará TODOS los torneos guardados. No se puede deshacer.',
-    () => {
-      guardarTorneos([]);
-      showToast('Historial borrado');
-      renderHistorial();
-    }
-  );
+function pedirBorrarTodo() {
+  showModal('¿Borrar TODO el historial?', 'Se eliminarán todos los torneos guardados. Esta acción no se puede deshacer.', () => {
+    LS.set([]);
+    renderHistorial();
+    toast('Historial borrado');
+  });
 }
 
-// =====================
-// SALIDA CON CONFIRMACIÓN
-// =====================
 function confirmarSalida() {
   if (torneoActual && !torneoActual.finalizado) {
-    showModal(
-      '¿Volver al inicio?',
-      'El torneo se guardará y podrás retomarlo desde el inicio.',
-      () => { showScreen('screen-home'); }
-    );
+    showModal('¿Salir del torneo?', 'El torneo se guardará automáticamente y podrás retomarlo desde el inicio.', () => showScreen('screen-home'));
   } else {
     showScreen('screen-home');
   }
 }
 
-// =====================
+// ══════════════════════════════════════
 // MODAL
-// =====================
-function showModal(titulo, msg, onConfirm) {
+// ══════════════════════════════════════
+function showModal(titulo, msg, fn) {
   document.getElementById('modal-title').textContent = titulo;
   document.getElementById('modal-msg').textContent = msg;
-  document.getElementById('modal-overlay').style.display = 'flex';
-  modalConfirmFn = onConfirm || null;
-  if (!onConfirm) {
-    document.getElementById('modal-confirm-btn').style.display = 'none';
-    document.querySelector('.modal-btns .btn-secondary').textContent = 'Cerrar';
-  } else {
-    document.getElementById('modal-confirm-btn').style.display = 'block';
-    document.querySelector('.modal-btns .btn-secondary').textContent = 'Cancelar';
-  }
+  document.getElementById('modal-bg').style.display = 'flex';
+  document.getElementById('modal-ok').style.display = fn ? 'flex' : 'none';
+  modalFn = fn;
 }
+function closeModal() { document.getElementById('modal-bg').style.display = 'none'; modalFn = null; }
+function modalOk() { if (modalFn) modalFn(); closeModal(); }
 
-function closeModal() {
-  document.getElementById('modal-overlay').style.display = 'none';
-  modalConfirmFn = null;
-}
-
-function modalConfirmAction() {
-  if (modalConfirmFn) modalConfirmFn();
-  closeModal();
-}
-
-// =====================
+// ══════════════════════════════════════
 // TOAST
-// =====================
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
+// ══════════════════════════════════════
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2800);
 }
 
-// =====================
+// ══════════════════════════════════════
 // INIT
-// =====================
+// ══════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  // Fecha por defecto = hoy
-  const hoy = new Date().toISOString().slice(0,10);
-  const fechaInput = document.getElementById('fecha-torneo');
-  if (fechaInput) fechaInput.value = hoy;
-  
-  actualizarCamposEquipos();
   renderHome();
-  
-  // Registrar Service Worker para PWA
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-  }
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 });

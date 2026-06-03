@@ -2,243 +2,231 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#1a1a2e">
-<meta name="description" content="Gestión de torneos de voleibol local">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0B0E1A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>VoleyTorneo</title>
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <div id="app">
 
-  <!-- SPLASH / INICIO -->
-  <div id="screen-home" class="screen active">
-    <div class="home-bg"></div>
-    <div class="home-content">
-      <div class="logo-mark">🏐</div>
-      <h1 class="app-title">VoleyTorneo</h1>
-      <p class="app-subtitle">Gestión de torneos locales</p>
-      <div class="home-btns">
-        <button class="btn-primary big" onclick="showScreen('screen-type')">
-          <span>➕</span> Nuevo Torneo
-        </button>
-        <button class="btn-secondary big" onclick="showScreen('screen-historial')">
-          <span>📋</span> Historial
-        </button>
-      </div>
-      <div id="torneos-activos-home"></div>
-    </div>
+<!-- ══════════════ SPLASH ══════════════ -->
+<div id="screen-home" class="screen active">
+  <div class="splash-glow"></div>
+  <div class="splash-glow2"></div>
+  <span class="splash-ball">🏐</span>
+  <div class="splash-title">VOLEY<br>TORNEO</div>
+  <div class="splash-sub">Gestión de torneos locales</div>
+  <div class="splash-actions">
+    <button class="btn btn-acc btn-full" onclick="showScreen('screen-type')">
+      <span>＋</span> Nuevo torneo
+    </button>
+    <button class="btn btn-ghost btn-full" onclick="showScreen('screen-historial')">
+      <span>📋</span> Ver historial
+    </button>
   </div>
+  <div id="active-torneos-home"></div>
+</div>
 
-  <!-- SELECCIONAR TIPO -->
-  <div id="screen-type" class="screen">
-    <div class="top-bar">
-      <button class="back-btn" onclick="showScreen('screen-home')">← Atrás</button>
-      <h2>Tipo de Voleibol</h2>
-    </div>
-    <div class="type-cards">
-      <div class="type-card" onclick="selectType('sala')">
-        <div class="type-icon">🏟️</div>
-        <h3>Voleibol de Sala</h3>
-        <p>6 vs 6 · Cancha cubierta</p>
-        <ul class="type-rules">
-          <li>6 jugadores por equipo</li>
-          <li>Sets a 25 puntos (5to a 15)</li>
-          <li>Mejor de 5 sets</li>
-          <li>3 sustituciones por set</li>
-        </ul>
-        <button class="btn-primary">Seleccionar</button>
+<!-- ══════════════ TIPO ══════════════ -->
+<div id="screen-type" class="screen">
+  <div class="topbar">
+    <div class="topbar-back" onclick="showScreen('screen-home')">←</div>
+    <div class="topbar-title">Tipo de voleibol</div>
+  </div>
+  <div class="tipo-grid">
+    <div class="tipo-card" onclick="selectType('sala')">
+      <span class="tipo-emoji">🏟️</span>
+      <div class="tipo-name">De Sala</div>
+      <div class="tipo-sub">6 vs 6</div>
+      <div class="tipo-rules">
+        <div class="rule-row"><span class="rule-dot"></span>Sets a 25 pts</div>
+        <div class="rule-row"><span class="rule-dot"></span>5to set a 15</div>
+        <div class="rule-row"><span class="rule-dot"></span>Mejor de 5</div>
       </div>
-      <div class="type-card" onclick="selectType('playa')">
-        <div class="type-icon">🏖️</div>
-        <h3>Voleibol de Playa</h3>
-        <p>2 vs 2 · Arena</p>
-        <ul class="type-rules">
-          <li>2 jugadores por equipo</li>
-          <li>Sets a 21 puntos (3ro a 15)</li>
-          <li>Mejor de 3 sets</li>
-          <li>Sin sustituciones</li>
-        </ul>
-        <button class="btn-primary">Seleccionar</button>
+    </div>
+    <div class="tipo-card" onclick="selectType('playa')">
+      <span class="tipo-emoji">🏖️</span>
+      <div class="tipo-name">De Playa</div>
+      <div class="tipo-sub">2 vs 2</div>
+      <div class="tipo-rules">
+        <div class="rule-row"><span class="rule-dot"></span>Sets a 21 pts</div>
+        <div class="rule-row"><span class="rule-dot"></span>3er set a 15</div>
+        <div class="rule-row"><span class="rule-dot"></span>Mejor de 3</div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- NORMAS DE CLASIFICACIÓN -->
-  <div id="screen-normas" class="screen">
-    <div class="top-bar">
-      <button class="back-btn" onclick="showScreen('screen-type')">← Atrás</button>
-      <h2>Normas de Clasificación</h2>
-    </div>
-    <p class="screen-desc">Elige las normas a usar en tu torneo <span id="tipo-label"></span>:</p>
-    <div id="normas-lista" class="normas-lista"></div>
-    <div class="bottom-bar">
-      <button class="btn-primary" onclick="confirmarNormas()">Continuar →</button>
-    </div>
+<!-- ══════════════ NORMAS ══════════════ -->
+<div id="screen-normas" class="screen">
+  <div class="topbar">
+    <div class="topbar-back" onclick="showScreen('screen-type')">←</div>
+    <div class="topbar-title">Normas de clasificación</div>
   </div>
+  <div style="padding:12px 20px 4px;font-size:13px;color:var(--txt3)">
+    Selecciona las normas a usar. Puedes combinar varias.
+  </div>
+  <div id="normas-lista" style="flex:1;overflow-y:auto;padding-top:8px;padding-bottom:16px"></div>
+  <div class="sheet-bar">
+    <button class="btn btn-acc btn-full" onclick="confirmarNormas()">Continuar →</button>
+  </div>
+</div>
 
-  <!-- CONFIGURAR TORNEO -->
-  <div id="screen-config" class="screen">
-    <div class="top-bar">
-      <button class="back-btn" onclick="showScreen('screen-normas')">← Atrás</button>
-      <h2>Configurar Torneo</h2>
+<!-- ══════════════ CONFIGURAR ══════════════ -->
+<div id="screen-config" class="screen">
+  <div class="topbar">
+    <div class="topbar-back" onclick="showScreen('screen-normas')">←</div>
+    <div class="topbar-title">Nuevo torneo</div>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:16px 0 8px">
+    <div class="form-block">
+      <label class="form-label">Nombre del torneo</label>
+      <input type="text" class="form-input" id="nombre-torneo" placeholder="Ej: Copa Verano 2025">
     </div>
-    <div class="form-section">
-      <label>Nombre del torneo</label>
-      <input type="text" id="nombre-torneo" placeholder="Ej: Copa Verano 2025">
-
-      <label>Número de equipos</label>
-      <input type="number" id="num-equipos" min="2" max="32" value="4" oninput="actualizarCamposEquipos()">
-
-      <div id="equipos-inputs"></div>
-
-      <label>Formato del torneo</label>
-      <select id="formato-torneo">
-        <option value="liga">Liga (todos contra todos)</option>
+    <div class="form-block">
+      <label class="form-label">Sede / Lugar</label>
+      <input type="text" class="form-input" id="sede-torneo" placeholder="Ej: Polideportivo Municipal">
+    </div>
+    <div class="form-block">
+      <label class="form-label">Fecha inicio</label>
+      <input type="date" class="form-input" id="fecha-torneo">
+    </div>
+    <div class="form-block">
+      <label class="form-label">Formato</label>
+      <select class="form-select" id="formato-torneo">
+        <option value="liga">Liga — todos contra todos</option>
         <option value="eliminacion">Eliminación directa</option>
         <option value="grupos">Fase de grupos + eliminatoria</option>
       </select>
-
-      <label>Sede / Lugar</label>
-      <input type="text" id="sede-torneo" placeholder="Ej: Polideportivo Municipal">
-
-      <label>Fecha inicio</label>
-      <input type="date" id="fecha-torneo">
     </div>
-    <div class="bottom-bar">
-      <button class="btn-primary" onclick="crearTorneo()">🏆 Crear Torneo</button>
+    <div class="form-block">
+      <label class="form-label">Número de equipos</label>
+      <input type="number" class="form-input" id="num-equipos" min="2" max="32" value="4" oninput="actualizarEquipos()">
     </div>
-  </div>
-
-  <!-- DASHBOARD TORNEO -->
-  <div id="screen-torneo" class="screen">
-    <div class="top-bar">
-      <button class="back-btn" onclick="confirmarSalida()">← Inicio</button>
-      <h2 id="torneo-nombre-header">Torneo</h2>
-      <button class="icon-btn" onclick="showScreen('screen-config-edit')">⚙️</button>
-    </div>
-    <div class="tabs">
-      <button class="tab active" onclick="showTab('tab-calendario')">📅 Calendario</button>
-      <button class="tab" onclick="showTab('tab-tabla')">🏆 Tabla</button>
-      <button class="tab" onclick="showTab('tab-stats')">📊 Estadísticas</button>
-    </div>
-
-    <!-- TAB CALENDARIO -->
-    <div id="tab-calendario" class="tab-content active">
-      <div id="partidos-lista"></div>
-    </div>
-
-    <!-- TAB TABLA CLASIFICATORIA -->
-    <div id="tab-tabla" class="tab-content">
-      <div class="tabla-wrap">
-        <table class="tabla-clasificacion" id="tabla-clasificacion">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Equipo</th>
-              <th>PJ</th>
-              <th>PG</th>
-              <th>PP</th>
-              <th>SF</th>
-              <th>SC</th>
-              <th>PF</th>
-              <th>PC</th>
-              <th>Pts</th>
-            </tr>
-          </thead>
-          <tbody id="tabla-body"></tbody>
-        </table>
-        <p class="tabla-leyenda">PJ=Jugados · PG=Ganados · PP=Perdidos · SF/SC=Sets F/C · PF/PC=Puntos F/C</p>
-      </div>
-    </div>
-
-    <!-- TAB ESTADÍSTICAS -->
-    <div id="tab-stats" class="tab-content">
-      <div id="stats-content"></div>
+    <div class="form-block">
+      <label class="form-label">Nombres de equipos</label>
+      <div class="equipos-grid" id="equipos-inputs"></div>
     </div>
   </div>
-
-  <!-- MARCADOR EN VIVO -->
-  <div id="screen-marcador" class="screen">
-    <div class="top-bar">
-      <button class="back-btn" onclick="volverDePartido()">← Partidos</button>
-      <h2>Partido en Vivo</h2>
-    </div>
-    <div class="marcador-container">
-      <div class="marcador-timer">
-        ⏱️ <span id="timer-display">00:00</span>
-        <button class="btn-small" id="timer-btn" onclick="toggleTimer()">▶ Iniciar</button>
-      </div>
-      <div class="marcador-sets" id="marcador-sets-display"></div>
-      <div class="marcador-main">
-        <div class="equipo-marcador" id="marcador-local">
-          <div class="equipo-nombre" id="nombre-local">Local</div>
-          <div class="equipo-puntos" id="pts-local">0</div>
-          <div class="marcador-btns">
-            <button class="btn-punto" onclick="sumarPunto('local')">+1</button>
-            <button class="btn-restar" onclick="restarPunto('local')">−1</button>
-          </div>
-        </div>
-        <div class="marcador-vs">VS</div>
-        <div class="equipo-marcador" id="marcador-visitante">
-          <div class="equipo-nombre" id="nombre-visitante">Visitante</div>
-          <div class="equipo-puntos" id="pts-visitante">0</div>
-          <div class="marcador-btns">
-            <button class="btn-punto" onclick="sumarPunto('visitante')">+1</button>
-            <button class="btn-restar" onclick="restarPunto('visitante')">−1</button>
-          </div>
-        </div>
-      </div>
-      <div class="set-info" id="set-info-display"></div>
-      <div class="marcador-actions">
-        <button class="btn-warning" onclick="terminarSet()">Terminar Set</button>
-        <button class="btn-danger" onclick="terminarPartido()">Finalizar Partido</button>
-      </div>
-    </div>
+  <div class="sheet-bar">
+    <button class="btn btn-acc btn-full" onclick="crearTorneo()">🏆 Crear torneo</button>
   </div>
-
-  <!-- HISTORIAL -->
-  <div id="screen-historial" class="screen">
-    <div class="top-bar">
-      <button class="back-btn" onclick="showScreen('screen-home')">← Inicio</button>
-      <h2>Historial de Torneos</h2>
-    </div>
-    <div id="historial-lista"></div>
-    <div class="bottom-bar" id="historial-actions">
-      <button class="btn-danger" onclick="confirmarBorrarHistorial()">🗑️ Borrar todo el historial</button>
-    </div>
-  </div>
-
-  <!-- DETALLE TORNEO HISTORIAL -->
-  <div id="screen-detalle-historial" class="screen">
-    <div class="top-bar">
-      <button class="back-btn" onclick="showScreen('screen-historial')">← Historial</button>
-      <h2>Detalle del Torneo</h2>
-    </div>
-    <div id="detalle-historial-content"></div>
-    <div class="bottom-bar">
-      <button class="btn-danger" onclick="borrarTorneoHistorial()">🗑️ Borrar este torneo</button>
-    </div>
-  </div>
-
 </div>
 
-<!-- MODAL -->
-<div id="modal-overlay" class="modal-overlay" style="display:none">
-  <div class="modal">
-    <h3 id="modal-title"></h3>
-    <p id="modal-msg"></p>
-    <div class="modal-btns">
-      <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
-      <button class="btn-danger" id="modal-confirm-btn" onclick="modalConfirmAction()">Confirmar</button>
+<!-- ══════════════ TORNEO PRINCIPAL ══════════════ -->
+<div id="screen-torneo" class="screen has-nav">
+  <div class="topbar">
+    <div class="topbar-back" onclick="confirmarSalida()">←</div>
+    <div class="topbar-title" id="torneo-nombre-header">Torneo</div>
+    <button class="topbar-action" onclick="marcarFinalizado()">🏁</button>
+  </div>
+
+  <div id="tab-calendario" class="tab-content" style="flex:1;overflow-y:auto;padding-bottom:8px"></div>
+  <div id="tab-tabla" class="tab-content" style="display:none;padding-bottom:16px"></div>
+  <div id="tab-stats" class="tab-content" style="display:none"></div>
+
+  <div class="bottom-nav" id="torneo-nav">
+    <div class="nav-item active" onclick="showTab('tab-calendario',0)" id="nav-0">
+      <div class="nav-icon">📅</div>
+      <div class="nav-label">Partidos</div>
+    </div>
+    <div class="nav-item" onclick="showTab('tab-tabla',1)" id="nav-1">
+      <div class="nav-icon">🏆</div>
+      <div class="nav-label">Tabla</div>
+    </div>
+    <div class="nav-item" onclick="showTab('tab-stats',2)" id="nav-2">
+      <div class="nav-icon">📊</div>
+      <div class="nav-label">Stats</div>
     </div>
   </div>
 </div>
 
-<!-- TOAST -->
-<div id="toast" class="toast"></div>
+<!-- ══════════════ MARCADOR ══════════════ -->
+<div id="screen-marcador" class="screen">
+  <div class="topbar">
+    <div class="topbar-back" onclick="volverDePartido()">←</div>
+    <div class="topbar-title">En vivo</div>
+  </div>
+  <div class="marcador-wrap">
+    <div class="live-chip"><span class="live-dot"></span> En vivo</div>
+    <div class="timer-box">
+      <div class="timer-num" id="timer-display">00:00</div>
+      <button class="btn btn-teal btn-sm" id="timer-btn" onclick="toggleTimer()">▶ Iniciar</button>
+    </div>
+    <div class="sets-track" id="sets-track-display"></div>
+    <div class="score-main">
+      <div class="score-team score-home">
+        <div class="score-team-name" id="nombre-local">Local</div>
+        <div class="score-number" id="pts-local">0</div>
+        <div class="score-btns">
+          <button class="score-plus" onclick="sumarPunto('local')">+1</button>
+          <button class="score-minus" onclick="restarPunto('local')">−</button>
+        </div>
+      </div>
+      <div class="vs-divider">
+        <div class="vs-text">VS</div>
+      </div>
+      <div class="score-team score-away">
+        <div class="score-team-name" id="nombre-visitante">Visitante</div>
+        <div class="score-number" id="pts-visitante">0</div>
+        <div class="score-btns">
+          <button class="score-plus away" onclick="sumarPunto('visitante')">+1</button>
+          <button class="score-minus" onclick="restarPunto('visitante')">−</button>
+        </div>
+      </div>
+    </div>
+    <div class="set-meta" id="set-meta-info">Set 1 — Meta: 25 puntos</div>
+    <div class="marcador-ctas">
+      <button class="btn btn-amber btn-full" onclick="terminarSet()">⏸ Terminar set</button>
+      <button class="btn btn-red btn-full" onclick="terminarPartido()">✓ Fin partido</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HISTORIAL ══════════════ -->
+<div id="screen-historial" class="screen has-nav">
+  <div class="topbar">
+    <div class="topbar-back" onclick="showScreen('screen-home')">←</div>
+    <div class="topbar-title">Historial</div>
+  </div>
+  <div class="historial-wrap" id="historial-lista" style="overflow-y:auto;padding-top:12px"></div>
+  <div id="historial-bar" class="sheet-bar" style="display:none">
+    <button class="btn btn-red btn-full" onclick="pedirBorrarTodo()">🗑 Borrar todo el historial</button>
+  </div>
+</div>
+
+<!-- ══════════════ DETALLE HISTORIAL ══════════════ -->
+<div id="screen-detalle" class="screen">
+  <div class="topbar">
+    <div class="topbar-back" onclick="showScreen('screen-historial')">←</div>
+    <div class="topbar-title" id="detalle-title">Detalle</div>
+  </div>
+  <div class="detalle-wrap" id="detalle-content" style="overflow-y:auto;flex:1"></div>
+  <div class="sheet-bar">
+    <button class="btn btn-red btn-full" onclick="pedirBorrarUno()">🗑 Borrar este torneo</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<!-- MODAL BOTTOM SHEET -->
+<div class="modal-bg" id="modal-bg" style="display:none">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-msg" id="modal-msg"></div>
+    <div class="modal-actions">
+      <button class="btn btn-red btn-full" id="modal-ok" onclick="modalOk()">Confirmar</button>
+      <button class="btn btn-ghost btn-full" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
