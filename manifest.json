@@ -1,36 +1,37 @@
 {
-  "name": "VoleyTorneo",
-  "short_name": "VoleyTorneo",
-  "description": "Gestión de torneos de voleibol local",
-  "id": "com.voleytorneo.app",
+  "id": "com.loscamilas.inventario",
+  "name": "Los Camil@s — Inventario",
+  "short_name": "Los Camil@s",
+  "description": "App de inventario y ventas para punto de venta de alimentos y confituras",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0B0E1A",
-  "theme_color": "#0B0E1A",
   "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#0F6E56",
   "lang": "es",
-  "categories": ["sports", "utilities"],
+  "categories": ["business", "productivity", "finance"],
+  "prefer_related_applications": false,
   "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [
     {
-      "src": "./icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "form_factor": "narrow",
+      "label": "Pantalla de inicio"
     }
   ],
-  "screenshots": [],
-  "shortcuts": []
+  "shortcuts": [
+    {
+      "name": "Cierre del día",
+      "short_name": "Cierre",
+      "description": "Ir directamente al cierre del día",
+      "url": "./index.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
 }
