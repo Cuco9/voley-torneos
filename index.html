@@ -125,6 +125,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-he
 .equipo-row{display:flex;align-items:center;gap:10px}
 .equipo-num{width:32px;height:32px;border-radius:10px;background:rgba(255,78,106,0.12);border:1px solid rgba(255,78,106,0.25);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--acc);flex-shrink:0}
 .sheet-bar{padding:16px 20px;background:var(--bg2);border-top:1px solid var(--border);margin-top:auto}
+.btn-shuffle{display:inline-flex;align-items:center;gap:6px;background:rgba(155,109,255,0.12);border:1.5px solid rgba(155,109,255,0.3);border-radius:20px;padding:7px 14px;font-size:12px;font-weight:700;color:var(--purple);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.18s;white-space:nowrap}
+.btn-shuffle:active{transform:scale(0.93)}
+.btn-shuffle:hover{background:rgba(155,109,255,0.22);border-color:rgba(155,109,255,0.5)}
+.shuffle-icon{display:inline-block;transition:transform 0.4s}
+.btn-shuffle.spin .shuffle-icon{animation:spin-once 0.45s cubic-bezier(.36,.07,.19,.97)}
+@keyframes spin-once{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.equipo-row{transition:opacity 0.2s,transform 0.2s}
+.equipo-row.fading{opacity:0;transform:translateX(-6px)}
+.shuffle-hint{font-size:11px;color:var(--green);margin-bottom:8px;display:flex;align-items:center;gap:5px;padding:6px 10px;background:rgba(46,204,143,0.07);border:1px solid rgba(46,204,143,0.15);border-radius:8px}
 .sec-header{padding:20px 20px 8px;display:flex;align-items:center;justify-content:space-between}
 .sec-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase}
 
@@ -318,7 +327,7 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
   <div class="splash-glow2"></div>
   <span class="splash-ball">🏐</span>
   <div class="splash-title">VOLEY<br>TORNEO</div>
-  <div class="splash-sub">Gestión de torneos locales</div>
+  <div class="splash-sub">Gestión de torneos <span style="color:var(--acc);font-weight:800">El Grillo</span> Ciego de Ávila</div>
   <div class="splash-actions">
     <button class="btn btn-acc btn-full" onclick="showScreen('screen-type')">＋ Nuevo torneo</button>
     <button class="btn btn-ghost btn-full" onclick="showScreen('screen-historial')">📋 Ver historial</button>
@@ -401,7 +410,13 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
       <input type="number" class="form-input" id="num-equipos" min="2" max="32" value="4" oninput="actualizarEquipos()">
     </div>
     <div class="form-block">
-      <label class="form-label">Nombres de equipos</label>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <label class="form-label" style="margin-bottom:0">Nombres de equipos</label>
+        <button class="btn-shuffle" id="btn-shuffle" onclick="mezclarEquipos()">
+          <span class="shuffle-icon">🔀</span> Aleatorio
+        </button>
+      </div>
+      <div id="shuffle-hint" class="shuffle-hint" style="display:none"></div>
       <div class="equipos-grid" id="equipos-inputs"></div>
     </div>
   </div>
@@ -799,10 +814,60 @@ function confirmarNormas() {
 function actualizarEquipos() {
   const n = parseInt(document.getElementById('num-equipos').value) || 4;
   document.getElementById('equipos-inputs').innerHTML = Array.from({length: n}, (_, i) => `
-    <div class="equipo-row">
+    <div class="equipo-row" id="erow-${i+1}">
       <div class="equipo-num">${i+1}</div>
       <input type="text" class="form-input" id="eq-${i+1}" placeholder="Nombre del equipo ${i+1}" style="flex:1">
     </div>`).join('');
+  // Ocultar hint al regenerar campos
+  const hint = document.getElementById('shuffle-hint');
+  if (hint) hint.style.display = 'none';
+}
+
+function mezclarEquipos() {
+  const n = parseInt(document.getElementById('num-equipos').value) || 4;
+  // Recoger nombres actuales
+  const nombres = [];
+  for (let i = 1; i <= n; i++) {
+    const inp = document.getElementById('eq-' + i);
+    nombres.push(inp ? inp.value.trim() : '');
+  }
+  // Verificar que haya al menos un nombre escrito
+  const conNombre = nombres.filter(v => v !== '');
+  if (conNombre.length < 2) { toast('Escribe al menos 2 nombres para mezclar'); return; }
+
+  // Animación: fade out
+  for (let i = 1; i <= n; i++) {
+    const row = document.getElementById('erow-' + i);
+    if (row) row.classList.add('fading');
+  }
+
+  setTimeout(() => {
+    // Fisher-Yates shuffle
+    for (let i = nombres.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [nombres[i], nombres[j]] = [nombres[j], nombres[i]];
+    }
+    // Escribir nombres mezclados
+    for (let i = 1; i <= n; i++) {
+      const inp = document.getElementById('eq-' + i);
+      if (inp) inp.value = nombres[i - 1];
+      const row = document.getElementById('erow-' + i);
+      if (row) row.classList.remove('fading');
+    }
+    // Mostrar hint
+    const hint = document.getElementById('shuffle-hint');
+    if (hint) {
+      hint.style.display = 'flex';
+      hint.innerHTML = '✓ &nbsp;Orden mezclado — puedes volver a mezclar las veces que quieras';
+    }
+    // Animar el ícono del botón
+    const btn = document.getElementById('btn-shuffle');
+    if (btn) {
+      btn.classList.add('spin');
+      setTimeout(() => btn.classList.remove('spin'), 500);
+    }
+    toast('🔀 Equipos mezclados');
+  }, 200);
 }
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
