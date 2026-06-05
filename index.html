@@ -334,8 +334,9 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
 .jugador-stat-col{display:flex;flex-direction:column;gap:6px}
 .jugador-stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px}
 .jscard-name{font-size:11px;font-weight:700;color:var(--txt2);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.jscard-btns{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.jstat-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:7px;padding:5px 3px;font-size:10px;font-weight:700;color:var(--txt3);cursor:pointer;text-align:center;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;gap:1px}
+.jscard-btns{display:flex;flex-direction:column;gap:4px}
+.jstat-row{display:flex;align-items:center;gap:3px}
+.jstat-btn{flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:7px;padding:5px 3px;font-size:10px;font-weight:700;color:var(--txt3);cursor:pointer;text-align:center;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;gap:1px}
 .jstat-btn:active{transform:scale(0.9)}
 .jstat-btn.ataque{border-color:rgba(255,78,106,0.3);color:var(--acc)}
 .jstat-btn.bloqueo{border-color:rgba(78,202,255,0.3);color:var(--acc3)}
@@ -343,6 +344,8 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
 .jstat-btn.saque{border-color:rgba(255,140,66,0.3);color:var(--acc2)}
 .jstat-btn .jstat-val{font-size:13px;font-weight:900}
 .jstat-btn .jstat-lbl{font-size:8px;opacity:0.8}
+.jstat-minus{width:24px;height:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:7px;color:var(--txt3);font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;padding:0}
+.jstat-minus:active{transform:scale(0.88);background:rgba(255,255,255,0.1)}
 .no-jugadores-hint{font-size:11px;color:var(--txt3);text-align:center;padding:8px;grid-column:1/-1}
 
 /* ══ TABLA STATS INDIVIDUALES (tab) ══ */
@@ -1123,16 +1126,25 @@ function renderPanelPremiumMarcador(){
   if(!jugL.length&&!jugV.length){grid.innerHTML=`<div class="no-jugadores-hint">Agrega jugadores a los equipos para registrar estadísticas individuales</div>`;return;}
   const renderCol=(jugs)=>{
     if(!jugs.length)return`<div class="jugador-stat-col"><div style="font-size:11px;color:var(--txt3);text-align:center;padding:8px">Sin jugadores</div></div>`;
-    return`<div class="jugador-stat-col">${jugs.map(j=>{const sid=`${partidoActual.id}_${j.id}`,st=partidoActual.statsJugadores[sid]||{ataque:0,bloqueo:0,defensa:0,saque:0};return`<div class="jugador-stat-card"><div class="jscard-name">${j.dorsal?`#${j.dorsal} `:''}${j.nombre}${j.capitan?' ★':''}</div><div class="jscard-btns"><button class="jstat-btn ataque" onclick="registrarStatJugador('${sid}','ataque',this)"><span class="jstat-val">${st.ataque}</span><span class="jstat-lbl">⚡ Ataque</span></button><button class="jstat-btn bloqueo" onclick="registrarStatJugador('${sid}','bloqueo',this)"><span class="jstat-val">${st.bloqueo}</span><span class="jstat-lbl">🛡 Bloqueo</span></button><button class="jstat-btn defensa" onclick="registrarStatJugador('${sid}','defensa',this)"><span class="jstat-val">${st.defensa}</span><span class="jstat-lbl">🤲 Defensa</span></button><button class="jstat-btn saque" onclick="registrarStatJugador('${sid}','saque',this)"><span class="jstat-val">${st.saque}</span><span class="jstat-lbl">🎯 Saque</span></button></div></div>`;}).join('')}</div>`;
+    return`<div class="jugador-stat-col">${jugs.map(j=>{const sid=`${partidoActual.id}_${j.id}`,st=partidoActual.statsJugadores[sid]||{ataque:0,bloqueo:0,defensa:0,saque:0};return`<div class="jugador-stat-card"><div class="jscard-name">${j.dorsal?`#${j.dorsal} `:''}${j.nombre}${j.capitan?' ★':''}</div><div class="jscard-btns">
+  <div class="jstat-row"><button class="jstat-btn ataque" onclick="registrarStatJugador('${sid}','ataque',1,this)"><span class="jstat-val" id="sv_${sid}_ataque">${st.ataque}</span><span class="jstat-lbl">⚡ Ataque</span></button><button class="jstat-minus" onclick="registrarStatJugador('${sid}','ataque',-1,this.previousElementSibling)">−</button></div>
+  <div class="jstat-row"><button class="jstat-btn bloqueo" onclick="registrarStatJugador('${sid}','bloqueo',1,this)"><span class="jstat-val" id="sv_${sid}_bloqueo">${st.bloqueo}</span><span class="jstat-lbl">🛡 Bloqueo</span></button><button class="jstat-minus" onclick="registrarStatJugador('${sid}','bloqueo',-1,this.previousElementSibling)">−</button></div>
+  <div class="jstat-row"><button class="jstat-btn defensa" onclick="registrarStatJugador('${sid}','defensa',1,this)"><span class="jstat-val" id="sv_${sid}_defensa">${st.defensa}</span><span class="jstat-lbl">🤲 Defensa</span></button><button class="jstat-minus" onclick="registrarStatJugador('${sid}','defensa',-1,this.previousElementSibling)">−</button></div>
+  <div class="jstat-row"><button class="jstat-btn saque" onclick="registrarStatJugador('${sid}','saque',1,this)"><span class="jstat-val" id="sv_${sid}_saque">${st.saque}</span><span class="jstat-lbl">🎯 Saque</span></button><button class="jstat-minus" onclick="registrarStatJugador('${sid}','saque',-1,this.previousElementSibling)">−</button></div>
+</div></div>`;}).join('')}</div>`;
   };
   grid.innerHTML=renderCol(jugL)+renderCol(jugV);
 }
-function registrarStatJugador(sid,tipo,btn){
+function registrarStatJugador(sid,tipo,delta,btn){
   if(!partidoActual)return;
   if(!partidoActual.statsJugadores)partidoActual.statsJugadores={};
   if(!partidoActual.statsJugadores[sid])partidoActual.statsJugadores[sid]={ataque:0,bloqueo:0,defensa:0,saque:0};
-  partidoActual.statsJugadores[sid][tipo]++;
-  btn.querySelector('.jstat-val').textContent=partidoActual.statsJugadores[sid][tipo];
+  const nuevo = Math.max(0, (partidoActual.statsJugadores[sid][tipo]||0) + delta);
+  if(delta < 0 && nuevo === partidoActual.statsJugadores[sid][tipo]) return; // ya en 0
+  partidoActual.statsJugadores[sid][tipo] = nuevo;
+  // Actualizar el span del valor dentro del botón +
+  const valSpan = btn.querySelector('.jstat-val');
+  if(valSpan) valSpan.textContent = nuevo;
   btn.style.transform='scale(0.88)';setTimeout(()=>{btn.style.transform='';},120);
   LS.save();
 }
@@ -1297,7 +1309,41 @@ function showModal(titulo,msg,fn){document.getElementById('modal-title').textCon
 function closeModal(){document.getElementById('modal-bg').style.display='none';modalFn=null;}
 function modalOk(){if(modalFn)modalFn();closeModal();}
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800);}
-document.addEventListener('DOMContentLoaded',()=>{renderHome();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});});
+// ── Historial de navegación interno ──────────────────────────────────
+const NAV_STACK = [];
+
+const _origShowScreen = showScreen;
+window.showScreen = function(id) {
+  const current = document.querySelector('.screen.active');
+  if (current && current.id !== id) {
+    NAV_STACK.push(current.id);
+  }
+  _origShowScreen(id);
+  // Registrar entrada en history del navegador para capturar botón atrás
+  history.pushState({ screenId: id }, '', '');
+};
+
+window.addEventListener('popstate', (e) => {
+  // El usuario presionó atrás en el sistema/navegador
+  if (NAV_STACK.length > 0) {
+    const prev = NAV_STACK.pop();
+    _origShowScreen(prev);
+    // Acciones especiales al volver a ciertas pantallas
+    if (prev === 'screen-torneo') renderCalendario();
+    if (prev === 'screen-historial') renderHistorial();
+    if (prev === 'screen-home') renderHome();
+  } else {
+    // No hay historial → volver al home en lugar de salir
+    _origShowScreen('screen-home');
+  }
+});
+
+document.addEventListener('DOMContentLoaded',()=>{
+  renderHome();
+  // Entrada inicial en el history
+  history.replaceState({ screenId: 'screen-home' }, '', '');
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+});
 
 
 // ══════════════════════════════════════
