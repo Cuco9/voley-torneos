@@ -316,6 +316,91 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:4px}
+
+/* ══ PREMIUM SYSTEM ══ */
+.premium-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FFD700,#FF8C42);color:#1a1a2e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px}
+.premium-lock{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 20px;text-align:center;background:rgba(255,215,0,0.04);border:1px dashed rgba(255,215,0,0.2);border-radius:var(--r);margin:0 20px}
+.lock-icon{font-size:36px;margin-bottom:10px}
+.lock-title{font-size:16px;font-weight:800;margin-bottom:6px;color:var(--acc2)}
+.lock-desc{font-size:13px;color:var(--txt3);margin-bottom:16px;line-height:1.5}
+.btn-premium{background:linear-gradient(135deg,#FFD700,#FF8C42);color:#1a1a2e;border:none;border-radius:var(--r);padding:14px 24px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;width:100%;transition:transform 0.15s,opacity 0.15s}
+.btn-premium:active{transform:scale(0.97)}
+.premium-active-chip{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,66,0.15));border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:#FFD700}
+
+/* ══ STATS INDIVIDUALES EN MARCADOR ══ */
+.stats-panel{background:var(--bg2);border-top:1px solid var(--border2);padding:12px 16px}
+.stats-panel-title{font-size:10px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.jugadores-enfrentados{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.jugador-stat-col{display:flex;flex-direction:column;gap:6px}
+.jugador-stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px}
+.jscard-name{font-size:11px;font-weight:700;color:var(--txt2);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jscard-btns{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.jstat-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:7px;padding:5px 3px;font-size:10px;font-weight:700;color:var(--txt3);cursor:pointer;text-align:center;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;gap:1px}
+.jstat-btn:active{transform:scale(0.9)}
+.jstat-btn.ataque{border-color:rgba(255,78,106,0.3);color:var(--acc)}
+.jstat-btn.bloqueo{border-color:rgba(78,202,255,0.3);color:var(--acc3)}
+.jstat-btn.defensa{border-color:rgba(46,204,143,0.3);color:var(--green)}
+.jstat-btn.saque{border-color:rgba(255,140,66,0.3);color:var(--acc2)}
+.jstat-btn .jstat-val{font-size:13px;font-weight:900}
+.jstat-btn .jstat-lbl{font-size:8px;opacity:0.8}
+.no-jugadores-hint{font-size:11px;color:var(--txt3);text-align:center;padding:8px;grid-column:1/-1}
+
+/* ══ TABLA STATS INDIVIDUALES (tab) ══ */
+.ind-stats-wrap{padding:0 0 24px}
+.ind-stat-section{margin-bottom:4px}
+.ind-podium{display:flex;flex-direction:column;gap:6px;padding:0 20px}
+.ind-row{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:11px 14px;display:flex;align-items:center;gap:10px}
+.ind-pos{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;width:24px;text-align:center;flex-shrink:0}
+.ind-info{flex:1;min-width:0}
+.ind-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ind-team{font-size:11px;color:var(--txt3)}
+.ind-val{font-size:20px;font-weight:900;font-family:'Barlow Condensed',sans-serif;flex-shrink:0}
+.ind-val.atk{color:var(--acc)}
+.ind-val.blk{color:var(--acc3)}
+.ind-val.def{color:var(--green)}
+.ind-val.srv{color:var(--acc2)}
+.cat-header{display:flex;align-items:center;gap:8px;padding:16px 20px 8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--txt3)}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ══ ACTIVATE PREMIUM MODAL ══ */
+.premium-modal-inner{padding:24px}
+.code-input{width:100%;background:var(--card);border:2px solid rgba(255,215,0,0.3);border-radius:var(--rs);color:#FFD700;font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;padding:14px 16px;text-align:center;letter-spacing:4px;text-transform:uppercase;outline:none}
+.code-input:focus{border-color:#FFD700}
+
+/* ══ EXPORTAR/IMPORTAR ══ */
+.export-row{display:flex;gap:8px;margin-bottom:8px}
+
+/* ══ BRACKET VISUAL ══ */
+.bracket-wrap{padding:0 20px 24px;overflow-x:auto}
+.bracket-rounds{display:flex;gap:20px;min-width:max-content}
+.bracket-round{display:flex;flex-direction:column;gap:8px;min-width:140px}
+.bracket-round-title{font-size:10px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;text-align:center}
+.bracket-match{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);overflow:hidden}
+.bracket-team{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;font-size:12px;font-weight:600}
+.bracket-team.winner{background:rgba(255,78,106,0.12);color:var(--acc);font-weight:800}
+.bracket-team .bteam-score{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--acc2)}
+.bracket-divider{height:1px;background:var(--border)}
+.bracket-empty{background:var(--bg3);border:1px dashed var(--border2);border-radius:var(--rs);padding:10px;text-align:center;font-size:11px;color:var(--txt3)}
+
+/* ══ MODO ÁRBITRO (pantalla siempre encendida) ══ */
+.arbitro-chip{position:fixed;top:72px;right:12px;background:rgba(255,78,106,0.15);border:1px solid rgba(255,78,106,0.3);border-radius:20px;padding:4px 10px;font-size:10px;font-weight:700;color:var(--acc);z-index:25;display:none}
+.arbitro-chip.active{display:flex;align-items:center;gap:5px}
+
+/* ══ COMPARTIR RESULTADO ══ */
+.share-btn{background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);border-radius:var(--rs);padding:10px 14px;font-size:13px;font-weight:700;color:#25D366;cursor:pointer;display:flex;align-items:center;gap:8px;width:100%;font-family:'Inter',sans-serif;transition:all 0.15s}
+.share-btn:active{transform:scale(0.97)}
+
+/* ══ NOTIFICACIONES DE SET ══ */
+.notif-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:90;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity 0.3s;pointer-events:none}
+.notif-overlay.show{opacity:1;pointer-events:auto}
+.notif-card{background:var(--bg2);border:1px solid var(--border2);border-radius:24px;padding:28px 24px;text-align:center;max-width:320px;width:100%;transform:scale(0.85);transition:transform 0.3s}
+.notif-overlay.show .notif-card{transform:scale(1)}
+.notif-emoji{font-size:52px;display:block;margin-bottom:12px}
+.notif-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;margin-bottom:6px}
+.notif-sub{font-size:14px;color:var(--txt3);margin-bottom:20px;line-height:1.5}
+.notif-close{background:var(--acc);color:#fff;border:none;border-radius:var(--r);padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;width:100%;transition:transform 0.12s}
+.notif-close:active{transform:scale(0.96)}
+
 </style>
 </head>
 <body>
@@ -436,11 +521,15 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
   <div id="tab-tabla"      class="tab-content" style="display:none;padding-bottom:16px"></div>
   <div id="tab-equipos"    class="tab-content" style="display:none;padding-bottom:16px"></div>
   <div id="tab-stats"      class="tab-content" style="display:none"></div>
+  <div id="tab-ind-stats"  class="tab-content" style="display:none"></div>
+  <div id="tab-bracket"    class="tab-content" style="display:none;padding-bottom:16px"></div>
   <div class="bottom-nav" id="torneo-nav">
     <div class="nav-item active" onclick="showTab('tab-calendario',0)"><div class="nav-icon">📅</div><div class="nav-label">Partidos</div></div>
     <div class="nav-item"        onclick="showTab('tab-tabla',1)">    <div class="nav-icon">🏆</div><div class="nav-label">Tabla</div></div>
     <div class="nav-item"        onclick="showTab('tab-equipos',2)">  <div class="nav-icon">👥</div><div class="nav-label">Equipos</div></div>
     <div class="nav-item"        onclick="showTab('tab-stats',3)">    <div class="nav-icon">📊</div><div class="nav-label">Stats</div></div>
+    <div class="nav-item"        onclick="showTab('tab-ind-stats',4)"><div class="nav-icon">⭐</div><div class="nav-label">Premium</div></div>
+    <div class="nav-item"        onclick="showTab('tab-bracket',5)">   <div class="nav-icon">🎯</div><div class="nav-label">Bracket</div></div>
   </div>
 </div>
 
@@ -473,38 +562,50 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
   <div class="topbar">
     <div class="topbar-back" onclick="volverDePartido()">←</div>
     <div class="topbar-title">En vivo</div>
+    <button class="topbar-action" onclick="compartirResultadoVivo()" style="font-size:18px" title="Compartir resultado">📲</button>
+    <button class="topbar-action" onclick="toggleModoArbitro()" style="font-size:18px" title="Modo árbitro">🟢</button>
     <button class="topbar-action" onclick="undoPunto()" style="font-size:16px" title="Deshacer punto">↩</button>
   </div>
-  <div class="marcador-wrap">
-    <div class="live-chip"><span class="live-dot"></span> En vivo</div>
-    <div class="timer-box">
-      <div class="timer-num" id="timer-display">00:00</div>
-      <button class="btn btn-teal btn-sm" id="timer-btn" onclick="toggleTimer()">▶ Iniciar</button>
-    </div>
-    <div class="sets-track" id="sets-track-display"></div>
-    <div class="score-main">
-      <div class="score-team score-home">
-        <div class="score-team-name" id="nombre-local">Local</div>
-        <div class="score-number" id="pts-local">0</div>
-        <div class="score-btns">
-          <button class="score-plus"  onclick="sumarPunto('local')">+1</button>
-          <button class="score-minus" onclick="restarPunto('local')">−</button>
+  <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column">
+    <div class="marcador-wrap">
+      <div class="live-chip"><span class="live-dot"></span> En vivo</div>
+      <div class="timer-box">
+        <div class="timer-num" id="timer-display">00:00</div>
+        <button class="btn btn-teal btn-sm" id="timer-btn" onclick="toggleTimer()">▶ Iniciar</button>
+      </div>
+      <div class="sets-track" id="sets-track-display"></div>
+      <div class="score-main">
+        <div class="score-team score-home">
+          <div class="score-team-name" id="nombre-local">Local</div>
+          <div class="score-number" id="pts-local">0</div>
+          <div class="score-btns">
+            <button class="score-plus"  onclick="sumarPunto('local')">+1</button>
+            <button class="score-minus" onclick="restarPunto('local')">−</button>
+          </div>
+        </div>
+        <div class="vs-divider"><div class="vs-text">VS</div></div>
+        <div class="score-team score-away">
+          <div class="score-team-name" id="nombre-visitante">Visitante</div>
+          <div class="score-number" id="pts-visitante">0</div>
+          <div class="score-btns">
+            <button class="score-plus away" onclick="sumarPunto('visitante')">+1</button>
+            <button class="score-minus"     onclick="restarPunto('visitante')">−</button>
+          </div>
         </div>
       </div>
-      <div class="vs-divider"><div class="vs-text">VS</div></div>
-      <div class="score-team score-away">
-        <div class="score-team-name" id="nombre-visitante">Visitante</div>
-        <div class="score-number" id="pts-visitante">0</div>
-        <div class="score-btns">
-          <button class="score-plus away" onclick="sumarPunto('visitante')">+1</button>
-          <button class="score-minus"     onclick="restarPunto('visitante')">−</button>
-        </div>
+      <div class="set-meta" id="set-meta-info">Set 1 — Meta: 25 puntos</div>
+      <div class="marcador-ctas">
+        <button class="btn btn-amber btn-full" onclick="terminarSet()">⏸ Terminar set</button>
+        <button class="btn btn-red   btn-full" onclick="terminarPartido()">✓ Fin partido</button>
       </div>
     </div>
-    <div class="set-meta" id="set-meta-info">Set 1 — Meta: 25 puntos</div>
-    <div class="marcador-ctas">
-      <button class="btn btn-amber btn-full" onclick="terminarSet()">⏸ Terminar set</button>
-      <button class="btn btn-red   btn-full" onclick="terminarPartido()">✓ Fin partido</button>
+    <!-- PANEL PREMIUM STATS -->
+    <div class="stats-panel" id="premium-stats-panel">
+      <div class="stats-panel-title">
+        <span class="premium-badge">⭐ Premium</span>
+        Estadísticas individuales
+      </div>
+      <div class="jugadores-enfrentados" id="jugadores-enfrentados-grid"></div>
     </div>
   </div>
 </div>
@@ -517,7 +618,12 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
   </div>
   <div class="historial-wrap" id="historial-lista" style="overflow-y:auto;padding-top:12px;flex:1"></div>
   <div id="historial-bar" class="sheet-bar" style="display:none">
+    <div class="export-row">
+      <button class="btn btn-teal btn-full" onclick="exportarDatos()" style="font-size:13px">📤 Exportar copia</button>
+      <button class="btn btn-green btn-full" onclick="importarDatos()" style="font-size:13px">📥 Importar</button>
+    </div>
     <button class="btn btn-red btn-full" onclick="pedirBorrarTodo()">🗑 Borrar todo el historial</button>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="procesarImport(event)">
   </div>
 </div>
 
@@ -529,11 +635,59 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
   </div>
   <div class="detalle-wrap" id="detalle-content" style="overflow-y:auto;flex:1"></div>
   <div class="sheet-bar">
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+      <button class="share-btn" onclick="compartirTorneo()">📲 Compartir por WhatsApp</button>
+    </div>
     <button class="btn btn-red btn-full" onclick="pedirBorrarUno()">🗑 Borrar este torneo</button>
   </div>
 </div>
 
+<!-- ══ MODAL PREMIUM ACTIVACIÓN ══ -->
+<div class="modal-bg" id="modal-premium" style="display:none">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="font-size:44px;margin-bottom:8px">⭐</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700">PREMIUM</div>
+      <div style="font-size:13px;color:var(--txt3);margin-top:4px">Pago único · Acceso de por vida</div>
+    </div>
+    <div style="background:var(--card);border-radius:var(--r);padding:16px;margin-bottom:18px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--txt2)">Incluye:</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span style="color:var(--acc)">⚡</span> Estadísticas individuales en marcador</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span style="color:var(--acc3)">📊</span> Tabla de líderes individuales</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span style="color:var(--green)">🏅</span> MVP del torneo automático</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span style="color:var(--acc2)">🔓</span> Todas las funciones futuras</div>
+      </div>
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:11px;color:var(--txt3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px;font-weight:700">Código de activación</div>
+      <input class="code-input" type="text" id="premium-code-input" placeholder="XXXX-XXXX" maxlength="9" oninput="formatPremiumCode(this)">
+      <div id="code-error" style="font-size:11px;color:var(--acc);margin-top:6px;display:none">Código incorrecto. Verifica e intenta de nuevo.</div>
+    </div>
+    <button class="btn-premium" onclick="activarPremium()">Activar Premium</button>
+    <div style="text-align:center;margin-top:12px;font-size:12px;color:var(--txt3)">
+      ¿No tienes código? <span style="color:var(--acc2);font-weight:700;cursor:pointer" onclick="mostrarInfoCompra()">Cómo obtenerlo →</span>
+    </div>
+    <button class="btn btn-ghost btn-full" style="margin-top:10px" onclick="closePremiumModal()">Cancelar</button>
+  </div>
+</div>
+
 </div><!-- /app -->
+
+
+<!-- ══ ÁRBITRO CHIP (visible en marcador) ══ -->
+<div class="arbitro-chip" id="arbitro-chip">🟢 Árbitro</div>
+
+<!-- ══ NOTIFICACIÓN DE SET / PARTIDO ══ -->
+<div class="notif-overlay" id="notif-overlay">
+  <div class="notif-card">
+    <span class="notif-emoji" id="notif-emoji">🏐</span>
+    <div class="notif-title" id="notif-title">Set terminado</div>
+    <div class="notif-sub" id="notif-sub"></div>
+    <button class="notif-close" onclick="cerrarNotif()">Continuar</button>
+  </div>
+</div>
 
 <!-- MODAL BOTTOM SHEET -->
 <div class="modal-bg" id="modal-bg" style="display:none">
@@ -664,1031 +818,727 @@ const REGLAMENTO = {
   }
 };
 </script>
+
 <script>
+
 // ══════════════════════════════════════
 // ESTADO GLOBAL
 // ══════════════════════════════════════
-let torneoActual   = null;
-let partidoActual  = null;
-let equipoActual   = null;   // equipo abierto en screen-equipo
-let tipoSel        = null;
-let normasSel      = [];
-let timerSeg       = 0;
-let timerOn        = false;
-let timerInt       = null;
-let modalFn        = null;
-let histSel        = null;
-let tabActual      = 0;
+let torneoActual=null,partidoActual=null,equipoActual=null,tipoSel=null,normasSel=[],timerSeg=0,timerOn=false,timerInt=null,modalFn=null,histSel=null,tabActual=0,undoStack=[],puntosHistorial=[];
 
-// ── Pilas de undo ──
-let undoStack      = [];     // acciones globales (equipo/jugador)
-let puntosHistorial = [];    // historial de puntos del set actual
+// ══════════════════════════════════════
+// PREMIUM
+// ══════════════════════════════════════
+const PREMIUM_CODES=['GRIL-2025','VLEY-PRO1','AVIL-VOLEY','GRIL-VOLEY'];
+const PREMIUM_KEY='vt_premium';
+function isPremium(){return localStorage.getItem(PREMIUM_KEY)==='1';}
+function formatPremiumCode(input){let v=input.value.toUpperCase().replace(/[^A-Z0-9]/g,'');if(v.length>4)v=v.slice(0,4)+'-'+v.slice(4,8);input.value=v;document.getElementById('code-error').style.display='none';}
+function activarPremium(){const code=document.getElementById('premium-code-input').value.trim().toUpperCase();if(PREMIUM_CODES.includes(code)){localStorage.setItem(PREMIUM_KEY,'1');closePremiumModal();toast('⭐ ¡Premium activado! Gracias.');renderPanelPremiumMarcador();if(tabActual===4)renderIndStats();}else{document.getElementById('code-error').style.display='block';}}
+function mostrarInfoCompra(){closePremiumModal();showModal('¿Cómo obtener Premium?','Escríbenos por WhatsApp o Telegram para recibir tu código de activación.\n\nPrecio: Pago único $3 USD\n\nContacto: @VoleyTorneoApp',null);}
+function openPremiumModal(){document.getElementById('premium-code-input').value='';document.getElementById('code-error').style.display='none';document.getElementById('modal-premium').style.display='flex';}
+function closePremiumModal(){document.getElementById('modal-premium').style.display='none';}
 
 // ══════════════════════════════════════
 // STORAGE
 // ══════════════════════════════════════
-const LS = {
-  get:  ()  => { try { return JSON.parse(localStorage.getItem('vt2') || '[]'); } catch(e){ return []; } },
-  set:  (d) => localStorage.setItem('vt2', JSON.stringify(d)),
-  save: ()  => {
-    if (!torneoActual) return;
-    const lista = LS.get();
-    const i = lista.findIndex(t => t.id === torneoActual.id);
-    if (i >= 0) lista[i] = torneoActual; else lista.push(torneoActual);
-    LS.set(lista);
-  }
+const LS={
+  get:()=>{try{return JSON.parse(localStorage.getItem('vt2')||'[]');}catch(e){return [];}},
+  set:(d)=>localStorage.setItem('vt2',JSON.stringify(d)),
+  save:()=>{if(!torneoActual)return;const lista=LS.get();const i=lista.findIndex(t=>t.id===torneoActual.id);if(i>=0)lista[i]=torneoActual;else lista.push(torneoActual);LS.set(lista);}
 };
 
 // ══════════════════════════════════════
-// COLORES PARA AVATARES
+// HELPERS
 // ══════════════════════════════════════
-const AVATAR_COLORS = [
-  ['rgba(255,78,106,0.2)','var(--acc)'],
-  ['rgba(78,202,255,0.2)','var(--acc3)'],
-  ['rgba(255,140,66,0.2)','var(--acc2)'],
-  ['rgba(46,204,143,0.2)','var(--green)'],
-  ['rgba(155,109,255,0.2)','var(--purple)'],
-  ['rgba(255,212,60,0.2)','#FFD43B'],
-  ['rgba(240,99,150,0.2)','#F06496'],
-  ['rgba(32,201,151,0.2)','#20C997'],
-];
-function avatarColor(i) { return AVATAR_COLORS[i % AVATAR_COLORS.length]; }
-function initials(nombre) {
-  return nombre.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase() || '?';
-}
+const AVATAR_COLORS=[['rgba(255,78,106,0.2)','var(--acc)'],['rgba(78,202,255,0.2)','var(--acc3)'],['rgba(255,140,66,0.2)','var(--acc2)'],['rgba(46,204,143,0.2)','var(--green)'],['rgba(155,109,255,0.2)','var(--purple)'],['rgba(255,212,60,0.2)','#FFD43B']];
+function avatarColor(i){return AVATAR_COLORS[i%AVATAR_COLORS.length];}
+function initials(n){return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
 
 // ══════════════════════════════════════
 // NAVEGACIÓN
 // ══════════════════════════════════════
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if (id === 'screen-home')      renderHome();
-  if (id === 'screen-historial') renderHistorial();
-  if (id === 'screen-torneo')    renderTorneo();
+  if(id==='screen-home')renderHome();
+  if(id==='screen-historial')renderHistorial();
+  if(id==='screen-torneo')renderTorneo();
 }
-
-function showTab(id, idx) {
-  document.querySelectorAll('#screen-torneo .tab-content').forEach(c => c.style.display = 'none');
-  document.getElementById(id).style.display = 'block';
-  document.querySelectorAll('#torneo-nav .nav-item').forEach((n,i) => n.classList.toggle('active', i === idx));
-  tabActual = idx;
-  if (id === 'tab-calendario') renderCalendario();
-  if (id === 'tab-tabla')      renderTabla();
-  if (id === 'tab-equipos')    renderEquiposTab();
-  if (id === 'tab-stats')      renderStats();
+function showTab(id,idx){
+  document.querySelectorAll('#screen-torneo .tab-content').forEach(c=>c.style.display='none');
+  document.getElementById(id).style.display='block';
+  document.querySelectorAll('#torneo-nav .nav-item').forEach((n,i)=>n.classList.toggle('active',i===idx));
+  tabActual=idx;
+  if(id==='tab-calendario')renderCalendario();
+  if(id==='tab-tabla')renderTabla();
+  if(id==='tab-equipos')renderEquiposTab();
+  if(id==='tab-stats')renderStats();
+  if(id==='tab-ind-stats')renderIndStats();
+  if(id==='tab-bracket')renderBracket();
 }
 
 // ══════════════════════════════════════
 // HOME
 // ══════════════════════════════════════
-function renderHome() {
-  const cont = document.getElementById('active-torneos-home');
-  const activos = LS.get().filter(t => !t.finalizado);
-  if (!activos.length) { cont.innerHTML = ''; return; }
-  cont.innerHTML = '<div class="active-torneos-label">Torneos activos</div>' +
-    activos.map(t => `
-      <div class="torneo-resume-pill" onclick="abrirTorneo('${t.id}')">
-        <div class="pill-icon">${t.tipo === 'sala' ? '🏟️' : '🏖️'}</div>
-        <div>
-          <div class="pill-name">${t.nombre}</div>
-          <div class="pill-meta">${t.equipos.length} equipos · ${t.tipo === 'sala' ? 'Sala' : 'Playa'}</div>
-        </div>
-      </div>`).join('');
+function renderHome(){
+  const cont=document.getElementById('active-torneos-home');
+  const activos=LS.get().filter(t=>!t.finalizado);
+  if(!activos.length){cont.innerHTML='';return;}
+  cont.innerHTML='<div class="active-torneos-label">Torneos activos</div>'+activos.map(t=>`<div class="torneo-resume-pill" onclick="abrirTorneo('${t.id}')"><div class="pill-icon">${t.tipo==='sala'?'🏟️':'🏖️'}</div><div><div class="pill-name">${t.nombre}</div><div class="pill-meta">${t.equipos.length} equipos · ${t.tipo==='sala'?'Sala':'Playa'}</div></div></div>`).join('');
 }
-
-function abrirTorneo(id) {
-  torneoActual = LS.get().find(t => t.id === id);
-  if (!torneoActual) return;
-  tipoSel = torneoActual.tipo;
-  // Migrar equipos: agregar jugadores[] si no existe
-  torneoActual.equipos.forEach(eq => { if (!eq.jugadores) eq.jugadores = []; });
+function abrirTorneo(id){
+  torneoActual=LS.get().find(t=>t.id===id);
+  if(!torneoActual)return;
+  tipoSel=torneoActual.tipo;
+  torneoActual.equipos.forEach(eq=>{if(!eq.jugadores)eq.jugadores=[];});
   showScreen('screen-torneo');
 }
 
 // ══════════════════════════════════════
-// TIPO
+// TIPO / NORMAS
 // ══════════════════════════════════════
-function selectType(tipo) {
-  tipoSel = tipo;
-  normasSel = [];
-  renderNormas();
-  showScreen('screen-normas');
+function selectType(tipo){tipoSel=tipo;normasSel=[];renderNormas();showScreen('screen-normas');}
+function renderNormas(){
+  const lista=tipoSel==='sala'?NORMAS_SALA:NORMAS_PLAYA;
+  document.getElementById('normas-lista').innerHTML=lista.map(n=>`<div class="norma-card ${normasSel.includes(n.id)?'sel':''}" onclick="toggleNorma('${n.id}')"><div class="norma-head"><div class="norma-check">${normasSel.includes(n.id)?'✓':''}</div><div class="norma-info"><span class="norma-badge ${n.badge==='oficial'?'badge-oficial':'badge-alt'}">${n.badge==='oficial'?'⚡ Oficial FIVB':'🔧 Alternativa'}</span><div class="norma-title">${n.titulo}</div><div class="norma-desc">${n.descripcion}</div></div></div></div>`).join('');
 }
-
-// ══════════════════════════════════════
-// NORMAS
-// ══════════════════════════════════════
-function renderNormas() {
-  const lista = tipoSel === 'sala' ? NORMAS_SALA : NORMAS_PLAYA;
-  document.getElementById('normas-lista').innerHTML = lista.map(n => `
-    <div class="norma-card ${normasSel.includes(n.id) ? 'sel' : ''}" onclick="toggleNorma('${n.id}')" id="nc-${n.id}">
-      <div class="norma-head">
-        <div class="norma-check" id="chk-${n.id}">${normasSel.includes(n.id) ? '✓' : ''}</div>
-        <div class="norma-info">
-          <span class="norma-badge ${n.badge === 'oficial' ? 'badge-oficial' : 'badge-alt'}">
-            ${n.badge === 'oficial' ? '⚡ Oficial FIVB' : '🔧 Alternativa'}
-          </span>
-          <div class="norma-title">${n.titulo}</div>
-          <div class="norma-desc">${n.descripcion}</div>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function toggleNorma(id) {
-  normasSel = normasSel.includes(id) ? normasSel.filter(n => n !== id) : [...normasSel, id];
-  renderNormas();
-}
-
-function confirmarNormas() {
-  if (!normasSel.length) { toast('Selecciona al menos una norma'); return; }
-  actualizarEquipos();
-  document.getElementById('fecha-torneo').value = new Date().toISOString().slice(0, 10);
-  showScreen('screen-config');
-}
+function toggleNorma(id){normasSel=normasSel.includes(id)?normasSel.filter(n=>n!==id):[...normasSel,id];renderNormas();}
+function confirmarNormas(){if(!normasSel.length){toast('Selecciona al menos una norma');return;}actualizarEquipos();document.getElementById('fecha-torneo').value=new Date().toISOString().slice(0,10);showScreen('screen-config');}
 
 // ══════════════════════════════════════
-// CONFIG TORNEO
+// CONFIG
 // ══════════════════════════════════════
-function actualizarEquipos() {
-  const n = parseInt(document.getElementById('num-equipos').value) || 4;
-  document.getElementById('equipos-inputs').innerHTML = Array.from({length: n}, (_, i) => `
-    <div class="equipo-row" id="erow-${i+1}">
-      <div class="equipo-num">${i+1}</div>
-      <input type="text" class="form-input" id="eq-${i+1}" placeholder="Nombre del equipo ${i+1}" style="flex:1">
-    </div>`).join('');
-  // Ocultar hint al regenerar campos
-  const hint = document.getElementById('shuffle-hint');
-  if (hint) hint.style.display = 'none';
+function actualizarEquipos(){
+  const n=parseInt(document.getElementById('num-equipos').value)||4;
+  document.getElementById('equipos-inputs').innerHTML=Array.from({length:n},(_,i)=>`<div class="equipo-row" id="erow-${i+1}"><div class="equipo-num">${i+1}</div><input type="text" class="form-input" id="eq-${i+1}" placeholder="Nombre del equipo ${i+1}" style="flex:1"></div>`).join('');
+  const hint=document.getElementById('shuffle-hint');if(hint)hint.style.display='none';
 }
-
-function mezclarEquipos() {
-  const n = parseInt(document.getElementById('num-equipos').value) || 4;
-  // Recoger nombres actuales
-  const nombres = [];
-  for (let i = 1; i <= n; i++) {
-    const inp = document.getElementById('eq-' + i);
-    nombres.push(inp ? inp.value.trim() : '');
-  }
-  // Verificar que haya al menos un nombre escrito
-  const conNombre = nombres.filter(v => v !== '');
-  if (conNombre.length < 2) { toast('Escribe al menos 2 nombres para mezclar'); return; }
-
-  // Animación: fade out
-  for (let i = 1; i <= n; i++) {
-    const row = document.getElementById('erow-' + i);
-    if (row) row.classList.add('fading');
-  }
-
-  setTimeout(() => {
-    // Fisher-Yates shuffle
-    for (let i = nombres.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [nombres[i], nombres[j]] = [nombres[j], nombres[i]];
-    }
-    // Escribir nombres mezclados
-    for (let i = 1; i <= n; i++) {
-      const inp = document.getElementById('eq-' + i);
-      if (inp) inp.value = nombres[i - 1];
-      const row = document.getElementById('erow-' + i);
-      if (row) row.classList.remove('fading');
-    }
-    // Mostrar hint
-    const hint = document.getElementById('shuffle-hint');
-    if (hint) {
-      hint.style.display = 'flex';
-      hint.innerHTML = '✓ &nbsp;Orden mezclado — puedes volver a mezclar las veces que quieras';
-    }
-    // Animar el ícono del botón
-    const btn = document.getElementById('btn-shuffle');
-    if (btn) {
-      btn.classList.add('spin');
-      setTimeout(() => btn.classList.remove('spin'), 500);
-    }
+function mezclarEquipos(){
+  const n=parseInt(document.getElementById('num-equipos').value)||4;
+  const nombres=[];
+  for(let i=1;i<=n;i++){const inp=document.getElementById('eq-'+i);nombres.push(inp?inp.value.trim():'');}
+  if(nombres.filter(v=>v!=='').length<2){toast('Escribe al menos 2 nombres para mezclar');return;}
+  for(let i=1;i<=n;i++){const r=document.getElementById('erow-'+i);if(r)r.classList.add('fading');}
+  setTimeout(()=>{
+    for(let i=nombres.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[nombres[i],nombres[j]]=[nombres[j],nombres[i]];}
+    for(let i=1;i<=n;i++){const inp=document.getElementById('eq-'+i);if(inp)inp.value=nombres[i-1];const r=document.getElementById('erow-'+i);if(r)r.classList.remove('fading');}
+    const hint=document.getElementById('shuffle-hint');if(hint){hint.style.display='flex';hint.innerHTML='✓ &nbsp;Orden mezclado — puedes volver a mezclar';}
+    const btn=document.getElementById('btn-shuffle');if(btn){btn.classList.add('spin');setTimeout(()=>btn.classList.remove('spin'),500);}
     toast('🔀 Equipos mezclados');
-  }, 200);
+  },200);
 }
-
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
-
-function crearTorneo() {
-  const nombre  = document.getElementById('nombre-torneo').value.trim();
-  const sede    = document.getElementById('sede-torneo').value.trim();
-  const fecha   = document.getElementById('fecha-torneo').value;
-  const formato = document.getElementById('formato-torneo').value;
-  const n       = parseInt(document.getElementById('num-equipos').value);
-  if (!nombre) { toast('Escribe el nombre del torneo'); return; }
-  const equipos = [];
-  for (let i = 1; i <= n; i++) {
-    const v = document.getElementById('eq-' + i)?.value.trim();
-    if (!v) { toast(`Escribe el nombre del equipo ${i}`); return; }
-    equipos.push({ id: 'eq' + i, nombre: v, jugadores: [] });
-  }
-  torneoActual = {
-    id: uid(), nombre, tipo: tipoSel, formato,
-    sede: sede || 'Sin especificar', fecha,
-    equipos, normas: normasSel,
-    partidos: [], finalizado: false,
-    creadoEn: new Date().toISOString()
-  };
-  generarCalendario();
-  LS.save();
-  showScreen('screen-torneo');
-  toast('¡Torneo creado! 🏐');
+function crearTorneo(){
+  const nombre=document.getElementById('nombre-torneo').value.trim();
+  const sede=document.getElementById('sede-torneo').value.trim();
+  const fecha=document.getElementById('fecha-torneo').value;
+  const formato=document.getElementById('formato-torneo').value;
+  const n=parseInt(document.getElementById('num-equipos').value);
+  if(!nombre){toast('Escribe el nombre del torneo');return;}
+  const equipos=[];
+  for(let i=1;i<=n;i++){const v=document.getElementById('eq-'+i)?.value.trim();if(!v){toast(`Escribe el nombre del equipo ${i}`);return;}equipos.push({id:'eq'+i,nombre:v,jugadores:[]});}
+  torneoActual={id:uid(),nombre,tipo:tipoSel,formato,sede:sede||'Sin especificar',fecha,equipos,normas:normasSel,partidos:[],finalizado:false,creadoEn:new Date().toISOString()};
+  generarCalendario();LS.save();showScreen('screen-torneo');toast('¡Torneo creado! 🏐');
 }
 
 // ══════════════════════════════════════
 // CALENDARIO
 // ══════════════════════════════════════
-function generarCalendario() {
-  const { equipos, formato } = torneoActual;
-  torneoActual.partidos = [];
-
-  if (formato === 'liga') {
-    const partidos = [];
-    for (let i = 0; i < equipos.length; i++)
-      for (let j = i+1; j < equipos.length; j++)
-        partidos.push({ id: uid(), local: equipos[i].id, visitante: equipos[j].id, estado: 'pendiente', sets: [], duracion: null, ganador: null });
-    let jornada = 1;
-    const pendientes = [...partidos];
-    while (pendientes.length) {
-      const usados = new Set(); let i = 0;
-      while (i < pendientes.length) {
-        const p = pendientes[i];
-        if (!usados.has(p.local) && !usados.has(p.visitante)) {
-          p.jornada = jornada; usados.add(p.local); usados.add(p.visitante);
-          torneoActual.partidos.push(p); pendientes.splice(i, 1);
-        } else i++;
-      }
-      jornada++;
-    }
-  } else if (formato === 'eliminacion') {
-    const eqs = [...equipos].sort(() => Math.random() - 0.5);
-    for (let i = 0; i < Math.floor(eqs.length / 2); i++)
-      torneoActual.partidos.push({ id: uid(), jornada: 1, fase: 'Primera ronda', local: eqs[i*2].id, visitante: eqs[i*2+1].id, estado: 'pendiente', sets: [], duracion: null, ganador: null });
-    if (eqs.length % 2 === 1)
-      torneoActual.partidos.push({ id: uid(), jornada: 1, fase: 'Primera ronda', local: eqs[eqs.length-1].id, visitante: null, estado: 'bye', sets: [], duracion: null, ganador: eqs[eqs.length-1].id });
-  } else {
-    const mitad = Math.ceil(equipos.length / 2);
-    const gA = equipos.slice(0, mitad), gB = equipos.slice(mitad);
-    [['A', gA], ['B', gB]].forEach(([g, grupo]) => {
-      for (let i = 0; i < grupo.length; i++)
-        for (let j = i+1; j < grupo.length; j++)
-          torneoActual.partidos.push({ id: uid(), jornada: i+1, fase: `Grupo ${g}`, local: grupo[i].id, visitante: grupo[j].id, estado: 'pendiente', sets: [], duracion: null, ganador: null });
-    });
+function generarCalendario(){
+  const{equipos,formato}=torneoActual;torneoActual.partidos=[];
+  const mkP=(loc,vis,extra={})=>({id:uid(),local:loc,visitante:vis,estado:'pendiente',sets:[],duracion:null,ganador:null,statsJugadores:{},...extra});
+  if(formato==='liga'){
+    const partidos=[];
+    for(let i=0;i<equipos.length;i++)for(let j=i+1;j<equipos.length;j++)partidos.push(mkP(equipos[i].id,equipos[j].id));
+    let jornada=1;const pendientes=[...partidos];
+    while(pendientes.length){const usados=new Set();let i=0;while(i<pendientes.length){const p=pendientes[i];if(!usados.has(p.local)&&!usados.has(p.visitante)){p.jornada=jornada;usados.add(p.local);usados.add(p.visitante);torneoActual.partidos.push(p);pendientes.splice(i,1);}else i++;}jornada++;}
+  }else if(formato==='eliminacion'){
+    const eqs=[...equipos].sort(()=>Math.random()-0.5);
+    for(let i=0;i<Math.floor(eqs.length/2);i++)torneoActual.partidos.push(mkP(eqs[i*2].id,eqs[i*2+1].id,{jornada:1,fase:'Primera ronda'}));
+    if(eqs.length%2===1)torneoActual.partidos.push({...mkP(eqs[eqs.length-1].id,null,{jornada:1,fase:'Primera ronda'}),estado:'bye',ganador:eqs[eqs.length-1].id});
+  }else{
+    const mitad=Math.ceil(equipos.length/2);const gA=equipos.slice(0,mitad),gB=equipos.slice(mitad);
+    [['A',gA],['B',gB]].forEach(([g,grupo])=>{for(let i=0;i<grupo.length;i++)for(let j=i+1;j<grupo.length;j++)torneoActual.partidos.push(mkP(grupo[i].id,grupo[j].id,{jornada:i+1,fase:`Grupo ${g}`}));});
   }
 }
 
 // ══════════════════════════════════════
 // RENDER TORNEO
 // ══════════════════════════════════════
-function renderTorneo() {
-  if (!torneoActual) return;
-  document.getElementById('torneo-nombre-header').textContent = torneoActual.nombre;
-  showTab('tab-calendario', 0);
+function renderTorneo(){if(!torneoActual)return;document.getElementById('torneo-nombre-header').textContent=torneoActual.nombre;showTab('tab-calendario',0);}
+function nombreEq(id){if(!torneoActual||!id)return '?';return torneoActual.equipos.find(e=>e.id===id)?.nombre||'?';}
+
+function renderCalendario(){
+  if(!torneoActual)return;
+  const cont=document.getElementById('tab-calendario');
+  if(!torneoActual.partidos.length){cont.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--txt3)">Sin partidos generados</div>';return;}
+  const grupos={};
+  torneoActual.partidos.forEach(p=>{const k=p.fase?p.fase:`Jornada ${p.jornada}`;if(!grupos[k])grupos[k]=[];grupos[k].push(p);});
+  cont.innerHTML=Object.entries(grupos).map(([titulo,ps])=>`<div class="jornada-pill">📅 ${titulo}</div>${ps.map(cardPartido).join('')}`).join('');
+}
+function cardPartido(p){
+  if(p.estado==='bye')return`<div class="partido-card"><div class="partido-body"><div class="partido-team home">${nombreEq(p.local)}</div><div class="partido-score-box"><div class="partido-score-label">BYE</div></div><div class="partido-team away" style="color:var(--txt3)">—</div></div></div>`;
+  const sL=p.sets.filter(s=>s.local>s.visitante).length,sV=p.sets.filter(s=>s.visitante>s.local).length;
+  const dur=p.duracion?`⏱ ${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}`:'';
+  const eClass={pendiente:'estado-pendiente','en-curso':'estado-curso',terminado:'estado-fin'}[p.estado];
+  const eLabel={pendiente:'Pendiente','en-curso':'🔴 En curso',terminado:'✓ Finalizado'}[p.estado];
+  let scoreHtml=`<div class="partido-score-box"><div class="partido-score-label">vs</div></div>`;
+  if(p.estado!=='pendiente')scoreHtml=`<div class="partido-score-box"><div class="partido-score-num">${sL} – ${sV}</div><div class="partido-score-label">sets</div></div>`;
+  let btns='';
+  if(p.estado==='pendiente')btns=`<button class="partido-btn primary" onclick="iniciarPartido('${p.id}')">▶ Jugar ahora</button>`;
+  else if(p.estado==='en-curso')btns=`<button class="partido-btn primary" onclick="iniciarPartido('${p.id}')">🔴 Continuar</button>`;
+  else btns=`<button class="partido-btn" onclick="detallePartido('${p.id}')">📊 Detalle</button><button class="partido-btn" onclick="compartirPartido(torneoActual.partidos.find(x=>x.id==='${p.id}'))">📲</button><button class="partido-btn" onclick="resetPartido('${p.id}')">↺</button>`;
+  return`<div class="partido-card"><div class="partido-top"><span class="estado-badge ${eClass}">${eLabel}</span><span class="partido-dur">${dur}</span></div><div class="partido-body"><div class="partido-team home">${nombreEq(p.local)}</div>${scoreHtml}<div class="partido-team away">${nombreEq(p.visitante)}</div></div><div class="partido-actions">${btns}</div></div>`;
 }
 
-function nombreEq(id) {
-  if (!torneoActual || !id) return '?';
-  return torneoActual.equipos.find(e => e.id === id)?.nombre || '?';
-}
-
-// ── CALENDARIO ──
-function renderCalendario() {
-  if (!torneoActual) return;
-  const cont = document.getElementById('tab-calendario');
-  if (!torneoActual.partidos.length) {
-    cont.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--txt3)">Sin partidos generados</div>';
-    return;
-  }
-  const grupos = {};
-  torneoActual.partidos.forEach(p => {
-    const k = p.fase ? p.fase : `Jornada ${p.jornada}`;
-    if (!grupos[k]) grupos[k] = [];
-    grupos[k].push(p);
+// ══════════════════════════════════════
+// TABLA
+// ══════════════════════════════════════
+function calcTabla(t){
+  t=t||torneoActual;const stats={};
+  t.equipos.forEach(e=>{stats[e.id]={id:e.id,nombre:e.nombre,pj:0,pg:0,pp:0,sf:0,sc:0,pf:0,pc:0,pts:0};});
+  const normas=t.tipo==='sala'?NORMAS_SALA:NORMAS_PLAYA;
+  const normaActiva=t.normas.map(nid=>normas.find(n=>n.id===nid)).find(n=>n&&n.calcularPuntos);
+  (t.partidos||[]).filter(p=>p.estado==='terminado').forEach(p=>{
+    const sL=p.sets.filter(s=>s.local>s.visitante).length,sV=p.sets.filter(s=>s.visitante>s.local).length;
+    const pF=p.sets.reduce((a,s)=>a+s.local,0),pC=p.sets.reduce((a,s)=>a+s.visitante,0);
+    const eL=stats[p.local],eV=stats[p.visitante];if(!eL||!eV)return;
+    eL.pj++;eV.pj++;eL.sf+=sL;eL.sc+=sV;eV.sf+=sV;eV.sc+=sL;eL.pf+=pF;eL.pc+=pC;eV.pf+=pC;eV.pc+=pF;
+    if(sL>sV){eL.pg++;eV.pp++;const r=normaActiva?normaActiva.calcularPuntos({setsG:sL,setsP:sV}):{ganador:3,perdedor:0};eL.pts+=r.ganador;eV.pts+=r.perdedor;}
+    else{eV.pg++;eL.pp++;const r=normaActiva?normaActiva.calcularPuntos({setsG:sV,setsP:sL}):{ganador:3,perdedor:0};eV.pts+=r.ganador;eL.pts+=r.perdedor;}
   });
-  cont.innerHTML = Object.entries(grupos).map(([titulo, ps]) =>
-    `<div class="jornada-pill">📅 ${titulo}</div>${ps.map(cardPartido).join('')}`
-  ).join('');
+  return Object.values(stats).sort((a,b)=>b.pts-a.pts||(b.sf-b.sc)-(a.sf-a.sc)||(b.pf-b.pc)-(a.pf-a.pc));
 }
-
-function cardPartido(p) {
-  if (p.estado === 'bye') return `
-    <div class="partido-card">
-      <div class="partido-body">
-        <div class="partido-team home">${nombreEq(p.local)}</div>
-        <div class="partido-score-box"><div class="partido-score-label">BYE</div></div>
-        <div class="partido-team away" style="color:var(--txt3)">—</div>
-      </div>
-    </div>`;
-  const sL = p.sets.filter(s => s.local > s.visitante).length;
-  const sV = p.sets.filter(s => s.visitante > s.local).length;
-  const dur = p.duracion ? `⏱ ${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}` : '';
-  const eClass = {pendiente:'estado-pendiente','en-curso':'estado-curso',terminado:'estado-fin'}[p.estado];
-  const eLabel = {pendiente:'Pendiente','en-curso':'🔴 En curso',terminado:'✓ Finalizado'}[p.estado];
-  let scoreHtml = `<div class="partido-score-box"><div class="partido-score-label">vs</div></div>`;
-  if (p.estado !== 'pendiente')
-    scoreHtml = `<div class="partido-score-box"><div class="partido-score-num">${sL} – ${sV}</div><div class="partido-score-label">sets</div></div>`;
-  let btns = '';
-  if (p.estado === 'pendiente')    btns = `<button class="partido-btn primary" onclick="iniciarPartido('${p.id}')">▶ Jugar ahora</button>`;
-  else if (p.estado === 'en-curso') btns = `<button class="partido-btn primary" onclick="iniciarPartido('${p.id}')">🔴 Continuar</button>`;
-  else                              btns = `<button class="partido-btn" onclick="detallePartido('${p.id}')">📊 Detalle</button>
-                                            <button class="partido-btn" onclick="resetPartido('${p.id}')">↺ Repetir</button>`;
-  return `
-    <div class="partido-card">
-      <div class="partido-top"><span class="estado-badge ${eClass}">${eLabel}</span><span class="partido-dur">${dur}</span></div>
-      <div class="partido-body">
-        <div class="partido-team home">${nombreEq(p.local)}</div>
-        ${scoreHtml}
-        <div class="partido-team away">${nombreEq(p.visitante)}</div>
-      </div>
-      <div class="partido-actions">${btns}</div>
-    </div>`;
-}
-
-// ── TABLA ──
-function calcTabla(t) {
-  t = t || torneoActual;
-  const stats = {};
-  t.equipos.forEach(e => { stats[e.id] = {id:e.id, nombre:e.nombre, pj:0, pg:0, pp:0, sf:0, sc:0, pf:0, pc:0, pts:0}; });
-  const normas = t.tipo === 'sala' ? NORMAS_SALA : NORMAS_PLAYA;
-  const normaActiva = t.normas.map(nid => normas.find(n => n.id === nid)).find(n => n && n.calcularPuntos);
-  (t.partidos || []).filter(p => p.estado === 'terminado').forEach(p => {
-    const sL = p.sets.filter(s => s.local > s.visitante).length;
-    const sV = p.sets.filter(s => s.visitante > s.local).length;
-    const pF = p.sets.reduce((a,s) => a + s.local, 0);
-    const pC = p.sets.reduce((a,s) => a + s.visitante, 0);
-    const eL = stats[p.local], eV = stats[p.visitante];
-    if (!eL || !eV) return;
-    eL.pj++; eV.pj++;
-    eL.sf += sL; eL.sc += sV; eV.sf += sV; eV.sc += sL;
-    eL.pf += pF; eL.pc += pC; eV.pf += pC; eV.pc += pF;
-    if (sL > sV) {
-      eL.pg++; eV.pp++;
-      const r = normaActiva ? normaActiva.calcularPuntos({setsG:sL,setsP:sV}) : {ganador:3,perdedor:0};
-      eL.pts += r.ganador; eV.pts += r.perdedor;
-    } else {
-      eV.pg++; eL.pp++;
-      const r = normaActiva ? normaActiva.calcularPuntos({setsG:sV,setsP:sL}) : {ganador:3,perdedor:0};
-      eV.pts += r.ganador; eL.pts += r.perdedor;
-    }
-  });
-  return Object.values(stats).sort((a,b) => b.pts-a.pts || (b.sf-b.sc)-(a.sf-a.sc) || (b.pf-b.pc)-(a.pf-a.pc));
-}
-
-function renderTabla() {
-  const data = calcTabla();
-  const pC = ['pos-1','pos-2','pos-3'];
-  document.getElementById('tab-tabla').innerHTML = `
-    <div class="sec-header"><div class="sec-title">Clasificación</div></div>
-    <div class="tabla-scroll">
-      <table class="tabla">
-        <thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>PG</th><th>PP</th><th>SF</th><th>SC</th><th>Pts</th></tr></thead>
-        <tbody>${data.map((eq,i) => `
-          <tr class="${i===0?'row-1':i===1?'row-2':''}">
-            <td><span class="pos-badge ${pC[i]||''}">${i+1}</span></td>
-            <td>${eq.nombre}${i===0&&eq.pj>0?' 🏆':''}</td>
-            <td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pp}</td>
-            <td>${eq.sf}</td><td>${eq.sc}</td><td class="td-pts">${eq.pts}</td>
-          </tr>`).join('')}
-        </tbody>
-      </table>
-    </div>
-    <div class="tabla-legend">PJ=Jugados · PG=Ganados · PP=Perdidos · SF/SC=Sets favor/contra</div>`;
+function renderTabla(){
+  const data=calcTabla(),pC=['pos-1','pos-2','pos-3'];
+  document.getElementById('tab-tabla').innerHTML=`<div class="sec-header"><div class="sec-title">Clasificación</div></div><div class="tabla-scroll"><table class="tabla"><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>PG</th><th>PP</th><th>SF</th><th>SC</th><th>Pts</th></tr></thead><tbody>${data.map((eq,i)=>`<tr class="${i===0?'row-1':i===1?'row-2':''}"><td><span class="pos-badge ${pC[i]||''}">${i+1}</span></td><td>${eq.nombre}${i===0&&eq.pj>0?' 🏆':''}</td><td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pp}</td><td>${eq.sf}</td><td>${eq.sc}</td><td class="td-pts">${eq.pts}</td></tr>`).join('')}</tbody></table></div><div class="tabla-legend">PJ=Jugados · PG=Ganados · PP=Perdidos · SF/SC=Sets favor/contra</div>`;
 }
 
 // ══════════════════════════════════════
-// TAB EQUIPOS — lista de equipos
+// EQUIPOS TAB
 // ══════════════════════════════════════
-function renderEquiposTab() {
-  if (!torneoActual) return;
-  const cont = document.getElementById('tab-equipos');
-  const tabla = calcTabla();
-  const statsMap = {};
-  tabla.forEach(e => { statsMap[e.id] = e; });
-
-  cont.innerHTML = `
-    <div class="sec-header"><div class="sec-title">Equipos</div></div>
-    <div class="eq-grid">
-      ${torneoActual.equipos.map((eq, idx) => {
-        const [bg, color] = avatarColor(idx);
-        const st = statsMap[eq.id] || {};
-        const njug = (eq.jugadores || []).length;
-        const cap = (eq.jugadores || []).find(j => j.capitan);
-        return `
-          <div class="eq-card" onclick="abrirEquipo('${eq.id}')">
-            <div class="eq-avatar" style="background:${bg};color:${color}">${initials(eq.nombre)}</div>
-            <div class="eq-info">
-              <div class="eq-name">${eq.nombre}</div>
-              <div class="eq-meta">
-                ${njug} jugador${njug !== 1 ? 'es' : ''}
-                ${cap ? ' · Cap: ' + cap.nombre : ''}
-                ${st.pj ? ' · ' + st.pg + 'G ' + st.pp + 'P · ' + st.pts + 'pts' : ''}
-              </div>
-            </div>
-            <div class="eq-arrow">›</div>
-          </div>`;
-      }).join('')}
-    </div>`;
+function renderEquiposTab(){
+  if(!torneoActual)return;
+  const cont=document.getElementById('tab-equipos'),tabla=calcTabla(),statsMap={};
+  tabla.forEach(e=>{statsMap[e.id]=e;});
+  cont.innerHTML=`<div class="sec-header"><div class="sec-title">Equipos</div></div><div class="eq-grid">${torneoActual.equipos.map((eq,idx)=>{const[bg,color]=avatarColor(idx),st=statsMap[eq.id]||{},njug=(eq.jugadores||[]).length,cap=(eq.jugadores||[]).find(j=>j.capitan);return`<div class="eq-card" onclick="abrirEquipo('${eq.id}')"><div class="eq-avatar" style="background:${bg};color:${color}">${initials(eq.nombre)}</div><div class="eq-info"><div class="eq-name">${eq.nombre}</div><div class="eq-meta">${njug} jugador${njug!==1?'es':''}${cap?' · Cap: '+cap.nombre:''}${st.pj?' · '+st.pg+'G '+st.pp+'P · '+st.pts+'pts':''}</div></div><div class="eq-arrow">›</div></div>`;}).join('')}</div>`;
 }
-
-// ══════════════════════════════════════
-// SCREEN EQUIPO — detalle y jugadores
-// ══════════════════════════════════════
-function abrirEquipo(eqId) {
-  if (!torneoActual) return;
-  equipoActual = torneoActual.equipos.find(e => e.id === eqId);
-  if (!equipoActual) return;
-  if (!equipoActual.jugadores) equipoActual.jugadores = [];
-  undoStack = [];
-  actualizarBtnUndo();
-  renderScreenEquipo();
-  showScreen('screen-equipo');
+function abrirEquipo(eqId){
+  if(!torneoActual)return;
+  equipoActual=torneoActual.equipos.find(e=>e.id===eqId);if(!equipoActual)return;
+  if(!equipoActual.jugadores)equipoActual.jugadores=[];
+  undoStack=[];actualizarBtnUndo();renderScreenEquipo();showScreen('screen-equipo');
 }
-
-function renderScreenEquipo() {
-  if (!equipoActual) return;
-  const idx = torneoActual.equipos.findIndex(e => e.id === equipoActual.id);
-  const [bg, color] = avatarColor(idx);
-  const st = calcTabla().find(e => e.id === equipoActual.id) || {};
-  const cap = equipoActual.jugadores.find(j => j.capitan);
-
-  document.getElementById('eq-screen-title').textContent = equipoActual.nombre;
-  document.getElementById('eq-hero-card').innerHTML = `
-    <div class="eq-hero-avatar" style="background:${bg};color:${color}">${initials(equipoActual.nombre)}</div>
-    <div style="flex:1;min-width:0">
-      <div class="eq-hero-name">${equipoActual.nombre}</div>
-      ${cap ? `<div style="font-size:12px;color:var(--acc2);margin-bottom:8px">★ Capitán: ${cap.nombre}</div>` : '<div style="font-size:12px;color:var(--txt3);margin-bottom:8px">Sin capitán asignado</div>'}
-      <div class="eq-hero-stats">
-        <div class="eq-hero-stat"><div class="val">${st.pj||0}</div><div class="lbl">Jugados</div></div>
-        <div class="eq-hero-stat"><div class="val" style="color:var(--green)">${st.pg||0}</div><div class="lbl">Ganados</div></div>
-        <div class="eq-hero-stat"><div class="val" style="color:var(--acc)">${st.pts||0}</div><div class="lbl">Puntos</div></div>
-        <div class="eq-hero-stat"><div class="val" style="color:var(--purple)">${equipoActual.jugadores.length}</div><div class="lbl">Jugadores</div></div>
-      </div>
-    </div>`;
-
+function renderScreenEquipo(){
+  if(!equipoActual)return;
+  const idx=torneoActual.equipos.findIndex(e=>e.id===equipoActual.id),[bg,color]=avatarColor(idx),st=calcTabla().find(e=>e.id===equipoActual.id)||{},cap=equipoActual.jugadores.find(j=>j.capitan);
+  document.getElementById('eq-screen-title').textContent=equipoActual.nombre;
+  document.getElementById('eq-hero-card').innerHTML=`<div class="eq-hero-avatar" style="background:${bg};color:${color}">${initials(equipoActual.nombre)}</div><div style="flex:1;min-width:0"><div class="eq-hero-name">${equipoActual.nombre}</div>${cap?`<div style="font-size:12px;color:var(--acc2);margin-bottom:8px">★ Capitán: ${cap.nombre}</div>`:'<div style="font-size:12px;color:var(--txt3);margin-bottom:8px">Sin capitán</div>'}<div class="eq-hero-stats"><div class="eq-hero-stat"><div class="val">${st.pj||0}</div><div class="lbl">Jugados</div></div><div class="eq-hero-stat"><div class="val" style="color:var(--green)">${st.pg||0}</div><div class="lbl">Ganados</div></div><div class="eq-hero-stat"><div class="val" style="color:var(--acc)">${st.pts||0}</div><div class="lbl">Puntos</div></div><div class="eq-hero-stat"><div class="val" style="color:var(--purple)">${equipoActual.jugadores.length}</div><div class="lbl">Jugadores</div></div></div></div>`;
   renderListaJugadores();
 }
-
-function renderListaJugadores() {
-  const lista = document.getElementById('jugadores-lista');
-  const count = document.getElementById('jugadores-count');
-  const jug = equipoActual.jugadores;
-  count.textContent = `(${jug.length})`;
-
-  if (!jug.length) {
-    lista.innerHTML = `<div class="jugadores-empty">👤 Aún no hay jugadores<br>Agrega el primero arriba</div>`;
-    return;
-  }
-  // Ordenar: capitán primero, luego por dorsal
-  const ordenados = [...jug].sort((a,b) => {
-    if (a.capitan && !b.capitan) return -1;
-    if (!a.capitan && b.capitan) return 1;
-    return (a.dorsal || 99) - (b.dorsal || 99);
-  });
-  lista.innerHTML = ordenados.map(j => `
-    <div class="jugador-item" id="jug-${j.id}">
-      <div class="jugador-dorsal">${j.dorsal || '—'}</div>
-      <div class="jugador-nombre">${j.nombre}</div>
-      <span class="jugador-rol ${j.capitan ? 'rol-capitan' : 'rol-jugador'}">${j.capitan ? '★ Cap.' : 'Jugador'}</span>
-      <div class="jugador-actions">
-        <button class="jugador-btn jbtn-cap ${j.capitan ? 'activo' : ''}"
-          onclick="toggleCapitan('${j.id}')" title="${j.capitan ? 'Quitar capitán' : 'Hacer capitán'}">★</button>
-        <button class="jugador-btn jbtn-del" onclick="eliminarJugador('${j.id}')" title="Eliminar">✕</button>
-      </div>
-    </div>`).join('');
+function renderListaJugadores(){
+  const lista=document.getElementById('jugadores-lista'),count=document.getElementById('jugadores-count'),jug=equipoActual.jugadores;
+  count.textContent=`(${jug.length})`;
+  if(!jug.length){lista.innerHTML=`<div class="jugadores-empty">👤 Aún no hay jugadores<br>Agrega el primero arriba</div>`;return;}
+  const ord=[...jug].sort((a,b)=>{if(a.capitan&&!b.capitan)return -1;if(!a.capitan&&b.capitan)return 1;return(a.dorsal||99)-(b.dorsal||99);});
+  lista.innerHTML=ord.map(j=>`<div class="jugador-item"><div class="jugador-dorsal">${j.dorsal||'—'}</div><div class="jugador-nombre">${j.nombre}</div><span class="jugador-rol ${j.capitan?'rol-capitan':'rol-jugador'}">${j.capitan?'★ Cap.':'Jugador'}</span><div class="jugador-actions"><button class="jugador-btn jbtn-cap ${j.capitan?'activo':''}" onclick="toggleCapitan('${j.id}')">★</button><button class="jugador-btn jbtn-del" onclick="eliminarJugador('${j.id}')">✕</button></div></div>`).join('');
 }
-
-function agregarJugador() {
-  const nombreInput  = document.getElementById('nuevo-jugador-nombre');
-  const dorsalInput  = document.getElementById('nuevo-jugador-dorsal');
-  const nombre = nombreInput.value.trim();
-  if (!nombre) { toast('Escribe el nombre del jugador'); return; }
-  const dorsal = parseInt(dorsalInput.value) || null;
-
-  // Verificar dorsal duplicado
-  if (dorsal && equipoActual.jugadores.some(j => j.dorsal === dorsal)) {
-    toast(`El dorsal ${dorsal} ya está en uso`); return;
-  }
-
-  const jugador = { id: uid(), nombre, dorsal, capitan: false };
-
-  // Guardar en undo stack
-  undoStack.push({ tipo: 'agregar-jugador', eqId: equipoActual.id, jugadorId: jugador.id });
-  actualizarBtnUndo();
-
-  equipoActual.jugadores.push(jugador);
-  LS.save();
-  nombreInput.value = '';
-  dorsalInput.value = '';
-  renderListaJugadores();
-  actualizarHeroStats();
-  toast(`${nombre} agregado ✓`);
+function agregarJugador(){
+  const nI=document.getElementById('nuevo-jugador-nombre'),dI=document.getElementById('nuevo-jugador-dorsal'),nombre=nI.value.trim();
+  if(!nombre){toast('Escribe el nombre del jugador');return;}
+  const dorsal=parseInt(dI.value)||null;
+  if(dorsal&&equipoActual.jugadores.some(j=>j.dorsal===dorsal)){toast(`El dorsal ${dorsal} ya está en uso`);return;}
+  const jugador={id:uid(),nombre,dorsal,capitan:false,stats:{ataque:0,bloqueo:0,defensa:0,saque:0}};
+  undoStack.push({tipo:'agregar-jugador',eqId:equipoActual.id,jugadorId:jugador.id});actualizarBtnUndo();
+  equipoActual.jugadores.push(jugador);LS.save();nI.value='';dI.value='';
+  renderListaJugadores();renderScreenEquipo();toast(`${nombre} agregado ✓`);
 }
-
-function toggleCapitan(jugId) {
-  const jug = equipoActual.jugadores.find(j => j.id === jugId);
-  if (!jug) return;
-
-  const anteriorCapId = equipoActual.jugadores.find(j => j.capitan && j.id !== jugId)?.id || null;
-
-  // Guardar estado anterior en undo
-  undoStack.push({
-    tipo: 'toggle-capitan',
-    eqId: equipoActual.id,
-    jugadorId: jugId,
-    eraCapitan: jug.capitan,
-    anteriorCapId
-  });
-  actualizarBtnUndo();
-
-  // Quitar capitán anterior
-  equipoActual.jugadores.forEach(j => { j.capitan = false; });
-  // Si no era capitán, hacerlo capitán
-  if (!jug.capitan) { jug.capitan = true; toast(`★ ${jug.nombre} es el nuevo capitán`); }
-  else { toast('Capitán removido'); }
-
-  LS.save();
-  renderListaJugadores();
-  actualizarHeroStats();
+function toggleCapitan(jugId){
+  const jug=equipoActual.jugadores.find(j=>j.id===jugId);if(!jug)return;
+  const anteriorCapId=equipoActual.jugadores.find(j=>j.capitan&&j.id!==jugId)?.id||null;
+  undoStack.push({tipo:'toggle-capitan',eqId:equipoActual.id,jugadorId:jugId,eraCapitan:jug.capitan,anteriorCapId});actualizarBtnUndo();
+  equipoActual.jugadores.forEach(j=>{j.capitan=false;});
+  if(!jug.capitan){jug.capitan=true;toast(`★ ${jug.nombre} es el nuevo capitán`);}else toast('Capitán removido');
+  LS.save();renderListaJugadores();renderScreenEquipo();
 }
-
-function eliminarJugador(jugId) {
-  const jug = equipoActual.jugadores.find(j => j.id === jugId);
-  if (!jug) return;
-
-  // Guardar en undo stack (con datos completos para restaurar)
-  const indexOriginal = equipoActual.jugadores.findIndex(j => j.id === jugId);
-  undoStack.push({ tipo: 'eliminar-jugador', eqId: equipoActual.id, jugador: { ...jug }, indexOriginal });
-  actualizarBtnUndo();
-
-  equipoActual.jugadores = equipoActual.jugadores.filter(j => j.id !== jugId);
-  LS.save();
-  renderListaJugadores();
-  actualizarHeroStats();
-  toast(`${jug.nombre} eliminado`);
+function eliminarJugador(jugId){
+  const jug=equipoActual.jugadores.find(j=>j.id===jugId);if(!jug)return;
+  const indexOriginal=equipoActual.jugadores.findIndex(j=>j.id===jugId);
+  undoStack.push({tipo:'eliminar-jugador',eqId:equipoActual.id,jugador:{...jug},indexOriginal});actualizarBtnUndo();
+  equipoActual.jugadores=equipoActual.jugadores.filter(j=>j.id!==jugId);
+  LS.save();renderListaJugadores();renderScreenEquipo();toast(`${jug.nombre} eliminado`);
 }
-
-function actualizarHeroStats() {
-  // Refrescar solo la sección stats del hero sin redibujar todo
-  renderScreenEquipo();
+function undoAccion(){
+  if(!undoStack.length){toast('Nada para deshacer');return;}
+  const accion=undoStack.pop();const eq=torneoActual.equipos.find(e=>e.id===accion.eqId);if(!eq)return;
+  if(accion.tipo==='agregar-jugador'){eq.jugadores=eq.jugadores.filter(j=>j.id!==accion.jugadorId);toast('Jugador removido ↩');}
+  else if(accion.tipo==='eliminar-jugador'){eq.jugadores.splice(accion.indexOriginal,0,{...accion.jugador});toast(`${accion.jugador.nombre} restaurado ↩`);}
+  else if(accion.tipo==='toggle-capitan'){eq.jugadores.forEach(j=>{j.capitan=false;});if(accion.anteriorCapId){const a=eq.jugadores.find(j=>j.id===accion.anteriorCapId);if(a)a.capitan=true;}if(accion.eraCapitan){const j=eq.jugadores.find(j=>j.id===accion.jugadorId);if(j)j.capitan=true;}toast('Capitán restaurado ↩');}
+  actualizarBtnUndo();LS.save();
+  if(equipoActual&&equipoActual.id===accion.eqId){equipoActual=eq;renderListaJugadores();renderScreenEquipo();}
 }
-
-// ══════════════════════════════════════
-// UNDO — equipo / jugadores
-// ══════════════════════════════════════
-function undoAccion() {
-  if (!undoStack.length) { toast('Nada para deshacer'); return; }
-  const accion = undoStack.pop();
-  const eq = torneoActual.equipos.find(e => e.id === accion.eqId);
-  if (!eq) return;
-
-  if (accion.tipo === 'agregar-jugador') {
-    eq.jugadores = eq.jugadores.filter(j => j.id !== accion.jugadorId);
-    toast('Jugador removido ↩');
-  }
-  else if (accion.tipo === 'eliminar-jugador') {
-    eq.jugadores.splice(accion.indexOriginal, 0, { ...accion.jugador });
-    toast(`${accion.jugador.nombre} restaurado ↩`);
-  }
-  else if (accion.tipo === 'toggle-capitan') {
-    // Restaurar estado anterior de capitanes
-    eq.jugadores.forEach(j => { j.capitan = false; });
-    if (accion.anteriorCapId) {
-      const anterior = eq.jugadores.find(j => j.id === accion.anteriorCapId);
-      if (anterior) anterior.capitan = true;
-    }
-    if (accion.eraCapitan) {
-      const jug = eq.jugadores.find(j => j.id === accion.jugadorId);
-      if (jug) jug.capitan = true;
-    }
-    toast('Capitán restaurado ↩');
-  }
-
-  actualizarBtnUndo();
-  LS.save();
-  if (equipoActual && equipoActual.id === accion.eqId) {
-    equipoActual = eq;
-    renderListaJugadores();
-    renderScreenEquipo();
-  }
-}
-
-function actualizarBtnUndo() {
-  const btn = document.getElementById('eq-undo-btn');
-  if (btn) btn.style.opacity = undoStack.length ? '1' : '0.35';
-}
+function actualizarBtnUndo(){const btn=document.getElementById('eq-undo-btn');if(btn)btn.style.opacity=undoStack.length?'1':'0.35';}
 
 // ══════════════════════════════════════
 // MARCADOR
 // ══════════════════════════════════════
-function iniciarPartido(id) {
-  const p = torneoActual.partidos.find(p => p.id === id);
-  if (!p) return;
-  partidoActual = p;
-  puntosHistorial = [];
-  if (p.estado === 'pendiente') {
-    p.estado = 'en-curso'; p.sets = []; p.duracion = 0;
-    p.setActual = { local: 0, visitante: 0 }; p.setNum = 1;
-    timerSeg = 0;
-  } else {
-    timerSeg = p.duracion || 0;
-    puntosHistorial = p.puntosHistorial || [];
+function iniciarPartido(id){
+  const p=torneoActual.partidos.find(p=>p.id===id);if(!p)return;
+  partidoActual=p;puntosHistorial=[];
+  if(!p.statsJugadores)p.statsJugadores={};
+  if(p.estado==='pendiente'){p.estado='en-curso';p.sets=[];p.duracion=0;p.setActual={local:0,visitante:0};p.setNum=1;timerSeg=0;}
+  else{timerSeg=p.duracion||0;puntosHistorial=p.puntosHistorial||[];}
+  clearInterval(timerInt);timerOn=false;
+  document.getElementById('timer-btn').textContent='▶ Iniciar';
+  actualizarMarcador();renderPanelPremiumMarcador();
+  LS.save();showScreen('screen-marcador');
+}
+function actualizarMarcador(){
+  if(!partidoActual)return;
+  const sa=partidoActual.setActual||{local:0,visitante:0};
+  document.getElementById('pts-local').textContent=sa.local;
+  document.getElementById('pts-visitante').textContent=sa.visitante;
+  document.getElementById('nombre-local').textContent=nombreEq(partidoActual.local);
+  document.getElementById('nombre-visitante').textContent=nombreEq(partidoActual.visitante);
+  const regl=REGLAMENTO[torneoActual.tipo],setNum=partidoActual.setNum||1;
+  const esFinal=(torneoActual.tipo==='sala'&&setNum===5)||(torneoActual.tipo==='playa'&&setNum===3);
+  const meta=esFinal?regl.puntosFinalSet:regl.puntosSet;
+  document.getElementById('set-meta-info').textContent=`Set ${setNum} de ${regl.sets} — Meta: ${meta} puntos`;
+  const sL=partidoActual.sets.filter(s=>s.local>s.visitante).length,sV=partidoActual.sets.filter(s=>s.visitante>s.local).length;
+  document.getElementById('sets-track-display').innerHTML=`<div class="set-pill win-home">${nombreEq(partidoActual.local)}: ${sL}</div><div class="set-pill" style="font-size:11px;color:var(--txt3)">SETS</div><div class="set-pill win-away">${nombreEq(partidoActual.visitante)}: ${sV}</div>`;
+  const m=Math.floor(timerSeg/60),s=timerSeg%60;
+  document.getElementById('timer-display').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+// PANEL PREMIUM MARCADOR
+function renderPanelPremiumMarcador(){
+  const grid=document.getElementById('jugadores-enfrentados-grid');
+  if(!isPremium()){
+    grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:12px 8px"><div style="font-size:24px;margin-bottom:6px">⭐</div><div style="font-size:12px;font-weight:700;color:var(--acc2);margin-bottom:4px">Función Premium</div><div style="font-size:11px;color:var(--txt3);margin-bottom:10px">Registra estadísticas individuales por jugador</div><button class="btn-premium" style="padding:10px 20px;font-size:13px;width:auto" onclick="openPremiumModal()">⭐ Activar Premium</button></div>`;
+    return;
   }
-  clearInterval(timerInt);
-  timerOn = false;
-  document.getElementById('timer-btn').textContent = '▶ Iniciar';
-  actualizarMarcador();
+  if(!partidoActual)return;
+  const eqL=torneoActual.equipos.find(e=>e.id===partidoActual.local),eqV=torneoActual.equipos.find(e=>e.id===partidoActual.visitante);
+  const jugL=eqL?.jugadores||[],jugV=eqV?.jugadores||[];
+  if(!jugL.length&&!jugV.length){grid.innerHTML=`<div class="no-jugadores-hint">Agrega jugadores a los equipos para registrar estadísticas individuales</div>`;return;}
+  const renderCol=(jugs)=>{
+    if(!jugs.length)return`<div class="jugador-stat-col"><div style="font-size:11px;color:var(--txt3);text-align:center;padding:8px">Sin jugadores</div></div>`;
+    return`<div class="jugador-stat-col">${jugs.map(j=>{const sid=`${partidoActual.id}_${j.id}`,st=partidoActual.statsJugadores[sid]||{ataque:0,bloqueo:0,defensa:0,saque:0};return`<div class="jugador-stat-card"><div class="jscard-name">${j.dorsal?`#${j.dorsal} `:''}${j.nombre}${j.capitan?' ★':''}</div><div class="jscard-btns"><button class="jstat-btn ataque" onclick="registrarStatJugador('${sid}','ataque',this)"><span class="jstat-val">${st.ataque}</span><span class="jstat-lbl">⚡ Ataque</span></button><button class="jstat-btn bloqueo" onclick="registrarStatJugador('${sid}','bloqueo',this)"><span class="jstat-val">${st.bloqueo}</span><span class="jstat-lbl">🛡 Bloqueo</span></button><button class="jstat-btn defensa" onclick="registrarStatJugador('${sid}','defensa',this)"><span class="jstat-val">${st.defensa}</span><span class="jstat-lbl">🤲 Defensa</span></button><button class="jstat-btn saque" onclick="registrarStatJugador('${sid}','saque',this)"><span class="jstat-val">${st.saque}</span><span class="jstat-lbl">🎯 Saque</span></button></div></div>`;}).join('')}</div>`;
+  };
+  grid.innerHTML=renderCol(jugL)+renderCol(jugV);
+}
+function registrarStatJugador(sid,tipo,btn){
+  if(!partidoActual)return;
+  if(!partidoActual.statsJugadores)partidoActual.statsJugadores={};
+  if(!partidoActual.statsJugadores[sid])partidoActual.statsJugadores[sid]={ataque:0,bloqueo:0,defensa:0,saque:0};
+  partidoActual.statsJugadores[sid][tipo]++;
+  btn.querySelector('.jstat-val').textContent=partidoActual.statsJugadores[sid][tipo];
+  btn.style.transform='scale(0.88)';setTimeout(()=>{btn.style.transform='';},120);
   LS.save();
-  showScreen('screen-marcador');
 }
 
-function actualizarMarcador() {
-  if (!partidoActual) return;
-  const sa = partidoActual.setActual || { local: 0, visitante: 0 };
-  document.getElementById('pts-local').textContent     = sa.local;
-  document.getElementById('pts-visitante').textContent = sa.visitante;
-  document.getElementById('nombre-local').textContent     = nombreEq(partidoActual.local);
-  document.getElementById('nombre-visitante').textContent = nombreEq(partidoActual.visitante);
-  const regl  = REGLAMENTO[torneoActual.tipo];
-  const setNum = partidoActual.setNum || 1;
-  const esFinal = (torneoActual.tipo === 'sala' && setNum === 5) || (torneoActual.tipo === 'playa' && setNum === 3);
-  const meta = esFinal ? regl.puntosFinalSet : regl.puntosSet;
-  document.getElementById('set-meta-info').textContent = `Set ${setNum} de ${regl.sets} — Meta: ${meta} puntos`;
-  const sL = partidoActual.sets.filter(s => s.local > s.visitante).length;
-  const sV = partidoActual.sets.filter(s => s.visitante > s.local).length;
-  document.getElementById('sets-track-display').innerHTML = `
-    <div class="set-pill win-home">${nombreEq(partidoActual.local)}: ${sL}</div>
-    <div class="set-pill" style="font-size:11px;color:var(--txt3)">SETS</div>
-    <div class="set-pill win-away">${nombreEq(partidoActual.visitante)}: ${sV}</div>`;
-  const m = Math.floor(timerSeg/60), s = timerSeg % 60;
-  document.getElementById('timer-display').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-}
-
-function sumarPunto(lado) {
-  if (!partidoActual) return;
-  if (!timerOn) toggleTimer();
-  if (!partidoActual.setActual) partidoActual.setActual = { local: 0, visitante: 0 };
-
-  // Guardar snapshot para undo
-  puntosHistorial.push({
-    local: partidoActual.setActual.local,
-    visitante: partidoActual.setActual.visitante,
-    sets: JSON.parse(JSON.stringify(partidoActual.sets)),
-    setNum: partidoActual.setNum || 1
-  });
-  if (partidoActual) partidoActual.puntosHistorial = puntosHistorial;
-
+function sumarPunto(lado){
+  if(!partidoActual)return;if(!timerOn)toggleTimer();
+  if(!partidoActual.setActual)partidoActual.setActual={local:0,visitante:0};
+  puntosHistorial.push({local:partidoActual.setActual.local,visitante:partidoActual.setActual.visitante,sets:JSON.parse(JSON.stringify(partidoActual.sets)),setNum:partidoActual.setNum||1});
+  if(partidoActual)partidoActual.puntosHistorial=puntosHistorial;
   partidoActual.setActual[lado]++;
-  const sa = partidoActual.setActual;
-  const regl = REGLAMENTO[torneoActual.tipo];
-  const setNum = partidoActual.setNum || 1;
-  const esFinal = (torneoActual.tipo === 'sala' && setNum === 5) || (torneoActual.tipo === 'playa' && setNum === 3);
-  const meta = esFinal ? regl.puntosFinalSet : regl.puntosSet;
-  const mx = Math.max(sa.local, sa.visitante), mn = Math.min(sa.local, sa.visitante);
-  if (mx >= meta && mx - mn >= 2) {
-    actualizarMarcador();
-    setTimeout(() => terminarSet(true), 400);
-  } else {
-    actualizarMarcador();
-    LS.save();
+  const sa=partidoActual.setActual,regl=REGLAMENTO[torneoActual.tipo],setNum=partidoActual.setNum||1;
+  const esFinal=(torneoActual.tipo==='sala'&&setNum===5)||(torneoActual.tipo==='playa'&&setNum===3),meta=esFinal?regl.puntosFinalSet:regl.puntosSet;
+  const mx=Math.max(sa.local,sa.visitante),mn=Math.min(sa.local,sa.visitante);
+  if(mx>=meta&&mx-mn>=2){actualizarMarcador();setTimeout(()=>terminarSet(true),400);}else{actualizarMarcador();LS.save();}
+}
+function restarPunto(lado){
+  if(!partidoActual||!partidoActual.setActual)return;
+  if(partidoActual.setActual[lado]>0){
+    puntosHistorial.push({local:partidoActual.setActual.local,visitante:partidoActual.setActual.visitante,sets:JSON.parse(JSON.stringify(partidoActual.sets)),setNum:partidoActual.setNum||1});
+    partidoActual.setActual[lado]--;actualizarMarcador();LS.save();
   }
 }
-
-function restarPunto(lado) {
-  if (!partidoActual || !partidoActual.setActual) return;
-  if (partidoActual.setActual[lado] > 0) {
-    puntosHistorial.push({
-      local: partidoActual.setActual.local,
-      visitante: partidoActual.setActual.visitante,
-      sets: JSON.parse(JSON.stringify(partidoActual.sets)),
-      setNum: partidoActual.setNum || 1
-    });
-    partidoActual.setActual[lado]--;
-    actualizarMarcador();
-    LS.save();
+function undoPunto(){
+  if(!puntosHistorial.length){toast('No hay puntos para deshacer');return;}
+  const estado=puntosHistorial.pop();if(!partidoActual)return;
+  partidoActual.setActual={local:estado.local,visitante:estado.visitante};partidoActual.sets=estado.sets;partidoActual.setNum=estado.setNum;
+  if(partidoActual)partidoActual.puntosHistorial=puntosHistorial;
+  actualizarMarcador();LS.save();toast('Punto deshecho ↩');
+}
+function terminarSet(auto=false){
+  if(!partidoActual)return;const sa=partidoActual.setActual;
+  if(!sa||(sa.local===0&&sa.visitante===0&&!auto)){toast('El set no tiene puntos aún');return;}
+  if(sa)partidoActual.sets.push({local:sa.local,visitante:sa.visitante});
+  partidoActual.setActual={local:0,visitante:0};puntosHistorial=[];
+  const sL=partidoActual.sets.filter(s=>s.local>s.visitante).length,sV=partidoActual.sets.filter(s=>s.visitante>s.local).length,para=torneoActual.tipo==='sala'?3:2;
+  if(sL>=para||sV>=para)terminarPartido(true);
+  else{
+    partidoActual.setNum=(partidoActual.setNum||1)+1;
+    actualizarMarcador();LS.save();
+    const sNum=partidoActual.setNum-1, sL2=partidoActual.sets.filter(s=>s.local>s.visitante).length, sV2=partidoActual.sets.filter(s=>s.visitante>s.local).length;
+    mostrarNotif('🏐',`Set ${sNum} terminado`,`${nombreEq(partidoActual.local)} ${sL2} – ${sV2} ${nombreEq(partidoActual.visitante)} | Comienza el Set ${partidoActual.setNum}`,null);
   }
 }
-
-// UNDO de puntos — botón ↩ en topbar del marcador
-function undoPunto() {
-  if (!puntosHistorial.length) { toast('No hay puntos para deshacer'); return; }
-  const estado = puntosHistorial.pop();
-  if (!partidoActual) return;
-  partidoActual.setActual = { local: estado.local, visitante: estado.visitante };
-  partidoActual.sets = estado.sets;
-  partidoActual.setNum = estado.setNum;
-  if (partidoActual) partidoActual.puntosHistorial = puntosHistorial;
-  actualizarMarcador();
+function terminarPartido(auto=false){
+  if(!partidoActual)return;const sa=partidoActual.setActual;
+  if(sa&&(sa.local>0||sa.visitante>0))partidoActual.sets.push({...sa});
+  if(timerOn)toggleTimer();
+  partidoActual.duracion=timerSeg;puntosHistorial=[];delete partidoActual.puntosHistorial;
+  const sL=partidoActual.sets.filter(s=>s.local>s.visitante).length,sV=partidoActual.sets.filter(s=>s.visitante>s.local).length;
+  partidoActual.ganador=sL>sV?partidoActual.local:partidoActual.visitante;
+  partidoActual.estado='terminado';partidoActual.setActual=null;
   LS.save();
-  toast('Punto deshecho ↩');
+  const ganNombre = nombreEq(partidoActual.ganador);
+  const setsStr = partidoActual.sets.map((s,i)=>`Set ${i+1}: ${s.local}–${s.visitante}`).join('  ');
+  liberarWakeLock();
+  mostrarNotif('🏆', `¡${ganNombre} gana!`, setsStr, ()=>{ showScreen('screen-torneo'); renderCalendario(); });
 }
-
-function terminarSet(auto = false) {
-  if (!partidoActual) return;
-  const sa = partidoActual.setActual;
-  if (!sa || (sa.local === 0 && sa.visitante === 0 && !auto)) { toast('El set no tiene puntos aún'); return; }
-  if (sa) { partidoActual.sets.push({ local: sa.local, visitante: sa.visitante }); }
-  partidoActual.setActual = { local: 0, visitante: 0 };
-  puntosHistorial = []; // Limpiar historial de puntos al cambiar set
-  const regl = REGLAMENTO[torneoActual.tipo];
-  const sL = partidoActual.sets.filter(s => s.local > s.visitante).length;
-  const sV = partidoActual.sets.filter(s => s.visitante > s.local).length;
-  const para = torneoActual.tipo === 'sala' ? 3 : 2;
-  if (sL >= para || sV >= para) {
-    terminarPartido(true);
-  } else {
-    partidoActual.setNum = (partidoActual.setNum || 1) + 1;
-    actualizarMarcador();
-    LS.save();
-    toast(`Set ${partidoActual.setNum - 1} terminado ✓`);
-  }
+function volverDePartido(){if(timerOn)toggleTimer();liberarWakeLock();if(partidoActual)LS.save();showScreen('screen-torneo');renderCalendario();}
+function toggleTimer(){
+  if(timerOn){clearInterval(timerInt);timerOn=false;document.getElementById('timer-btn').textContent='▶ Reanudar';}
+  else{timerOn=true;document.getElementById('timer-btn').textContent='⏸ Pausar';timerInt=setInterval(()=>{timerSeg++;if(partidoActual)partidoActual.duracion=timerSeg;const m=Math.floor(timerSeg/60),s=timerSeg%60;document.getElementById('timer-display').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;},1000);}
 }
-
-function terminarPartido(auto = false) {
-  if (!partidoActual) return;
-  const sa = partidoActual.setActual;
-  if (sa && (sa.local > 0 || sa.visitante > 0)) partidoActual.sets.push({ ...sa });
-  if (timerOn) toggleTimer();
-  partidoActual.duracion = timerSeg;
-  puntosHistorial = [];
-  delete partidoActual.puntosHistorial;
-  const sL = partidoActual.sets.filter(s => s.local > s.visitante).length;
-  const sV = partidoActual.sets.filter(s => s.visitante > s.local).length;
-  partidoActual.ganador  = sL > sV ? partidoActual.local : partidoActual.visitante;
-  partidoActual.estado   = 'terminado';
-  partidoActual.setActual = null;
-  LS.save();
-  toast(`🏆 ¡${nombreEq(partidoActual.ganador)} gana!`);
-  setTimeout(() => { showScreen('screen-torneo'); renderCalendario(); }, 1600);
+function resetPartido(id){
+  const p=torneoActual.partidos.find(p=>p.id===id);if(!p)return;
+  Object.assign(p,{estado:'pendiente',sets:[],duracion:null,ganador:null,setActual:null,setNum:1,puntosHistorial:[],statsJugadores:{}});
+  LS.save();renderCalendario();toast('Partido reiniciado');
 }
-
-function volverDePartido() {
-  if (timerOn) toggleTimer();
-  if (partidoActual) LS.save();
-  showScreen('screen-torneo');
-  renderCalendario();
-}
-
-function toggleTimer() {
-  if (timerOn) {
-    clearInterval(timerInt); timerOn = false;
-    document.getElementById('timer-btn').textContent = '▶ Reanudar';
-  } else {
-    timerOn = true;
-    document.getElementById('timer-btn').textContent = '⏸ Pausar';
-    timerInt = setInterval(() => {
-      timerSeg++;
-      if (partidoActual) partidoActual.duracion = timerSeg;
-      const m = Math.floor(timerSeg/60), s = timerSeg % 60;
-      document.getElementById('timer-display').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    }, 1000);
-  }
-}
-
-function resetPartido(id) {
-  const p = torneoActual.partidos.find(p => p.id === id);
-  if (!p) return;
-  Object.assign(p, {estado:'pendiente', sets:[], duracion:null, ganador:null, setActual:null, setNum:1, puntosHistorial:[]});
-  LS.save(); renderCalendario(); toast('Partido reiniciado');
-}
-
-function detallePartido(id) {
-  const p = torneoActual.partidos.find(pt => pt.id === id);
-  if (!p) return;
-  const setsStr = p.sets.map((s,i) => `Set ${i+1}: ${s.local}–${s.visitante}`).join('\n');
-  const dur = p.duracion ? `${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}` : '—';
-  showModal('Detalle del partido',
-    `${nombreEq(p.local)} vs ${nombreEq(p.visitante)}\n\n${setsStr}\n\nDuración: ${dur}\nGanador: ${nombreEq(p.ganador)}`, null);
+function detallePartido(id){
+  const p=torneoActual.partidos.find(pt=>pt.id===id);if(!p)return;
+  const setsStr=p.sets.map((s,i)=>`Set ${i+1}: ${s.local}–${s.visitante}`).join('\n');
+  const dur=p.duracion?`${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}`:'—';
+  showModal('Detalle del partido',`${nombreEq(p.local)} vs ${nombreEq(p.visitante)}\n\n${setsStr}\n\nDuración: ${dur}\nGanador: ${nombreEq(p.ganador)}`,null);
 }
 
 // ══════════════════════════════════════
-// STATS
+// STATS GENERALES
 // ══════════════════════════════════════
-function renderStats() {
-  const data = calcTabla();
-  const terminados = torneoActual.partidos.filter(p => p.estado === 'terminado');
-  const pendientes = torneoActual.partidos.filter(p => p.estado === 'pendiente').length;
-  const durs = terminados.filter(p => p.duracion).map(p => p.duracion);
-  const durProm = durs.length ? Math.round(durs.reduce((a,b) => a+b,0)/durs.length) : 0;
-  const maxPts = Math.max(...data.map(e => e.pts), 1);
-  const lider = data[0];
-  let campeon = '';
-  if (torneoActual.finalizado && lider && lider.pj > 0) {
-    campeon = `<div class="champion-card">
-      <span class="champion-trophy">🏆</span>
-      <div class="champion-label">Campeón del torneo</div>
-      <div class="champion-name">${lider.nombre}</div>
-    </div>`;
+function renderStats(){
+  const data=calcTabla(),terminados=torneoActual.partidos.filter(p=>p.estado==='terminado'),pendientes=torneoActual.partidos.filter(p=>p.estado==='pendiente').length;
+  const durs=terminados.filter(p=>p.duracion).map(p=>p.duracion),durProm=durs.length?Math.round(durs.reduce((a,b)=>a+b,0)/durs.length):0;
+  const maxPts=Math.max(...data.map(e=>e.pts),1),lider=data[0];
+  let campeon='';if(torneoActual.finalizado&&lider&&lider.pj>0)campeon=`<div class="champion-card"><span class="champion-trophy">🏆</span><div class="champion-label">Campeón del torneo</div><div class="champion-name">${lider.nombre}</div></div>`;
+  document.getElementById('tab-stats').innerHTML=`<div class="stats-wrap">${campeon}<div class="stat-hero"><div class="stat-hero-title">Resumen</div><div class="stat-grid"><div class="stat-item"><div class="stat-val">${terminados.length}</div><div class="stat-lbl">Jugados</div></div><div class="stat-item"><div class="stat-val">${pendientes}</div><div class="stat-lbl">Pendientes</div></div><div class="stat-item"><div class="stat-val" style="color:var(--acc2)">${Math.floor(durProm/60)}:${String(durProm%60).padStart(2,'0')}</div><div class="stat-lbl">Duración prom.</div></div><div class="stat-item"><div class="stat-val" style="color:var(--acc3)">${torneoActual.equipos.length}</div><div class="stat-lbl">Equipos</div></div></div></div><div class="stat-hero"><div class="stat-hero-title">Posiciones</div><div class="rank-list">${data.slice(0,5).map((eq,i)=>`<div class="rank-row"><div class="rank-pos">${i+1}</div><div style="flex:1"><div class="rank-name">${eq.nombre}</div><div class="rank-bar-wrap"><div class="rank-bar" style="width:${Math.round(eq.pts/maxPts*100)}%"></div></div></div><div class="rank-pts">${eq.pts} pts</div></div>`).join('')}</div></div><div style="padding:0 0 20px"><button class="btn ${torneoActual.finalizado?'btn-green':'btn-amber'} btn-full" onclick="marcarFinalizado()">${torneoActual.finalizado?'✓ Torneo finalizado':'🏁 Marcar como finalizado'}</button></div></div>`;
+}
+function marcarFinalizado(){torneoActual.finalizado=!torneoActual.finalizado;LS.save();toast(torneoActual.finalizado?'¡Torneo finalizado! 🏆':'Torneo marcado como activo');if(tabActual===3)renderStats();}
+
+// ══════════════════════════════════════
+// ⭐ STATS INDIVIDUALES (PREMIUM)
+// ══════════════════════════════════════
+function calcStatsIndividuales(t){
+  t=t||torneoActual;const jugStats={};
+  t.equipos.forEach(eq=>{(eq.jugadores||[]).forEach(j=>{jugStats[j.id]={jugadorId:j.id,nombre:j.nombre,dorsal:j.dorsal,equipo:eq.nombre,ataque:0,bloqueo:0,defensa:0,saque:0,total:0};});});
+  (t.partidos||[]).filter(p=>p.estado==='terminado').forEach(p=>{Object.entries(p.statsJugadores||{}).forEach(([sid,st])=>{const jugId=sid.split('_')[1];if(jugStats[jugId]){jugStats[jugId].ataque+=st.ataque||0;jugStats[jugId].bloqueo+=st.bloqueo||0;jugStats[jugId].defensa+=st.defensa||0;jugStats[jugId].saque+=st.saque||0;jugStats[jugId].total+=(st.ataque||0)+(st.bloqueo||0)+(st.defensa||0)+(st.saque||0);}});});
+  return Object.values(jugStats);
+}
+function renderIndStats(){
+  const cont=document.getElementById('tab-ind-stats');
+  if(!isPremium()){
+    cont.innerHTML=`<div style="padding:40px 20px"><div class="premium-lock"><div class="lock-icon">⭐</div><div class="lock-title">Estadísticas Premium</div><div class="lock-desc">Tabla de líderes individuales: mejor atacante, más bloqueos, mejor defensor, mejor sacador y MVP automático del torneo.</div><button class="btn-premium" onclick="openPremiumModal()">⭐ Activar Premium — $3 USD</button></div></div>`;
+    return;
   }
-  document.getElementById('tab-stats').innerHTML = `<div class="stats-wrap">
-    ${campeon}
-    <div class="stat-hero">
-      <div class="stat-hero-title">Resumen</div>
-      <div class="stat-grid">
-        <div class="stat-item"><div class="stat-val">${terminados.length}</div><div class="stat-lbl">Jugados</div></div>
-        <div class="stat-item"><div class="stat-val">${pendientes}</div><div class="stat-lbl">Pendientes</div></div>
-        <div class="stat-item"><div class="stat-val" style="color:var(--acc2)">${Math.floor(durProm/60)}:${String(durProm%60).padStart(2,'0')}</div><div class="stat-lbl">Duración prom.</div></div>
-        <div class="stat-item"><div class="stat-val" style="color:var(--acc3)">${torneoActual.equipos.length}</div><div class="stat-lbl">Equipos</div></div>
-      </div>
-    </div>
-    <div class="stat-hero">
-      <div class="stat-hero-title">Posiciones</div>
-      <div class="rank-list">
-        ${data.slice(0,5).map((eq,i) => `
-          <div class="rank-row">
-            <div class="rank-pos">${i+1}</div>
-            <div style="flex:1">
-              <div class="rank-name">${eq.nombre}</div>
-              <div class="rank-bar-wrap"><div class="rank-bar" style="width:${Math.round(eq.pts/maxPts*100)}%"></div></div>
-            </div>
-            <div class="rank-pts">${eq.pts} pts</div>
-          </div>`).join('')}
-      </div>
-    </div>
-    <div style="padding:0 0 20px">
-      <button class="btn ${torneoActual.finalizado?'btn-green':'btn-amber'} btn-full" onclick="marcarFinalizado()">
-        ${torneoActual.finalizado ? '✓ Torneo finalizado' : '🏁 Marcar como finalizado'}
-      </button>
-    </div>
+  const stats=calcStatsIndividuales(),conStats=stats.filter(j=>j.total>0);
+  if(!conStats.length){cont.innerHTML=`<div class="sec-header"><div class="sec-title">⭐ Líderes</div><span class="premium-active-chip">⭐ Premium</span></div><div style="text-align:center;padding:40px 20px;color:var(--txt3)"><div style="font-size:36px;margin-bottom:10px">📊</div><div>Aún no hay estadísticas<br>Registra acciones en el marcador</div></div>`;return;}
+  const mvp=[...conStats].sort((a,b)=>b.total-a.total)[0];
+  const topAtk=[...conStats].sort((a,b)=>b.ataque-a.ataque).slice(0,3);
+  const topBlk=[...conStats].sort((a,b)=>b.bloqueo-a.bloqueo).slice(0,3);
+  const topDef=[...conStats].sort((a,b)=>b.defensa-a.defensa).slice(0,3);
+  const topSrv=[...conStats].sort((a,b)=>b.saque-a.saque).slice(0,3);
+  const posC=['var(--acc2)','rgba(255,255,255,0.6)','var(--acc3)'];
+  const renderPodio=(lista,campo,valClass)=>lista.filter(j=>j[campo]>0).map((j,i)=>`<div class="ind-row"><div class="ind-pos" style="color:${posC[i]||'var(--txt3)'}">${i+1}</div><div class="ind-info"><div class="ind-name">${j.dorsal?`#${j.dorsal} `:''}${j.nombre}</div><div class="ind-team">${j.equipo}</div></div><div class="ind-val ${valClass}">${j[campo]}</div></div>`).join('')||'<div style="color:var(--txt3);font-size:12px;padding:8px 20px">Sin datos</div>';
+  cont.innerHTML=`<div class="ind-stats-wrap">
+    <div class="sec-header"><div class="sec-title">⭐ Líderes</div><span class="premium-active-chip">⭐ Premium</span></div>
+    ${mvp?`<div style="padding:0 20px 16px"><div class="champion-card" style="padding:16px 20px"><span class="champion-trophy">🏅</span><div class="champion-label">MVP del torneo</div><div class="champion-name">${mvp.nombre}</div><div style="font-size:12px;color:rgba(255,140,66,0.8);margin-top:4px">${mvp.equipo} · ${mvp.total} acciones totales</div></div></div>`:''}
+    <div class="cat-header"><span class="cat-dot" style="background:var(--acc)"></span>⚡ Mejor Atacante</div>
+    <div class="ind-podium">${renderPodio(topAtk,'ataque','atk')}</div>
+    <div class="cat-header"><span class="cat-dot" style="background:var(--acc3)"></span>🛡 Más Bloqueos</div>
+    <div class="ind-podium">${renderPodio(topBlk,'bloqueo','blk')}</div>
+    <div class="cat-header"><span class="cat-dot" style="background:var(--green)"></span>🤲 Mejor Defensor</div>
+    <div class="ind-podium">${renderPodio(topDef,'defensa','def')}</div>
+    <div class="cat-header"><span class="cat-dot" style="background:var(--acc2)"></span>🎯 Mejor Sacador</div>
+    <div class="ind-podium">${renderPodio(topSrv,'saque','srv')}</div>
+    <div style="padding:20px 20px 8px"><div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px"><div style="font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px">Tabla completa</div>${[...conStats].sort((a,b)=>b.total-a.total).map((j,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><div style="width:20px;color:var(--txt3);font-weight:700;text-align:center">${i+1}</div><div style="flex:1;min-width:0"><div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${j.nombre}</div><div style="font-size:11px;color:var(--txt3)">${j.equipo}</div></div><div style="display:flex;gap:8px;font-size:11px;font-weight:700;flex-shrink:0"><span style="color:var(--acc)">⚡${j.ataque}</span><span style="color:var(--acc3)">🛡${j.bloqueo}</span><span style="color:var(--green)">🤲${j.defensa}</span><span style="color:var(--acc2)">🎯${j.saque}</span></div></div>`).join('')}</div></div>
   </div>`;
-}
-
-function marcarFinalizado() {
-  torneoActual.finalizado = !torneoActual.finalizado;
-  LS.save();
-  toast(torneoActual.finalizado ? '¡Torneo finalizado! 🏆' : 'Torneo marcado como activo');
-  if (tabActual === 3) renderStats();
 }
 
 // ══════════════════════════════════════
 // HISTORIAL
 // ══════════════════════════════════════
-function renderHistorial() {
-  const lista = LS.get();
-  const cont = document.getElementById('historial-lista');
-  const bar  = document.getElementById('historial-bar');
-  if (!lista.length) {
-    cont.innerHTML = `<div class="historial-empty"><span class="empty-icon">📋</span><div class="empty-text">No hay torneos guardados</div></div>`;
-    bar.style.display = 'none'; return;
-  }
-  bar.style.display = 'block';
-  cont.innerHTML = lista.slice().reverse().map(t => {
-    const tabla = calcTabla(t);
-    const lider = tabla.find(e => e.pj > 0);
-    const pts = (t.partidos||[]).filter(p => p.estado==='terminado').length;
-    return `<div class="historial-card" onclick="verDetalle('${t.id}')">
-      <div class="hcard-top"><div class="hcard-name">${t.nombre}</div><div class="hcard-arrow">›</div></div>
-      <div class="hcard-chips">
-        <span class="hchip ${t.tipo==='sala'?'chip-sala':'chip-playa'}">${t.tipo==='sala'?'🏟 Sala':'🏖 Playa'}</span>
-        <span class="hchip ${t.finalizado?'chip-fin':'chip-act'}">${t.finalizado?'✓ Final':'En curso'}</span>
-      </div>
-      <div class="hcard-meta">${t.equipos.length} equipos · ${pts} partidos · ${t.sede}
-        ${lider ? ' · 🏆 ' + lider.nombre : ''}</div>
-    </div>`;
+function renderHistorial(){
+  const lista=LS.get(),cont=document.getElementById('historial-lista'),bar=document.getElementById('historial-bar');
+  if(!lista.length){cont.innerHTML=`<div class="historial-empty"><span class="empty-icon">📋</span><div class="empty-text">No hay torneos guardados</div></div>`;bar.style.display='none';return;}
+  bar.style.display='block';
+  cont.innerHTML=lista.slice().reverse().map(t=>{
+    const tabla=calcTabla(t),lider=tabla.find(e=>e.pj>0),pts=(t.partidos||[]).filter(p=>p.estado==='terminado').length;
+    return`<div class="historial-card" onclick="verDetalle('${t.id}')"><div class="hcard-top"><div class="hcard-name">${t.nombre}</div><div class="hcard-arrow">›</div></div><div class="hcard-chips"><span class="hchip ${t.tipo==='sala'?'chip-sala':'chip-playa'}">${t.tipo==='sala'?'🏟 Sala':'🏖 Playa'}</span><span class="hchip ${t.finalizado?'chip-fin':'chip-act'}">${t.finalizado?'✓ Final':'En curso'}</span></div><div class="hcard-meta">${t.equipos.length} equipos · ${pts} partidos · ${t.sede}${lider?' · 🏆 '+lider.nombre:''}</div></div>`;
   }).join('');
 }
-
-function verDetalle(id) {
-  histSel = LS.get().find(t => t.id === id);
-  if (!histSel) return;
-  document.getElementById('detalle-title').textContent = histSel.nombre;
-  const tabla = calcTabla(histSel);
-  const terminados = (histSel.partidos||[]).filter(p => p.estado==='terminado');
-  const pC = ['pos-1','pos-2','pos-3'];
-
-  // Equipos con jugadores en detalle
-  const equiposConJug = histSel.equipos.filter(e => (e.jugadores||[]).length > 0);
-
-  document.getElementById('detalle-content').innerHTML = `
+function verDetalle(id){
+  histSel=LS.get().find(t=>t.id===id);if(!histSel)return;
+  document.getElementById('detalle-title').textContent=histSel.nombre;
+  const tabla=calcTabla(histSel),terminados=(histSel.partidos||[]).filter(p=>p.estado==='terminado'),pC=['pos-1','pos-2','pos-3'];
+  let indStatsHtml='';
+  if(isPremium()){const indStats=calcStatsIndividuales(histSel).filter(j=>j.total>0);if(indStats.length){const mvp=[...indStats].sort((a,b)=>b.total-a.total)[0];indStatsHtml=`<div class="sec-header"><div class="sec-title">⭐ Líderes</div></div><div style="padding:0 20px 16px"><div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="font-size:20px">🏅</span><div><div style="font-size:13px;font-weight:800">MVP: ${mvp.nombre}</div><div style="font-size:11px;color:var(--txt3)">${mvp.equipo}</div></div></div>${[...indStats].sort((a,b)=>b.total-a.total).slice(0,5).map((j,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border);font-size:12px"><div style="width:18px;color:var(--txt3);font-weight:700">${i+1}</div><div style="flex:1">${j.nombre} <span style="color:var(--txt3)">(${j.equipo})</span></div><span style="color:var(--acc)">⚡${j.ataque}</span><span style="color:var(--acc3)">🛡${j.bloqueo}</span><span style="color:var(--green)">🤲${j.defensa}</span><span style="color:var(--acc2)">🎯${j.saque}</span></div>`).join('')}</div></div>`;}}
+  document.getElementById('detalle-content').innerHTML=`
     <div class="sec-header"><div class="sec-title">Información</div></div>
-    <div style="padding:0 20px 16px">
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px">
-        <div class="info-rows">
-          <div class="info-row"><span class="lbl">Tipo</span><span class="val">${histSel.tipo==='sala'?'Sala':'Playa'}</span></div>
-          <div class="info-row"><span class="lbl">Sede</span><span class="val">${histSel.sede}</span></div>
-          <div class="info-row"><span class="lbl">Fecha</span><span class="val">${histSel.fecha||'—'}</span></div>
-          <div class="info-row"><span class="lbl">Formato</span><span class="val">${histSel.formato}</span></div>
-          <div class="info-row"><span class="lbl">Estado</span><span class="val" style="color:${histSel.finalizado?'var(--green)':'var(--acc2)'}">${histSel.finalizado?'✓ Finalizado':'En curso'}</span></div>
-        </div>
-      </div>
-    </div>
+    <div style="padding:0 20px 16px"><div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px"><div class="info-rows"><div class="info-row"><span class="lbl">Tipo</span><span class="val">${histSel.tipo==='sala'?'Sala':'Playa'}</span></div><div class="info-row"><span class="lbl">Sede</span><span class="val">${histSel.sede}</span></div><div class="info-row"><span class="lbl">Fecha</span><span class="val">${histSel.fecha||'—'}</span></div><div class="info-row"><span class="lbl">Formato</span><span class="val">${histSel.formato}</span></div><div class="info-row"><span class="lbl">Estado</span><span class="val" style="color:${histSel.finalizado?'var(--green)':'var(--acc2)'}">${histSel.finalizado?'✓ Finalizado':'En curso'}</span></div></div></div></div>
     <div class="sec-header"><div class="sec-title">Clasificación</div></div>
-    <div style="padding:0 20px 16px">
-      <div class="rank-list">
-        ${tabla.map((eq,i) => `
-          <div class="rank-row">
-            <div class="rank-pos" style="color:${i===0?'var(--acc2)':i===1?'rgba(255,255,255,0.6)':'var(--txt3)'}">${i+1}</div>
-            <div style="flex:1">
-              <div class="rank-name">${eq.nombre}${i===0&&eq.pj>0?' 🏆':''}</div>
-              ${(histSel.equipos.find(e=>e.id===eq.id)?.jugadores||[]).find(j=>j.capitan)?
-                `<div style="font-size:11px;color:var(--acc2)">★ ${histSel.equipos.find(e=>e.id===eq.id).jugadores.find(j=>j.capitan).nombre}</div>`:''}
-            </div>
-            <div style="text-align:right">
-              <div class="rank-pts">${eq.pts} pts</div>
-              <div style="font-size:11px;color:var(--txt3)">${eq.pg}G ${eq.pp}P</div>
-            </div>
-          </div>`).join('')}
-      </div>
-    </div>
-    ${equiposConJug.length ? `
-    <div class="sec-header"><div class="sec-title">Plantillas</div></div>
-    <div style="padding:0 20px 16px">
-      ${equiposConJug.map((eq, idx) => {
-        const [bg, color] = avatarColor(histSel.equipos.findIndex(e=>e.id===eq.id));
-        const cap = (eq.jugadores||[]).find(j=>j.capitan);
-        return `<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <div style="width:36px;height:36px;border-radius:10px;background:${bg};color:${color};display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px">${initials(eq.nombre)}</div>
-            <div>
-              <div style="font-weight:700;font-size:14px">${eq.nombre}</div>
-              ${cap?`<div style="font-size:11px;color:var(--acc2)">★ ${cap.nombre}</div>`:''}
-            </div>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px">
-            ${(eq.jugadores||[]).map(j=>`
-              <div style="background:var(--bg3);border-radius:8px;padding:5px 10px;font-size:12px;font-weight:600;display:flex;gap:6px;align-items:center">
-                ${j.dorsal?`<span style="color:var(--acc2);font-weight:800">#${j.dorsal}</span>`:''}
-                <span>${j.nombre}</span>
-                ${j.capitan?'<span style="color:var(--acc2)">★</span>':''}
-              </div>`).join('')}
-          </div>
-        </div>`;
-      }).join('')}
-    </div>` : ''}
+    <div style="padding:0 20px 16px"><div class="rank-list">${tabla.map((eq,i)=>`<div class="rank-row"><div class="rank-pos" style="color:${i===0?'var(--acc2)':i===1?'rgba(255,255,255,0.6)':'var(--txt3)'}">${i+1}</div><div style="flex:1"><div class="rank-name">${eq.nombre}${i===0&&eq.pj>0?' 🏆':''}</div></div><div style="text-align:right"><div class="rank-pts">${eq.pts} pts</div><div style="font-size:11px;color:var(--txt3)">${eq.pg}G ${eq.pp}P</div></div></div>`).join('')}</div></div>
+    ${indStatsHtml}
     <div class="sec-header"><div class="sec-title">Resultados (${terminados.length})</div></div>
-    <div style="padding:0 20px 8px">
-      ${terminados.map(p => {
-        const eqN = e => histSel.equipos.find(x => x.id === e)?.nombre || '?';
-        const sL = p.sets.filter(s => s.local > s.visitante).length;
-        const sV = p.sets.filter(s => s.visitante > s.local).length;
-        const dur = p.duracion ? `⏱ ${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}` : '';
-        return `<div class="result-row">
-          <div class="result-home">${eqN(p.local)}</div>
-          <div style="text-align:center">
-            <div class="result-score">${sL}–${sV}</div>
-            ${dur?`<div class="result-dur">${dur}</div>`:''}
-          </div>
-          <div class="result-away">${eqN(p.visitante)}</div>
-        </div>`;
-      }).join('') || '<div style="color:var(--txt3);font-size:13px;padding:8px 0">Sin partidos registrados</div>'}
-    </div>`;
+    <div style="padding:0 20px 8px">${terminados.map(p=>{const eqN=e=>histSel.equipos.find(x=>x.id===e)?.nombre||'?',sL=p.sets.filter(s=>s.local>s.visitante).length,sV=p.sets.filter(s=>s.visitante>s.local).length,dur=p.duracion?`⏱ ${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}`:'';return`<div class="result-row"><div class="result-home">${eqN(p.local)}</div><div style="text-align:center"><div class="result-score">${sL}–${sV}</div>${dur?`<div class="result-dur">${dur}</div>`:''}</div><div class="result-away">${eqN(p.visitante)}</div></div>`;}).join('')||'<div style="color:var(--txt3);font-size:13px;padding:8px 0">Sin partidos registrados</div>'}</div>`;
   showScreen('screen-detalle');
 }
+function pedirBorrarUno(){if(!histSel)return;showModal('¿Borrar este torneo?',`Se eliminará "${histSel.nombre}" con todos sus datos.`,()=>{LS.set(LS.get().filter(t=>t.id!==histSel.id));histSel=null;showScreen('screen-historial');toast('Torneo eliminado');});}
+function pedirBorrarTodo(){showModal('¿Borrar TODO el historial?','Se eliminarán todos los torneos. Esta acción no se puede deshacer.',()=>{LS.set([]);renderHistorial();toast('Historial borrado');});}
+function confirmarSalida(){if(torneoActual&&!torneoActual.finalizado){showModal('¿Salir del torneo?','El torneo se guardará automáticamente.',()=>showScreen('screen-home'));}else showScreen('screen-home');}
 
-function pedirBorrarUno() {
-  if (!histSel) return;
-  showModal('¿Borrar este torneo?', `Se eliminará "${histSel.nombre}" con todos sus datos.`, () => {
-    LS.set(LS.get().filter(t => t.id !== histSel.id));
-    histSel = null; showScreen('screen-historial'); toast('Torneo eliminado');
-  });
+// ══════════════════════════════════════
+// MODAL / TOAST / INIT
+// ══════════════════════════════════════
+function showModal(titulo,msg,fn){document.getElementById('modal-title').textContent=titulo;document.getElementById('modal-msg').textContent=msg;document.getElementById('modal-bg').style.display='flex';document.getElementById('modal-ok').style.display=fn?'flex':'none';modalFn=fn;}
+function closeModal(){document.getElementById('modal-bg').style.display='none';modalFn=null;}
+function modalOk(){if(modalFn)modalFn();closeModal();}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800);}
+document.addEventListener('DOMContentLoaded',()=>{renderHome();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});});
+
+
+// ══════════════════════════════════════
+// 1. EXPORTAR / IMPORTAR DATOS
+// ══════════════════════════════════════
+function exportarDatos() {
+  const datos = LS.get();
+  if (!datos.length) { toast('No hay torneos para exportar'); return; }
+  const json = JSON.stringify({ version: 2, exportado: new Date().toISOString(), torneos: datos }, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  const fecha = new Date().toISOString().slice(0,10);
+  a.href     = url;
+  a.download = `voleytorneo-backup-${fecha}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast(`📤 ${datos.length} torneo${datos.length!==1?'s':''} exportado${datos.length!==1?'s':''}`);
 }
 
-function pedirBorrarTodo() {
-  showModal('¿Borrar TODO el historial?', 'Se eliminarán todos los torneos. Esta acción no se puede deshacer.', () => {
-    LS.set([]); renderHistorial(); toast('Historial borrado');
-  });
+function importarDatos() {
+  document.getElementById('import-file').click();
 }
 
-function confirmarSalida() {
-  if (torneoActual && !torneoActual.finalizado) {
-    showModal('¿Salir del torneo?', 'El torneo se guardará automáticamente.', () => showScreen('screen-home'));
+function procesarImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      // Acepta tanto array directo como objeto con propiedad torneos
+      const torneos = Array.isArray(data) ? data : (data.torneos || []);
+      if (!torneos.length) { toast('El archivo no contiene torneos'); return; }
+      // Merge: no duplicar ids existentes
+      const existentes = LS.get();
+      const existentesIds = new Set(existentes.map(t => t.id));
+      const nuevos = torneos.filter(t => !existentesIds.has(t.id));
+      const merged = [...existentes, ...nuevos];
+      LS.set(merged);
+      renderHistorial();
+      toast(`📥 ${nuevos.length} torneo${nuevos.length!==1?'s':''} importado${nuevos.length!==1?'s':''}`);
+    } catch(err) {
+      toast('❌ Archivo inválido');
+    }
+    // Reset input so same file can be re-imported
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+// ══════════════════════════════════════
+// 2. NOTIFICACIONES DE SET Y PARTIDO
+// ══════════════════════════════════════
+function mostrarNotif(emoji, titulo, sub, onCerrar) {
+  document.getElementById('notif-emoji').textContent  = emoji;
+  document.getElementById('notif-title').textContent  = titulo;
+  document.getElementById('notif-sub').textContent    = sub;
+  const overlay = document.getElementById('notif-overlay');
+  overlay.classList.add('show');
+  // Store callback
+  overlay._onCerrar = onCerrar || null;
+}
+
+function cerrarNotif() {
+  const overlay = document.getElementById('notif-overlay');
+  overlay.classList.remove('show');
+  if (overlay._onCerrar) { overlay._onCerrar(); overlay._onCerrar = null; }
+}
+
+// ══════════════════════════════════════
+// 3. MODO ÁRBITRO (wake lock)
+// ══════════════════════════════════════
+let wakeLock = null;
+let modoArbitro = false;
+
+async function toggleModoArbitro() {
+  if (modoArbitro) {
+    // Desactivar
+    if (wakeLock) { try { await wakeLock.release(); } catch(e){} wakeLock = null; }
+    modoArbitro = false;
+    document.getElementById('arbitro-chip').classList.remove('active');
+    toast('Modo árbitro desactivado');
   } else {
-    showScreen('screen-home');
+    // Activar
+    if ('wakeLock' in navigator) {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => {
+          modoArbitro = false;
+          document.getElementById('arbitro-chip').classList.remove('active');
+        });
+        modoArbitro = true;
+        document.getElementById('arbitro-chip').classList.add('active');
+        toast('🟢 Pantalla siempre encendida');
+      } catch(e) {
+        toast('No se pudo activar el modo árbitro en este dispositivo');
+      }
+    } else {
+      toast('Tu dispositivo no soporta esta función');
+    }
   }
 }
 
-// ══════════════════════════════════════
-// MODAL
-// ══════════════════════════════════════
-function showModal(titulo, msg, fn) {
-  document.getElementById('modal-title').textContent = titulo;
-  document.getElementById('modal-msg').textContent   = msg;
-  document.getElementById('modal-bg').style.display  = 'flex';
-  document.getElementById('modal-ok').style.display  = fn ? 'flex' : 'none';
-  modalFn = fn;
-}
-function closeModal() { document.getElementById('modal-bg').style.display = 'none'; modalFn = null; }
-function modalOk()    { if (modalFn) modalFn(); closeModal(); }
-
-// ══════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2800);
+// Liberar wake lock al salir del marcador
+function liberarWakeLock() {
+  if (wakeLock) { try { wakeLock.release(); } catch(e){} wakeLock = null; modoArbitro = false; }
+  document.getElementById('arbitro-chip').classList.remove('active');
 }
 
 // ══════════════════════════════════════
-// INIT
+// 4. BRACKET VISUAL
 // ══════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
-  renderHome();
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
-});
+function renderBracket() {
+  const cont = document.getElementById('tab-bracket');
+  if (!torneoActual) return;
+
+  if (torneoActual.formato === 'liga') {
+    cont.innerHTML = `
+      <div class="sec-header"><div class="sec-title">Bracket</div></div>
+      <div style="padding:16px 20px;text-align:center;color:var(--txt3)">
+        <div style="font-size:36px;margin-bottom:10px">📋</div>
+        <div style="font-size:13px">El formato <strong style="color:var(--txt2)">Liga</strong> usa la tabla de clasificación.<br>El bracket aplica para eliminación y grupos.</div>
+      </div>`;
+    return;
+  }
+
+  // Agrupar partidos por fase/ronda
+  const rondas = {};
+  torneoActual.partidos.forEach(p => {
+    const r = p.fase || `Jornada ${p.jornada}`;
+    if (!rondas[r]) rondas[r] = [];
+    rondas[r].push(p);
+  });
+
+  const renderMatch = (p) => {
+    if (!p.visitante) {
+      return `<div class="bracket-match">
+        <div class="bracket-team winner">${nombreEq(p.local)}<span class="bteam-score">BYE</span></div>
+      </div>`;
+    }
+    const sL = p.sets.filter(s => s.local > s.visitante).length;
+    const sV = p.sets.filter(s => s.visitante > s.local).length;
+    const homWin = p.ganador === p.local;
+    const awayWin = p.ganador === p.visitante;
+    return `<div class="bracket-match">
+      <div class="bracket-team ${homWin?'winner':''}">
+        <span>${nombreEq(p.local)}</span>
+        ${p.estado!=='pendiente'?`<span class="bteam-score">${sL}</span>`:''}
+      </div>
+      <div class="bracket-divider"></div>
+      <div class="bracket-team ${awayWin?'winner':''}">
+        <span>${nombreEq(p.visitante)}</span>
+        ${p.estado!=='pendiente'?`<span class="bteam-score">${sV}</span>`:''}
+      </div>
+    </div>`;
+  };
+
+  const roundsHtml = Object.entries(rondas).map(([nombre, partidos]) => `
+    <div class="bracket-round">
+      <div class="bracket-round-title">${nombre}</div>
+      ${partidos.map(renderMatch).join('')}
+    </div>`).join('');
+
+  cont.innerHTML = `
+    <div class="sec-header"><div class="sec-title">Bracket</div></div>
+    <div class="bracket-wrap">
+      <div class="bracket-rounds">${roundsHtml}</div>
+    </div>`;
+}
+
+// ══════════════════════════════════════
+// 5. COMPARTIR POR WHATSAPP
+// ══════════════════════════════════════
+function compartirPartido(p) {
+  if (!p || p.estado !== 'terminado') return;
+  const local = nombreEq(p.local), visitante = nombreEq(p.visitante);
+  const sL = p.sets.filter(s => s.local > s.visitante).length;
+  const sV = p.sets.filter(s => s.visitante > s.local).length;
+  const setsDetalle = p.sets.map((s,i) => `Set ${i+1}: ${s.local}-${s.visitante}`).join(' | ');
+  const dur = p.duracion ? `⏱ ${Math.floor(p.duracion/60)}:${String(p.duracion%60).padStart(2,'0')}` : '';
+  const ganador = nombreEq(p.ganador);
+  const msg = `🏐 *VoleyTorneo — ${torneoActual?.nombre||''}*
+
+` +
+    `*${local}* ${sL} - ${sV} *${visitante}*
+` +
+    `${setsDetalle}
+` +
+    `🏆 Ganador: *${ganador}*
+` +
+    `${dur}
+
+_El Grillo Ciego de Ávila_`;
+  const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+function compartirTorneo() {
+  if (!histSel) return;
+  const tabla = calcTabla(histSel);
+  const terminados = (histSel.partidos||[]).filter(p => p.estado === 'terminado');
+  const podio = tabla.slice(0,3).map((eq,i) => `${['🥇','🥈','🥉'][i]} ${eq.nombre} — ${eq.pts} pts`).join('\n');
+  const msg = `🏐 *${histSel.nombre}*
+` +
+    `📍 ${histSel.sede} · ${histSel.tipo==='sala'?'Sala':'Playa'}
+
+` +
+    `*Clasificación final:*
+${podio}
+
+` +
+    `${terminados.length} partidos jugados
+` +
+    `_El Grillo Ciego de Ávila_`;
+  const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+function compartirResultadoVivo() {
+  if (!partidoActual || !torneoActual) return;
+  const local = nombreEq(partidoActual.local), visitante = nombreEq(partidoActual.visitante);
+  const sa = partidoActual.setActual || {local:0, visitante:0};
+  const sL = partidoActual.sets.filter(s=>s.local>s.visitante).length;
+  const sV = partidoActual.sets.filter(s=>s.visitante>s.local).length;
+  const m = Math.floor(timerSeg/60), s = timerSeg%60;
+  const msg = `🔴 *En vivo — ${torneoActual.nombre}*
+
+` +
+    `*${local}* ${sL} sets - ${sV} sets *${visitante}*
+` +
+    `Set actual: ${sa.local} - ${sa.visitante}
+` +
+    `⏱ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}
+
+` +
+    `_El Grillo Ciego de Ávila_`;
+  const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
 </script>
 </body>
 </html>
