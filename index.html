@@ -404,6 +404,91 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
 .notif-close{background:var(--acc);color:#fff;border:none;border-radius:var(--r);padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;width:100%;transition:transform 0.12s}
 .notif-close:active{transform:scale(0.96)}
 
+
+/* ══ ORGANIZACIÓN MANUAL ══ */
+.manual-jornada-block{margin:12px 20px 0}
+.manual-jornada-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.manual-jornada-name{flex:1;background:transparent;border:none;border-bottom:1.5px solid var(--border2);color:var(--txt);font-family:'Inter',sans-serif;font-size:14px;font-weight:700;padding:4px 0;outline:none}
+.manual-jornada-name:focus{border-bottom-color:var(--acc)}
+.manual-jornada-del{background:rgba(226,75,74,0.12);border:1px solid rgba(226,75,74,0.2);border-radius:8px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex-shrink:0;color:#F09595}
+.manual-partido-card{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all 0.15s}
+.manual-partido-card:active{transform:scale(0.98);border-color:var(--border2)}
+.manual-partido-card:hover{border-color:var(--acc)}
+.manual-partido-teams{flex:1}
+.manual-partido-vs{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
+.manual-partido-vs .vs{font-size:10px;color:var(--txt3);font-weight:600;background:var(--bg3);padding:2px 6px;border-radius:4px}
+.manual-partido-edit{font-size:16px;color:var(--txt3)}
+.manual-add-partido{background:rgba(255,255,255,0.04);border:1px dashed var(--border2);border-radius:var(--rs);padding:10px;text-align:center;font-size:12px;font-weight:600;color:var(--txt3);cursor:pointer;transition:all 0.15s;margin-bottom:8px}
+.manual-add-partido:active{background:rgba(255,255,255,0.08)}
+.format-manual-hint{background:rgba(155,109,255,0.08);border:1px solid rgba(155,109,255,0.2);border-radius:var(--rs);padding:10px 14px;font-size:12px;color:var(--purple);margin:8px 0 0;display:none}
+
+
+/* ══ ORGANIZAR GRUPOS ══ */
+.grupos-config-wrap{padding:12px 20px;flex:1;overflow-y:auto}
+.grupo-config-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);margin-bottom:14px;overflow:hidden}
+.grupo-config-header{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border)}
+.grupo-config-letra{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;flex-shrink:0}
+.grupo-config-info{flex:1}
+.grupo-config-nombre{font-size:14px;font-weight:800}
+.grupo-config-count{font-size:11px;color:var(--txt3);margin-top:1px}
+.grupo-eq-list{padding:8px 12px;display:flex;flex-direction:column;gap:6px;min-height:52px}
+.grupo-eq-item{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:grab;transition:all 0.15s;user-select:none}
+.grupo-eq-item.dragging{opacity:0.4;transform:scale(0.97)}
+.grupo-eq-item.drag-over{border-color:var(--acc);background:rgba(255,78,106,0.08)}
+.grupo-eq-drag{color:var(--txt3);font-size:16px;flex-shrink:0}
+.grupo-eq-name{flex:1;font-size:13px;font-weight:700}
+.grupo-eq-move{display:flex;gap:4px;flex-shrink:0}
+.grupo-move-btn{background:rgba(255,255,255,0.07);border:1px solid var(--border2);border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:var(--txt3);transition:all 0.15s;font-weight:700}
+.grupo-move-btn:active{transform:scale(0.88);background:rgba(255,255,255,0.15)}
+.grupo-move-btn:hover{color:var(--txt);border-color:var(--acc)}
+.grupo-drop-zone{border:1.5px dashed var(--border2);border-radius:var(--rs);padding:10px;text-align:center;font-size:11px;color:var(--txt3);margin:0 12px 8px;transition:all 0.15s}
+.grupo-drop-zone.active-drop{border-color:var(--acc);background:rgba(255,78,106,0.05);color:var(--acc)}
+.grupos-info-bar{background:rgba(155,109,255,0.08);border:1px solid rgba(155,109,255,0.2);border-radius:var(--rs);padding:10px 14px;font-size:12px;color:var(--purple);margin-bottom:14px;line-height:1.5}
+.clasifican-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(46,204,143,0.12);border:1px solid rgba(46,204,143,0.2);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:700;color:var(--green)}
+
+
+/* ══ TIPO + FORMATO COMBINADO ══ */
+.tipo-selector-wrap{padding:14px 20px;display:flex;gap:10px;margin-bottom:4px}
+.tipo-pill{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:var(--card);border:2px solid var(--border);border-radius:16px;
+  padding:14px 10px;cursor:pointer;transition:all 0.18s;text-align:center}
+.tipo-pill:active{transform:scale(0.95)}
+.tipo-pill.activo{border-color:var(--acc);background:rgba(255,78,106,0.08)}
+.tipo-pill .tp-emoji{font-size:28px}
+.tipo-pill .tp-name{font-size:13px;font-weight:800}
+.tipo-pill .tp-sub{font-size:10px;color:var(--txt3);font-weight:500}
+.tipo-reglamento{margin:0 20px 12px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:12px 16px;display:none}
+.tipo-reglamento.visible{display:block}
+.tipo-reglamento-title{font-size:10px;font-weight:700;color:var(--txt3);
+  text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px}
+.tipo-reg-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tipo-reg-item{background:var(--bg3);border-radius:8px;padding:7px 10px;font-size:11px;
+  color:var(--txt2);display:flex;align-items:center;gap:6px}
+.tipo-reg-dot{width:5px;height:5px;border-radius:50%;background:var(--acc);flex-shrink:0}
+.formato-section{padding:0 20px;margin-bottom:8px}
+.formato-section-title{font-size:10px;font-weight:700;color:var(--txt3);
+  text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;
+  display:flex;align-items:center;gap:8px}
+.formato-grid{display:flex;flex-direction:column;gap:8px}
+.formato-option{background:var(--card);border:2px solid var(--border);border-radius:var(--r);
+  padding:13px 16px;cursor:pointer;transition:all 0.18s;
+  display:flex;align-items:center;gap:12px}
+.formato-option:active{transform:scale(0.98)}
+.formato-option.selected{border-color:var(--acc);background:rgba(255,78,106,0.07)}
+.formato-option .fo-icon{font-size:22px;flex-shrink:0;width:32px;text-align:center}
+.formato-option .fo-info{flex:1}
+.formato-option .fo-name{font-size:14px;font-weight:700;margin-bottom:2px}
+.formato-option .fo-desc{font-size:11px;color:var(--txt3);line-height:1.4}
+.formato-option .fo-badge{display:inline-block;font-size:9px;font-weight:700;
+  padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle}
+.fo-badge-new{background:rgba(255,140,66,0.15);color:var(--acc2);border:1px solid rgba(255,140,66,0.25)}
+.fo-badge-pop{background:rgba(46,204,143,0.12);color:var(--green);border:1px solid rgba(46,204,143,0.2)}
+.formato-option .fo-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border2);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;
+  transition:all 0.15s}
+.formato-option.selected .fo-check{background:var(--acc);border-color:var(--acc);color:#fff}
+
 </style>
 </head>
 <body>
@@ -427,29 +512,83 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
 <div id="screen-type" class="screen">
   <div class="topbar">
     <div class="topbar-back" onclick="showScreen('screen-home')">←</div>
-    <div class="topbar-title">Tipo de voleibol</div>
+    <div class="topbar-title">Nuevo torneo</div>
   </div>
-  <div class="tipo-grid">
-    <div class="tipo-card" onclick="selectType('sala')">
-      <span class="tipo-emoji">🏟️</span>
-      <div class="tipo-name">De Sala</div>
-      <div class="tipo-sub">6 vs 6</div>
-      <div class="tipo-rules">
-        <div class="rule-row"><span class="rule-dot"></span>Sets a 25 pts</div>
-        <div class="rule-row"><span class="rule-dot"></span>5to set a 15</div>
-        <div class="rule-row"><span class="rule-dot"></span>Mejor de 5</div>
+  <div style="flex:1;overflow-y:auto;padding-bottom:16px">
+
+    <!-- Selector sala / playa -->
+    <div style="padding:14px 20px 6px;font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:0.8px">Modalidad</div>
+    <div class="tipo-selector-wrap">
+      <div class="tipo-pill activo" id="pill-sala" onclick="selectTipoPill('sala')">
+        <span class="tp-emoji">🏟️</span>
+        <div class="tp-name">Sala</div>
+        <div class="tp-sub">6 vs 6</div>
+      </div>
+      <div class="tipo-pill" id="pill-playa" onclick="selectTipoPill('playa')">
+        <span class="tp-emoji">🏖️</span>
+        <div class="tp-name">Playa</div>
+        <div class="tp-sub">2 vs 2</div>
       </div>
     </div>
-    <div class="tipo-card" onclick="selectType('playa')">
-      <span class="tipo-emoji">🏖️</span>
-      <div class="tipo-name">De Playa</div>
-      <div class="tipo-sub">2 vs 2</div>
-      <div class="tipo-rules">
-        <div class="rule-row"><span class="rule-dot"></span>Sets a 21 pts</div>
-        <div class="rule-row"><span class="rule-dot"></span>3er set a 15</div>
-        <div class="rule-row"><span class="rule-dot"></span>Mejor de 3</div>
+
+    <!-- Reglamento de la modalidad seleccionada -->
+    <div class="tipo-reglamento visible" id="tipo-reglamento-box">
+      <div class="tipo-reglamento-title">Reglamento</div>
+      <div class="tipo-reg-grid" id="tipo-reg-grid"></div>
+    </div>
+
+    <!-- Opciones de formato -->
+    <div class="formato-section" style="margin-top:14px">
+      <div class="formato-section-title">
+        📋 Formato del torneo
+      </div>
+      <div class="formato-grid">
+        <div class="formato-option selected" id="fmt-liga" onclick="selectFormatoTipo('liga')">
+          <div class="fo-icon">🔄</div>
+          <div class="fo-info">
+            <div class="fo-name">Liga <span class="fo-badge fo-badge-pop">Popular</span></div>
+            <div class="fo-desc">Todos contra todos. Tabla de clasificación final.</div>
+          </div>
+          <div class="fo-check">✓</div>
+        </div>
+        <div class="formato-option" id="fmt-eliminacion" onclick="selectFormatoTipo('eliminacion')">
+          <div class="fo-icon">⚔️</div>
+          <div class="fo-info">
+            <div class="fo-name">Eliminación directa</div>
+            <div class="fo-desc">El que pierde queda eliminado. Rápido e intenso.</div>
+          </div>
+          <div class="fo-check"></div>
+        </div>
+        <div class="formato-option" id="fmt-grupos" onclick="selectFormatoTipo('grupos')">
+          <div class="fo-icon">👥</div>
+          <div class="fo-info">
+            <div class="fo-name">Fase de grupos</div>
+            <div class="fo-desc">Dos grupos, todos contra todos dentro de cada uno.</div>
+          </div>
+          <div class="fo-check"></div>
+        </div>
+        <div class="formato-option" id="fmt-grupos_playoffs" onclick="selectFormatoTipo('grupos_playoffs')">
+          <div class="fo-icon">🏆</div>
+          <div class="fo-info">
+            <div class="fo-name">Grupos + Playoffs cruzados <span class="fo-badge fo-badge-new">Nuevo</span></div>
+            <div class="fo-desc">Fase de grupos + cruces eliminatorios. 1°G1 vs 2°G2, etc.</div>
+          </div>
+          <div class="fo-check"></div>
+        </div>
+        <div class="formato-option" id="fmt-manual" onclick="selectFormatoTipo('manual')">
+          <div class="fo-icon">🎯</div>
+          <div class="fo-info">
+            <div class="fo-name">Manual</div>
+            <div class="fo-desc">Tú decides cada partido y jornada a mano.</div>
+          </div>
+          <div class="fo-check"></div>
+        </div>
       </div>
     </div>
+  </div>
+
+  <div class="sheet-bar">
+    <button class="btn btn-acc btn-full" onclick="continuarDesdeType()">Continuar →</button>
   </div>
 </div>
 
@@ -487,11 +626,16 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
     </div>
     <div class="form-block">
       <label class="form-label">Formato</label>
-      <select class="form-select" id="formato-torneo">
+      <select class="form-select" id="formato-torneo" onchange="onFormatoChange(this.value)">
         <option value="liga">Liga — todos contra todos</option>
         <option value="eliminacion">Eliminación directa</option>
         <option value="grupos">Fase de grupos + eliminatoria</option>
+        <option value="grupos_playoffs">Grupos + Playoffs cruzados ⭐</option>
+        <option value="manual">Manual — yo decido los partidos</option>
       </select>
+      <div class="format-manual-hint" id="manual-hint">
+        🎯 Podrás organizar los partidos y jornadas tú mismo después de crear el torneo
+      </div>
     </div>
     <div class="form-block">
       <label class="form-label">Número de equipos</label>
@@ -692,6 +836,70 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
   </div>
 </div>
 
+
+<!-- ══ ORGANIZAR MANUALMENTE ══ -->
+<div id="screen-manual" class="screen">
+  <div class="topbar">
+    <div class="topbar-back" onclick="showScreen('screen-torneo')">←</div>
+    <div class="topbar-title">Organizar torneo</div>
+    <button class="topbar-action" onclick="agregarJornada()" style="font-size:22px" title="Nueva jornada">＋</button>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding-bottom:80px">
+    <div style="padding:10px 20px 0;font-size:12px;color:var(--txt3)">
+      Arrastra o edita los partidos. Toca un partido para cambiarlo.
+    </div>
+    <div id="manual-jornadas"></div>
+    <div style="padding:12px 20px">
+      <button class="btn btn-teal btn-full" onclick="agregarJornada()">＋ Agregar jornada</button>
+    </div>
+  </div>
+  <div class="sheet-bar">
+    <button class="btn btn-acc btn-full" onclick="guardarOrganizacion()">✓ Guardar organización</button>
+  </div>
+</div>
+
+<!-- ══ MODAL EDITAR PARTIDO MANUAL ══ -->
+<div class="modal-bg" id="modal-partido-manual" style="display:none">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Editar partido</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">
+      <div>
+        <label class="form-label" style="margin-bottom:6px">Jornada / Fase</label>
+        <input type="text" class="form-input" id="mp-jornada" placeholder="Ej: Jornada 1, Final, Semifinal...">
+      </div>
+      <div>
+        <label class="form-label" style="margin-bottom:6px">Equipo local</label>
+        <select class="form-select" id="mp-local"></select>
+      </div>
+      <div>
+        <label class="form-label" style="margin-bottom:6px">Equipo visitante</label>
+        <select class="form-select" id="mp-visitante"></select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-acc btn-full" id="mp-save-btn" onclick="guardarPartidoManual()">Guardar partido</button>
+      <button class="btn btn-red btn-full" id="mp-delete-btn" onclick="eliminarPartidoManual()" style="display:none">Eliminar partido</button>
+      <button class="btn btn-ghost btn-full" onclick="cerrarModalPartido()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ORGANIZAR GRUPOS ══ -->
+<div id="screen-grupos-config" class="screen">
+  <div class="topbar">
+    <div class="topbar-back" onclick="cancelarOrganizarGrupos()">←</div>
+    <div class="topbar-title">Organizar grupos</div>
+    <button class="topbar-action" onclick="mezclarGruposAleatorio()" style="font-size:18px" title="Aleatorio">🔀</button>
+  </div>
+  <div class="grupos-config-wrap">
+    <div class="grupos-info-bar" id="grupos-info-bar"></div>
+    <div id="grupos-config-lista"></div>
+  </div>
+  <div class="sheet-bar">
+    <button class="btn btn-acc btn-full" onclick="confirmarGruposYCrear()">✓ Confirmar grupos y crear torneo</button>
+  </div>
+</div>
 <!-- MODAL BOTTOM SHEET -->
 <div class="modal-bg" id="modal-bg" style="display:none">
   <div class="modal-sheet">
@@ -828,6 +1036,7 @@ const REGLAMENTO = {
 // ESTADO GLOBAL
 // ══════════════════════════════════════
 let torneoActual=null,partidoActual=null,equipoActual=null,tipoSel=null,normasSel=[],timerSeg=0,timerOn=false,timerInt=null,modalFn=null,histSel=null,tabActual=0,undoStack=[],puntosHistorial=[];
+let gruposTemp=null,torneoConfigTemp=null,dragSrcEqId=null,dragSrcGrupoIdx=null;
 
 // ══════════════════════════════════════
 // PREMIUM
@@ -901,13 +1110,69 @@ function abrirTorneo(id){
 // ══════════════════════════════════════
 // TIPO / NORMAS
 // ══════════════════════════════════════
-function selectType(tipo){tipoSel=tipo;normasSel=[];renderNormas();showScreen('screen-normas');}
+// Estado del nuevo selector de tipo+formato
+let formatoTipoSel = 'liga'; // formato seleccionado en screen-type
+
+function selectType(tipo){
+  // Compatibilidad: llamadas directas aún funcionan
+  tipoSel=tipo;normasSel=[];renderNormas();showScreen('screen-normas');
+}
+
+// ── Selector de pill sala/playa ──────────────────────────────────────────────
+function selectTipoPill(tipo) {
+  tipoSel = tipo;
+  document.getElementById('pill-sala').classList.toggle('activo', tipo==='sala');
+  document.getElementById('pill-playa').classList.toggle('activo', tipo==='playa');
+  actualizarReglamentoBox(tipo);
+}
+
+function actualizarReglamentoBox(tipo) {
+  const regl = tipo==='sala'
+    ? [{t:'6 jugadores',s:'por equipo'},{t:'Sets a 25 pts',s:'5to a 15'},{t:'Mejor de 5',s:'sets'},{t:'6 sustituciones',s:'por set'}]
+    : [{t:'2 jugadores',s:'por equipo'},{t:'Sets a 21 pts',s:'3ro a 15'},{t:'Mejor de 3',s:'sets'},{t:'Sin sustituciones',s:''}];
+  document.getElementById('tipo-reg-grid').innerHTML = regl.map(r =>
+    `<div class="tipo-reg-item"><span class="tipo-reg-dot"></span><div><div style="font-weight:700">${r.t}</div>${r.s?`<div style="color:var(--txt3);font-size:10px">${r.s}</div>`:''}</div></div>`
+  ).join('');
+}
+
+// ── Selector de formato ──────────────────────────────────────────────────────
+function selectFormatoTipo(fmt) {
+  formatoTipoSel = fmt;
+  document.querySelectorAll('.formato-option').forEach(el => {
+    const isSel = el.id === `fmt-${fmt}`;
+    el.classList.toggle('selected', isSel);
+    el.querySelector('.fo-check').textContent = isSel ? '✓' : '';
+  });
+}
+
+// ── Continuar: desde screen-type ir a normas ─────────────────────────────────
+function continuarDesdeType() {
+  if(!tipoSel) tipoSel = 'sala';
+  normasSel = [];
+  // Guardar el formato elegido aquí para pre-seleccionarlo en screen-config
+  renderNormas();
+  showScreen('screen-normas');
+  // Guardar formato seleccionado para aplicarlo al llegar a config
+  window._formatoPresel = formatoTipoSel;
+}
 function renderNormas(){
   const lista=tipoSel==='sala'?NORMAS_SALA:NORMAS_PLAYA;
   document.getElementById('normas-lista').innerHTML=lista.map(n=>`<div class="norma-card ${normasSel.includes(n.id)?'sel':''}" onclick="toggleNorma('${n.id}')"><div class="norma-head"><div class="norma-check">${normasSel.includes(n.id)?'✓':''}</div><div class="norma-info"><span class="norma-badge ${n.badge==='oficial'?'badge-oficial':'badge-alt'}">${n.badge==='oficial'?'⚡ Oficial FIVB':'🔧 Alternativa'}</span><div class="norma-title">${n.titulo}</div><div class="norma-desc">${n.descripcion}</div></div></div></div>`).join('');
 }
 function toggleNorma(id){normasSel=normasSel.includes(id)?normasSel.filter(n=>n!==id):[...normasSel,id];renderNormas();}
-function confirmarNormas(){if(!normasSel.length){toast('Selecciona al menos una norma');return;}actualizarEquipos();document.getElementById('fecha-torneo').value=new Date().toISOString().slice(0,10);showScreen('screen-config');}
+function confirmarNormas(){
+  if(!normasSel.length){toast('Selecciona al menos una norma');return;}
+  actualizarEquipos();
+  document.getElementById('fecha-torneo').value=new Date().toISOString().slice(0,10);
+  // Pre-seleccionar el formato elegido en screen-type
+  if(window._formatoPresel){
+    const sel = document.getElementById('formato-torneo');
+    if(sel) sel.value = window._formatoPresel;
+    onFormatoChange(window._formatoPresel);
+    window._formatoPresel = null;
+  }
+  showScreen('screen-config');
+}
 
 // ══════════════════════════════════════
 // CONFIG
@@ -941,28 +1206,235 @@ function crearTorneo(){
   const equipos=[];
   for(let i=1;i<=n;i++){const v=document.getElementById('eq-'+i)?.value.trim();if(!v){toast(`Escribe el nombre del equipo ${i}`);return;}equipos.push({id:'eq'+i,nombre:v,jugadores:[]});}
   torneoActual={id:uid(),nombre,tipo:tipoSel,formato,sede:sede||'Sin especificar',fecha,equipos,normas:normasSel,partidos:[],finalizado:false,creadoEn:new Date().toISOString()};
-  generarCalendario();LS.save();showScreen('screen-torneo');toast('¡Torneo creado! 🏐');
+  if(formato==='manual'){
+    torneoActual.partidos=[];
+    LS.save();
+    showScreen('screen-torneo');
+    toast('¡Torneo creado! Organiza los partidos en la pestaña Partidos 🎯');
+  } else {
+    // Todos los formatos con calendario pasan por el editor de orden/grupos
+    torneoConfigTemp = torneoActual;
+    abrirOrganizarGrupos();
+  }
 }
 
 // ══════════════════════════════════════
 // CALENDARIO
 // ══════════════════════════════════════
 function generarCalendario(){
-  const{equipos,formato}=torneoActual;torneoActual.partidos=[];
+  const{equipos,formato}=torneoActual;
+  torneoActual.partidos=[];
+  torneoActual.playoffs=null; // reset playoffs
   const mkP=(loc,vis,extra={})=>({id:uid(),local:loc,visitante:vis,estado:'pendiente',sets:[],duracion:null,ganador:null,statsJugadores:{},...extra});
+
   if(formato==='liga'){
     const partidos=[];
     for(let i=0;i<equipos.length;i++)for(let j=i+1;j<equipos.length;j++)partidos.push(mkP(equipos[i].id,equipos[j].id));
     let jornada=1;const pendientes=[...partidos];
     while(pendientes.length){const usados=new Set();let i=0;while(i<pendientes.length){const p=pendientes[i];if(!usados.has(p.local)&&!usados.has(p.visitante)){p.jornada=jornada;usados.add(p.local);usados.add(p.visitante);torneoActual.partidos.push(p);pendientes.splice(i,1);}else i++;}jornada++;}
+
   }else if(formato==='eliminacion'){
     const eqs=[...equipos].sort(()=>Math.random()-0.5);
     for(let i=0;i<Math.floor(eqs.length/2);i++)torneoActual.partidos.push(mkP(eqs[i*2].id,eqs[i*2+1].id,{jornada:1,fase:'Primera ronda'}));
     if(eqs.length%2===1)torneoActual.partidos.push({...mkP(eqs[eqs.length-1].id,null,{jornada:1,fase:'Primera ronda'}),estado:'bye',ganador:eqs[eqs.length-1].id});
-  }else{
+
+  }else if(formato==='grupos'){
     const mitad=Math.ceil(equipos.length/2);const gA=equipos.slice(0,mitad),gB=equipos.slice(mitad);
     [['A',gA],['B',gB]].forEach(([g,grupo])=>{for(let i=0;i<grupo.length;i++)for(let j=i+1;j<grupo.length;j++)torneoActual.partidos.push(mkP(grupo[i].id,grupo[j].id,{jornada:i+1,fase:`Grupo ${g}`}));});
+
+  }else if(formato==='grupos_playoffs'){
+    generarFaseGruposConPlayoffs(equipos, mkP);
   }
+}
+
+// ── Sistema de grupos + playoffs cruzados ────────────────────────────────────
+function generarFaseGruposConPlayoffs(equipos, mkP) {
+  const n = equipos.length;
+  // Decidir cuántos grupos según cantidad de equipos
+  let numGrupos, clasificanPorGrupo;
+  if(n <= 5){
+    numGrupos = 1;
+    clasificanPorGrupo = Math.min(4, n-1);
+  } else if(n <= 10){
+    numGrupos = 2;
+    clasificanPorGrupo = 4;
+  } else if(n <= 16){
+    numGrupos = 4;
+    clasificanPorGrupo = 2;
+  } else {
+    numGrupos = Math.ceil(n / 5);
+    clasificanPorGrupo = 2;
+  }
+
+  // Distribuir equipos en grupos de forma equilibrada (serpentina)
+  const grupos = Array.from({length: numGrupos}, () => []);
+  const eqsMezclados = [...equipos].sort(() => Math.random() - 0.5);
+  eqsMezclados.forEach((eq, i) => {
+    const gi = i % numGrupos;
+    grupos[gi < numGrupos ? (Math.floor(i / numGrupos) % 2 === 0 ? gi : numGrupos - 1 - gi) : gi].push(eq);
+  });
+
+  // Guardar metadatos para los playoffs
+  torneoActual.playoffs = {
+    numGrupos,
+    clasificanPorGrupo,
+    grupos: grupos.map((g, i) => ({ letra: String.fromCharCode(65+i), equipoIds: g.map(e=>e.id) })),
+    rondas: [], // se llenarán cuando termine la fase de grupos
+    generado: false
+  };
+
+  // Generar partidos de fase de grupos (todos contra todos dentro de cada grupo)
+  grupos.forEach((grupo, gi) => {
+    const letra = String.fromCharCode(65 + gi);
+    let jornada = 1;
+    const partidos = [];
+    for(let i = 0; i < grupo.length; i++)
+      for(let j = i+1; j < grupo.length; j++)
+        partidos.push(mkP(grupo[i].id, grupo[j].id));
+    // Asignar jornadas round-robin dentro del grupo
+    const pendientes = [...partidos];
+    while(pendientes.length){
+      const usados = new Set(); let i = 0;
+      while(i < pendientes.length){
+        const p = pendientes[i];
+        if(!usados.has(p.local) && !usados.has(p.visitante)){
+          p.jornada = jornada; p.fase = `Grupo ${letra}`;
+          usados.add(p.local); usados.add(p.visitante);
+          torneoActual.partidos.push(p); pendientes.splice(i,1);
+        } else i++;
+      }
+      jornada++;
+    }
+  });
+}
+
+// ── Verificar si la fase de grupos terminó y generar playoffs ────────────────
+function verificarYGenerarPlayoffs() {
+  if (!torneoActual || torneoActual.formato !== 'grupos_playoffs') return false;
+  if (!torneoActual.playoffs || torneoActual.playoffs.generado) return false;
+
+  const mkP = (loc,vis,extra={}) => ({id:uid(),local:loc,visitante:vis,estado:'pendiente',sets:[],duracion:null,ganador:null,statsJugadores:{},...extra});
+
+  // Comprobar si todos los partidos de grupos están terminados
+  const partGrupos = torneoActual.partidos.filter(p => p.fase && p.fase.startsWith('Grupo'));
+  const todosFin = partGrupos.length > 0 && partGrupos.every(p => p.estado === 'terminado');
+  if (!todosFin) return false;
+
+  // Calcular clasificación por grupo
+  const {grupos, clasificanPorGrupo} = torneoActual.playoffs;
+  const clasificados = grupos.map(g => {
+    const stats = {};
+    g.equipoIds.forEach(id => { stats[id]={id,pj:0,pg:0,pp:0,sf:0,sc:0,pts:0}; });
+    partGrupos.filter(p => g.equipoIds.includes(p.local) || g.equipoIds.includes(p.visitante)).forEach(p => {
+      const sL=p.sets.filter(s=>s.local>s.visitante).length, sV=p.sets.filter(s=>s.visitante>s.local).length;
+      if(!stats[p.local]||!stats[p.visitante]) return;
+      stats[p.local].pj++;stats[p.visitante].pj++;
+      stats[p.local].sf+=sL;stats[p.local].sc+=sV;
+      stats[p.visitante].sf+=sV;stats[p.visitante].sc+=sL;
+      const normas=torneoActual.tipo==='sala'?NORMAS_SALA:NORMAS_PLAYA;
+      const normaActiva=torneoActual.normas.map(nid=>normas.find(n=>n.id===nid)).find(n=>n&&n.calcularPuntos);
+      if(sL>sV){stats[p.local].pg++;stats[p.visitante].pp++;const r=normaActiva?normaActiva.calcularPuntos({setsG:sL,setsP:sV}):{ganador:3,perdedor:0};stats[p.local].pts+=r.ganador;stats[p.visitante].pts+=r.perdedor;}
+      else{stats[p.visitante].pg++;stats[p.local].pp++;const r=normaActiva?normaActiva.calcularPuntos({setsG:sV,setsP:sL}):{ganador:3,perdedor:0};stats[p.visitante].pts+=r.ganador;stats[p.local].pts+=r.perdedor;}
+    });
+    return Object.values(stats).sort((a,b)=>b.pts-a.pts||(b.sf-b.sc)-(a.sf-a.sc)).slice(0, clasificanPorGrupo);
+  });
+
+  // Generar cruces: 1G1 vs 2G2, 1G2 vs 2G1, luego 3G1 vs 4G2, 3G2 vs 4G1...
+  // Para un grupo único: 1vo vs 4to, 2do vs 3ro
+  const playoffPartidos = [];
+  const numGrupos = grupos.length;
+
+  if(numGrupos === 1){
+    // Un solo grupo: 1vo vs Nvo, 2do vs (N-1)vo...
+    const cls = clasificados[0];
+    for(let i=0; i<Math.floor(cls.length/2); i++){
+      playoffPartidos.push(mkP(cls[i].id, cls[cls.length-1-i].id, {fase:'Cuartos / Playoffs', rondaPlayoff:1}));
+    }
+  } else {
+    // Múltiples grupos: cruce cruzado entre grupos
+    // 1G1 vs 2G2, 1G2 vs 2G1, 1G3 vs 2G4... etc
+    const posiciones = clasificanPorGrupo;
+    for(let pos=0; pos<posiciones; pos++){
+      for(let g=0; g<Math.floor(numGrupos/2); g++){
+        const gA = clasificados[g];
+        const gB = clasificados[numGrupos-1-g];
+        if(gA[pos] && gB[posiciones-1-pos]){
+          const faseNombre = posiciones>2 ? `Playoffs Ronda 1` : `Semifinales`;
+          playoffPartidos.push(mkP(gA[pos].id, gB[posiciones-1-pos].id, {fase: faseNombre, rondaPlayoff:1}));
+        }
+        if(pos !== posiciones-1-pos && gA[posiciones-1-pos] && gB[pos]){
+          const faseNombre = posiciones>2 ? `Playoffs Ronda 1` : `Semifinales`;
+          playoffPartidos.push(mkP(gB[pos].id, gA[posiciones-1-pos].id, {fase: faseNombre, rondaPlayoff:1}));
+        }
+      }
+    }
+    // Si numGrupos es impar, el grupo del medio se cruza con sí mismo
+    if(numGrupos % 2 === 1){
+      const gMid = clasificados[Math.floor(numGrupos/2)];
+      for(let i=0;i<Math.floor(gMid.length/2);i++){
+        playoffPartidos.push(mkP(gMid[i].id, gMid[gMid.length-1-i].id, {fase:'Playoffs Ronda 1', rondaPlayoff:1}));
+      }
+    }
+  }
+
+  // Agregar partidos de playoffs al torneo
+  playoffPartidos.forEach(p => torneoActual.partidos.push(p));
+  torneoActual.playoffs.generado = true;
+  torneoActual.playoffs.clasificadosPorGrupo = clasificados;
+  LS.save();
+  return true;
+}
+
+// ── Verificar si hay que generar siguiente ronda de playoffs ────────────────
+function verificarSiguienteRondaPlayoffs() {
+  if (!torneoActual || torneoActual.formato !== 'grupos_playoffs') return false;
+  if (!torneoActual.playoffs?.generado) return false;
+
+  const mkP=(loc,vis,extra={})=>({id:uid(),local:loc,visitante:vis,estado:'pendiente',sets:[],duracion:null,ganador:null,statsJugadores:{},...extra});
+
+  // Buscar la ronda más alta que tenga todos terminados pero sin siguiente
+  const rondasPlayoff = {};
+  torneoActual.partidos.filter(p=>p.rondaPlayoff).forEach(p=>{
+    if(!rondasPlayoff[p.rondaPlayoff]) rondasPlayoff[p.rondaPlayoff]=[];
+    rondasPlayoff[p.rondaPlayoff].push(p);
+  });
+  if(!Object.keys(rondasPlayoff).length) return false;
+
+  const maxRonda = Math.max(...Object.keys(rondasPlayoff).map(Number));
+  const ultimaRonda = rondasPlayoff[maxRonda];
+  const todosTerm = ultimaRonda.every(p=>p.estado==='terminado');
+  if(!todosTerm) return false;
+
+  // Ya hay siguiente ronda generada?
+  if(rondasPlayoff[maxRonda+1]) return false;
+
+  const ganadores = ultimaRonda.map(p=>p.ganador).filter(Boolean);
+  if(ganadores.length < 2) {
+    // Campeón!
+    return false;
+  }
+
+  // Determinar fase
+  let faseNombre;
+  if(ganadores.length === 2) faseNombre = 'Final';
+  else if(ganadores.length === 4) faseNombre = 'Semifinales';
+  else if(ganadores.length === 8) faseNombre = 'Cuartos de final';
+  else faseNombre = `Playoffs Ronda ${maxRonda+1}`;
+
+  // Emparejar ganadores: 1ro vs último, 2do vs penúltimo...
+  const nuevosPartidos = [];
+  for(let i=0; i<Math.floor(ganadores.length/2); i++){
+    nuevosPartidos.push(mkP(ganadores[i], ganadores[ganadores.length-1-i], {fase:faseNombre, rondaPlayoff:maxRonda+1}));
+  }
+  if(ganadores.length % 2 === 1){
+    // BYE para el del medio
+    const byeId = ganadores[Math.floor(ganadores.length/2)];
+    nuevosPartidos.push({...mkP(byeId, null, {fase:faseNombre, rondaPlayoff:maxRonda+1}), estado:'bye', ganador:byeId});
+  }
+
+  nuevosPartidos.forEach(p=>torneoActual.partidos.push(p));
+  LS.save();
+  return true;
 }
 
 // ══════════════════════════════════════
@@ -974,10 +1446,23 @@ function nombreEq(id){if(!torneoActual||!id)return '?';return torneoActual.equip
 function renderCalendario(){
   if(!torneoActual)return;
   const cont=document.getElementById('tab-calendario');
-  if(!torneoActual.partidos.length){cont.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--txt3)">Sin partidos generados</div>';return;}
+  const esManual = torneoActual.formato==='manual';
+  const btnOrg = `<div style="padding:12px 20px 4px;display:flex;justify-content:flex-end">
+    <button onclick="abrirOrganizacion()" style="background:rgba(155,109,255,0.12);border:1.5px solid rgba(155,109,255,0.3);border-radius:20px;padding:7px 16px;font-size:12px;font-weight:700;color:var(--purple);cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px">
+      🎯 Organizar manualmente
+    </button>
+  </div>`;
+  if(!torneoActual.partidos.length){
+    cont.innerHTML = btnOrg + '<div style="text-align:center;padding:40px 20px;color:var(--txt3)">' +
+      (esManual
+        ? '<div style="font-size:36px;margin-bottom:12px">🎯</div><div style="font-size:14px;font-weight:600;margin-bottom:6px">Torneo manual</div><div style="font-size:12px">Toca "Organizar manualmente" para agregar partidos y jornadas</div>'
+        : '<div style="font-size:36px;margin-bottom:12px">📅</div><div style="font-size:13px">Sin partidos generados</div>') +
+      '</div>';
+    return;
+  }
   const grupos={};
   torneoActual.partidos.forEach(p=>{const k=p.fase?p.fase:`Jornada ${p.jornada}`;if(!grupos[k])grupos[k]=[];grupos[k].push(p);});
-  cont.innerHTML=Object.entries(grupos).map(([titulo,ps])=>`<div class="jornada-pill">📅 ${titulo}</div>${ps.map(cardPartido).join('')}`).join('');
+  cont.innerHTML= btnOrg + Object.entries(grupos).map(([titulo,ps])=>`<div class="jornada-pill">📅 ${titulo}</div>${ps.map(cardPartido).join('')}`).join('');
 }
 function cardPartido(p){
   if(p.estado==='bye')return`<div class="partido-card"><div class="partido-body"><div class="partido-team home">${nombreEq(p.local)}</div><div class="partido-score-box"><div class="partido-score-label">BYE</div></div><div class="partido-team away" style="color:var(--txt3)">—</div></div></div>`;
@@ -1013,8 +1498,72 @@ function calcTabla(t){
   return Object.values(stats).sort((a,b)=>b.pts-a.pts||(b.sf-b.sc)-(a.sf-a.sc)||(b.pf-b.pc)-(a.pf-a.pc));
 }
 function renderTabla(){
-  const data=calcTabla(),pC=['pos-1','pos-2','pos-3'];
-  document.getElementById('tab-tabla').innerHTML=`<div class="sec-header"><div class="sec-title">Clasificación</div></div><div class="tabla-scroll"><table class="tabla"><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>PG</th><th>PP</th><th>SF</th><th>SC</th><th>Pts</th></tr></thead><tbody>${data.map((eq,i)=>`<tr class="${i===0?'row-1':i===1?'row-2':''}"><td><span class="pos-badge ${pC[i]||''}">${i+1}</span></td><td>${eq.nombre}${i===0&&eq.pj>0?' 🏆':''}</td><td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pp}</td><td>${eq.sf}</td><td>${eq.sc}</td><td class="td-pts">${eq.pts}</td></tr>`).join('')}</tbody></table></div><div class="tabla-legend">PJ=Jugados · PG=Ganados · PP=Perdidos · SF/SC=Sets favor/contra</div>`;
+  const pC=['pos-1','pos-2','pos-3'];
+  const cont = document.getElementById('tab-tabla');
+
+  if(torneoActual.formato === 'grupos_playoffs' && torneoActual.playoffs?.grupos){
+    // Mostrar tabla por grupo
+    const pl = torneoActual.playoffs;
+    let html = `<div class="sec-header"><div class="sec-title">Clasificación por grupos</div></div>`;
+    pl.grupos.forEach(g => {
+      const partGrupo = torneoActual.partidos.filter(p=>p.fase===`Grupo ${g.letra}`);
+      const stats = {};
+      g.equipoIds.forEach(id=>{ stats[id]={id,nombre:nombreEq(id),pj:0,pg:0,pp:0,sf:0,sc:0,pts:0}; });
+      partGrupo.filter(p=>p.estado==='terminado').forEach(p=>{
+        const sL=p.sets.filter(s=>s.local>s.visitante).length, sV=p.sets.filter(s=>s.visitante>s.local).length;
+        const pF=p.sets.reduce((a,s)=>a+s.local,0), pC2=p.sets.reduce((a,s)=>a+s.visitante,0);
+        if(!stats[p.local]||!stats[p.visitante])return;
+        stats[p.local].pj++;stats[p.visitante].pj++;
+        stats[p.local].sf+=sL;stats[p.local].sc+=sV;stats[p.visitante].sf+=sV;stats[p.visitante].sc+=sL;
+        const normas=torneoActual.tipo==='sala'?NORMAS_SALA:NORMAS_PLAYA;
+        const na=torneoActual.normas.map(nid=>normas.find(n=>n.id===nid)).find(n=>n&&n.calcularPuntos);
+        if(sL>sV){stats[p.local].pg++;stats[p.visitante].pp++;const r=na?na.calcularPuntos({setsG:sL,setsP:sV}):{ganador:3,perdedor:0};stats[p.local].pts+=r.ganador;stats[p.visitante].pts+=r.perdedor;}
+        else{stats[p.visitante].pg++;stats[p.local].pp++;const r=na?na.calcularPuntos({setsG:sV,setsP:sL}):{ganador:3,perdedor:0};stats[p.visitante].pts+=r.ganador;stats[p.local].pts+=r.perdedor;}
+      });
+      const tabla=Object.values(stats).sort((a,b)=>b.pts-a.pts||(b.sf-b.sc)-(a.sf-a.sc));
+      const clasifican=pl.clasificanPorGrupo;
+      html += `<div style="padding:0 20px 12px">
+        <div style="font-size:11px;font-weight:700;color:var(--acc2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;display:flex;align-items:center;gap:8px">
+          <span style="background:rgba(255,140,66,0.15);border:1px solid rgba(255,140,66,0.25);border-radius:20px;padding:3px 10px">Grupo ${g.letra}</span>
+          <span style="color:var(--txt3);font-weight:500;font-size:10px">Clasifican ${clasifican}</span>
+        </div>
+        <div class="tabla-scroll" style="margin:0">
+        <table class="tabla"><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>PG</th><th>PP</th><th>SF</th><th>SC</th><th>Pts</th></tr></thead>
+        <tbody>${tabla.map((eq,i)=>`<tr class="${i===0?'row-1':i===1?'row-2':''}">
+          <td><span class="pos-badge ${pC[i]||''}">${i+1}${i<clasifican?'✓':''}</span></td>
+          <td style="color:${i<clasifican?'var(--txt)':'var(--txt3)'}">${eq.nombre}</td>
+          <td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pp}</td><td>${eq.sf}</td><td>${eq.sc}</td>
+          <td class="td-pts">${eq.pts}</td>
+        </tr>`).join('')}</tbody></table></div>
+      </div>`;
+    });
+
+    // Tabla de playoffs si existe
+    const rondasPO = {};
+    torneoActual.partidos.filter(p=>p.rondaPlayoff).forEach(p=>{if(!rondasPO[p.rondaPlayoff])rondasPO[p.rondaPlayoff]=[];rondasPO[p.rondaPlayoff].push(p);});
+    if(Object.keys(rondasPO).length){
+      html += `<div style="padding:0 20px 12px"><div style="font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px">Playoffs</div>`;
+      Object.entries(rondasPO).sort((a,b)=>a[0]-b[0]).forEach(([r,ps])=>{
+        const titulo=ps[0]?.fase||`Ronda ${r}`;
+        html+=`<div style="margin-bottom:8px"><div style="font-size:10px;color:var(--txt3);font-weight:600;margin-bottom:6px;text-transform:uppercase">${titulo}</div>
+        ${ps.map(p=>{const sL=p.sets.filter(s=>s.local>s.visitante).length,sV=p.sets.filter(s=>s.visitante>s.local).length;
+          return`<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;margin-bottom:6px">
+            <span style="flex:1;font-weight:${p.ganador===p.local?800:400};color:${p.ganador===p.local?'var(--acc)':'var(--txt)'}">${nombreEq(p.local)}</span>
+            <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--acc2);padding:0 10px">${p.estado!=='pendiente'?`${sL}–${sV}`:'vs'}</span>
+            <span style="flex:1;text-align:right;font-weight:${p.ganador===p.visitante?800:400};color:${p.ganador===p.visitante?'var(--acc)':'var(--txt)'}">${nombreEq(p.visitante)}</span>
+          </div>`;}).join('')}
+        </div>`;
+      });
+      html += `</div>`;
+    }
+    html += `<div class="tabla-legend">✓ = Clasifica a playoffs</div>`;
+    cont.innerHTML = html;
+    return;
+  }
+
+  // Tabla estándar para otros formatos
+  const data=calcTabla();
+  cont.innerHTML=`<div class="sec-header"><div class="sec-title">Clasificación</div></div><div class="tabla-scroll"><table class="tabla"><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>PG</th><th>PP</th><th>SF</th><th>SC</th><th>Pts</th></tr></thead><tbody>${data.map((eq,i)=>`<tr class="${i===0?'row-1':i===1?'row-2':''}"><td><span class="pos-badge ${pC[i]||''}">${i+1}</span></td><td>${eq.nombre}${i===0&&eq.pj>0?' 🏆':''}</td><td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pp}</td><td>${eq.sf}</td><td>${eq.sc}</td><td class="td-pts">${eq.pts}</td></tr>`).join('')}</tbody></table></div><div class="tabla-legend">PJ=Jugados · PG=Ganados · PP=Perdidos · SF/SC=Sets favor/contra</div>`;
 }
 
 // ══════════════════════════════════════
@@ -1200,7 +1749,21 @@ function terminarPartido(auto=false){
   const ganNombre = nombreEq(partidoActual.ganador);
   const setsStr = partidoActual.sets.map((s,i)=>`Set ${i+1}: ${s.local}–${s.visitante}`).join('  ');
   liberarWakeLock();
-  mostrarNotif('🏆', `¡${ganNombre} gana!`, setsStr, ()=>{ showScreen('screen-torneo'); renderCalendario(); });
+
+  // Verificar playoffs
+  const playoffsGenerados = verificarYGenerarPlayoffs();
+  const sigRonda = !playoffsGenerados && verificarSiguienteRondaPlayoffs();
+
+  let notifSub = setsStr;
+  if(playoffsGenerados) notifSub = setsStr + '\n\n🎯 ¡Fase de grupos completa! Los playoffs han sido generados.';
+  else if(sigRonda){
+    const ron = torneoActual.partidos.filter(p=>p.rondaPlayoff);
+    const maxR = Math.max(...ron.map(p=>p.rondaPlayoff));
+    const fase = torneoActual.partidos.find(p=>p.rondaPlayoff===maxR)?.fase||'';
+    notifSub = setsStr + `\n\n🎯 ¡${fase} generada!`;
+  }
+
+  mostrarNotif('🏆', `¡${ganNombre} gana!`, notifSub, ()=>{ showScreen('screen-torneo'); renderCalendario(); });
 }
 function volverDePartido(){if(timerOn)toggleTimer();liberarWakeLock();if(partidoActual)LS.save();showScreen('screen-torneo');renderCalendario();}
 function toggleTimer(){
@@ -1339,6 +1902,10 @@ window.addEventListener('popstate', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded',()=>{
+  // Inicializar screen-type: sala seleccionado por defecto
+  tipoSel = 'sala';
+  formatoTipoSel = 'liga';
+  actualizarReglamentoBox('sala');
   renderHome();
   // Entrada inicial en el history
   history.replaceState({ screenId: 'screen-home' }, '', '');
@@ -1461,58 +2028,106 @@ function renderBracket() {
   const cont = document.getElementById('tab-bracket');
   if (!torneoActual) return;
 
+  const renderMatch = (p) => {
+    if (!p.visitante) return `<div class="bracket-match"><div class="bracket-team winner" style="padding:10px">${nombreEq(p.local)} <span class="bteam-score" style="margin-left:auto">BYE</span></div></div>`;
+    const sL=p.sets.filter(s=>s.local>s.visitante).length, sV=p.sets.filter(s=>s.visitante>s.local).length;
+    const hW=p.ganador===p.local, aW=p.ganador===p.visitante;
+    return `<div class="bracket-match">
+      <div class="bracket-team ${hW?'winner':''}"><span>${nombreEq(p.local)}</span>${p.estado!=='pendiente'?`<span class="bteam-score">${sL}</span>`:''}</div>
+      <div class="bracket-divider"></div>
+      <div class="bracket-team ${aW?'winner':''}"><span>${nombreEq(p.visitante)}</span>${p.estado!=='pendiente'?`<span class="bteam-score">${sV}</span>`:''}</div>
+    </div>`;
+  };
+
+  // ── Liga simple ──
   if (torneoActual.formato === 'liga') {
-    cont.innerHTML = `
-      <div class="sec-header"><div class="sec-title">Bracket</div></div>
+    cont.innerHTML = `<div class="sec-header"><div class="sec-title">Bracket</div></div>
       <div style="padding:16px 20px;text-align:center;color:var(--txt3)">
         <div style="font-size:36px;margin-bottom:10px">📋</div>
-        <div style="font-size:13px">El formato <strong style="color:var(--txt2)">Liga</strong> usa la tabla de clasificación.<br>El bracket aplica para eliminación y grupos.</div>
+        <div style="font-size:13px">El formato <strong style="color:var(--txt2)">Liga</strong> usa la tabla de clasificación.</div>
       </div>`;
     return;
   }
 
-  // Agrupar partidos por fase/ronda
+  // ── Grupos + Playoffs ──
+  if (torneoActual.formato === 'grupos_playoffs') {
+    const pl = torneoActual.playoffs;
+    let html = `<div class="sec-header"><div class="sec-title">Bracket</div></div>`;
+
+    // Fase de grupos: tablas compactas
+    if (pl && pl.grupos) {
+      html += `<div style="padding:0 20px 8px"><div style="font-size:11px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px">Fase de grupos</div>`;
+      pl.grupos.forEach(g => {
+        const partGrupo = torneoActual.partidos.filter(p => p.fase === `Grupo ${g.letra}`);
+        // Mini tabla de este grupo
+        const stats = {};
+        g.equipoIds.forEach(id => { stats[id]={id,pj:0,pg:0,pts:0}; });
+        partGrupo.filter(p=>p.estado==='terminado').forEach(p=>{
+          const sL=p.sets.filter(s=>s.local>s.visitante).length, sV=p.sets.filter(s=>s.visitante>s.local).length;
+          if(!stats[p.local]||!stats[p.visitante])return;
+          stats[p.local].pj++;stats[p.visitante].pj++;
+          if(sL>sV){stats[p.local].pg++;stats[p.local].pts+=3;}else{stats[p.visitante].pg++;stats[p.visitante].pts+=3;}
+        });
+        const tabla=Object.values(stats).sort((a,b)=>b.pts-a.pts);
+        const clasifican = pl.clasificanPorGrupo;
+        html += `<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden">
+          <div style="background:var(--bg3);padding:8px 12px;font-size:11px;font-weight:700;color:var(--acc2);text-transform:uppercase;letter-spacing:0.5px">Grupo ${g.letra}</div>
+          ${tabla.map((e,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid var(--border);font-size:13px">
+            <span style="width:18px;font-weight:800;color:${i<clasifican?'var(--green)':'var(--txt3)'}">${i+1}</span>
+            <span style="flex:1;font-weight:${i<clasifican?700:400}">${nombreEq(e.id)}${i<clasifican?' ✓':''}</span>
+            <span style="font-size:11px;color:var(--txt3)">${e.pj}J ${e.pg}G</span>
+            <span style="font-weight:800;color:var(--acc);width:28px;text-align:right">${e.pts}p</span>
+          </div>`).join('')}
+        </div>`;
+      });
+      html += `</div>`;
+    }
+
+    // Rondas de playoffs
+    const rondasPlayoff = {};
+    torneoActual.partidos.filter(p=>p.rondaPlayoff).forEach(p=>{
+      if(!rondasPlayoff[p.rondaPlayoff])rondasPlayoff[p.rondaPlayoff]=[];
+      rondasPlayoff[p.rondaPlayoff].push(p);
+    });
+    if(Object.keys(rondasPlayoff).length){
+      html += `<div class="bracket-wrap"><div class="bracket-rounds">`;
+      Object.entries(rondasPlayoff).sort((a,b)=>a[0]-b[0]).forEach(([r,ps])=>{
+        const titulo = ps[0]?.fase || `Ronda ${r}`;
+        html += `<div class="bracket-round"><div class="bracket-round-title">${titulo}</div>${ps.map(renderMatch).join('')}</div>`;
+      });
+      html += `</div></div>`;
+    } else if(pl && !pl.generado){
+      html += `<div style="padding:16px 20px;text-align:center;color:var(--txt3);font-size:13px">Los playoffs se generarán automáticamente cuando termine la fase de grupos</div>`;
+    }
+
+    // Campeón
+    const rondasArr = Object.values(rondasPlayoff);
+    if(rondasArr.length){
+      const ultima = rondasArr[rondasArr.length-1];
+      if(ultima.every(p=>p.estado==='terminado') && ultima.length===1 && ultima[0].ganador){
+        html = html.replace('<div class="sec-header"><div class="sec-title">Bracket</div></div>',
+          `<div class="sec-header"><div class="sec-title">Bracket</div></div>
+          <div style="padding:0 20px 12px"><div class="champion-card"><span class="champion-trophy">🏆</span>
+          <div class="champion-label">Campeón</div>
+          <div class="champion-name">${nombreEq(ultima[0].ganador)}</div></div></div>`);
+      }
+    }
+
+    cont.innerHTML = html;
+    return;
+  }
+
+  // ── Otros formatos (eliminacion, grupos simple) ──
   const rondas = {};
   torneoActual.partidos.forEach(p => {
     const r = p.fase || `Jornada ${p.jornada}`;
     if (!rondas[r]) rondas[r] = [];
     rondas[r].push(p);
   });
-
-  const renderMatch = (p) => {
-    if (!p.visitante) {
-      return `<div class="bracket-match">
-        <div class="bracket-team winner">${nombreEq(p.local)}<span class="bteam-score">BYE</span></div>
-      </div>`;
-    }
-    const sL = p.sets.filter(s => s.local > s.visitante).length;
-    const sV = p.sets.filter(s => s.visitante > s.local).length;
-    const homWin = p.ganador === p.local;
-    const awayWin = p.ganador === p.visitante;
-    return `<div class="bracket-match">
-      <div class="bracket-team ${homWin?'winner':''}">
-        <span>${nombreEq(p.local)}</span>
-        ${p.estado!=='pendiente'?`<span class="bteam-score">${sL}</span>`:''}
-      </div>
-      <div class="bracket-divider"></div>
-      <div class="bracket-team ${awayWin?'winner':''}">
-        <span>${nombreEq(p.visitante)}</span>
-        ${p.estado!=='pendiente'?`<span class="bteam-score">${sV}</span>`:''}
-      </div>
-    </div>`;
-  };
-
-  const roundsHtml = Object.entries(rondas).map(([nombre, partidos]) => `
-    <div class="bracket-round">
-      <div class="bracket-round-title">${nombre}</div>
-      ${partidos.map(renderMatch).join('')}
-    </div>`).join('');
-
-  cont.innerHTML = `
-    <div class="sec-header"><div class="sec-title">Bracket</div></div>
-    <div class="bracket-wrap">
-      <div class="bracket-rounds">${roundsHtml}</div>
-    </div>`;
+  const roundsHtml = Object.entries(rondas).map(([nombre,partidos]) =>
+    `<div class="bracket-round"><div class="bracket-round-title">${nombre}</div>${partidos.map(renderMatch).join('')}</div>`
+  ).join('');
+  cont.innerHTML = `<div class="sec-header"><div class="sec-title">Bracket</div></div><div class="bracket-wrap"><div class="bracket-rounds">${roundsHtml}</div></div>`;
 }
 
 // ══════════════════════════════════════
@@ -1583,6 +2198,533 @@ function compartirResultadoVivo() {
     `_El Grillo Ciego de Ávila_`;
   const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
+}
+
+
+// ══════════════════════════════════════
+// FORMATO MANUAL — ORGANIZACIÓN
+// ══════════════════════════════════════
+
+// Estado temporal para el editor manual
+let manualEditandoId = null;   // id del partido que se edita (null = nuevo)
+let manualJornadaEdit = null;  // jornada del partido que se edita
+
+function onFormatoChange(val) {
+  const hint = document.getElementById('manual-hint');
+  if (hint) hint.style.display = val === 'manual' ? 'block' : 'none';
+}
+
+// ── Abrir pantalla de organización ───────────────────────────────────
+function abrirOrganizacion() {
+  renderManualJornadas();
+  showScreen('screen-manual');
+}
+
+// ── Render de jornadas en la pantalla manual ──────────────────────────
+function renderManualJornadas() {
+  if (!torneoActual) return;
+  const cont = document.getElementById('manual-jornadas');
+
+  // Agrupar partidos por jornada/fase
+  const grupos = {};
+  torneoActual.partidos.forEach(p => {
+    const k = p.fase || `Jornada ${p.jornada}`;
+    if (!grupos[k]) grupos[k] = [];
+    grupos[k].push(p);
+  });
+
+  // Si no hay jornadas, mostrar estado vacío
+  if (!Object.keys(grupos).length) {
+    cont.innerHTML = `
+      <div style="text-align:center;padding:40px 20px;color:var(--txt3)">
+        <div style="font-size:40px;margin-bottom:12px">📅</div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:8px">Sin partidos aún</div>
+        <div style="font-size:12px">Toca ＋ para agregar una jornada</div>
+      </div>`;
+    return;
+  }
+
+  cont.innerHTML = Object.entries(grupos).map(([nombre, partidos]) => `
+    <div class="manual-jornada-block" id="mjb-${encodeURIComponent(nombre)}">
+      <div class="manual-jornada-header">
+        <input class="manual-jornada-name" type="text" value="${nombre}"
+          onblur="renombrarJornada('${nombre}', this.value)"
+          onfocus="this.select()">
+        <div class="manual-jornada-del" onclick="eliminarJornada('${nombre}')" title="Eliminar jornada">✕</div>
+      </div>
+      ${partidos.map(p => `
+        <div class="manual-partido-card" onclick="editarPartidoManual('${p.id}')">
+          <div class="manual-partido-teams">
+            <div class="manual-partido-vs">
+              <span>${nombreEq(p.local)}</span>
+              <span class="vs">VS</span>
+              <span>${nombreEq(p.visitante)}</span>
+            </div>
+            ${p.estado === 'terminado' ? `<div style="font-size:11px;color:var(--green);margin-top:3px">✓ Finalizado</div>` : 
+              p.estado === 'en-curso' ? `<div style="font-size:11px;color:var(--acc);margin-top:3px">🔴 En curso</div>` : ''}
+          </div>
+          <div class="manual-partido-edit">✏️</div>
+        </div>`).join('')}
+      <div class="manual-add-partido" onclick="nuevoPartidoEnJornada('${nombre}')">
+        ＋ Agregar partido a esta jornada
+      </div>
+    </div>`).join('');
+}
+
+// ── Agregar nueva jornada vacía ───────────────────────────────────────
+function agregarJornada() {
+  if (!torneoActual) return;
+  // Calcular siguiente número de jornada
+  const jornadas = new Set(torneoActual.partidos.map(p => p.fase || `Jornada ${p.jornada}`));
+  let num = jornadas.size + 1;
+  let nombre = `Jornada ${num}`;
+  while (jornadas.has(nombre)) { num++; nombre = `Jornada ${num}`; }
+  // Crear un partido placeholder para que aparezca la jornada
+  // (jornada vacía → solo agregar un marcador)
+  torneoActual._jornadasManuales = torneoActual._jornadasManuales || [];
+  torneoActual._jornadasManuales.push(nombre);
+  // Abrir modal para agregar el primer partido de esta jornada
+  abrirModalPartido(null, nombre);
+}
+
+// ── Agregar partido en jornada existente ──────────────────────────────
+function nuevoPartidoEnJornada(jornada) {
+  abrirModalPartido(null, jornada);
+}
+
+// ── Editar partido existente ──────────────────────────────────────────
+function editarPartidoManual(partidoId) {
+  const p = torneoActual.partidos.find(x => x.id === partidoId);
+  if (!p) return;
+  abrirModalPartido(partidoId, p.fase || `Jornada ${p.jornada}`);
+}
+
+// ── Abrir modal de edición de partido ────────────────────────────────
+function abrirModalPartido(partidoId, jornadaNombre) {
+  manualEditandoId = partidoId;
+  manualJornadaEdit = jornadaNombre || 'Jornada 1';
+
+  // Poblar selects de equipos
+  const equipos = torneoActual.equipos;
+  const opts = equipos.map(e => `<option value="${e.id}">${e.nombre}</option>`).join('');
+  document.getElementById('mp-local').innerHTML = opts;
+  document.getElementById('mp-visitante').innerHTML = opts;
+
+  // Rellenar campos si es edición
+  const p = partidoId ? torneoActual.partidos.find(x => x.id === partidoId) : null;
+  document.getElementById('mp-jornada').value = p ? (p.fase || `Jornada ${p.jornada}`) : jornadaNombre;
+  if (p) {
+    document.getElementById('mp-local').value = p.local;
+    document.getElementById('mp-visitante').value = p.visitante;
+  } else {
+    // Default: primer equipo vs segundo equipo (si hay)
+    if (equipos.length >= 2) {
+      document.getElementById('mp-local').value = equipos[0].id;
+      document.getElementById('mp-visitante').value = equipos[1].id;
+    }
+  }
+
+  document.getElementById('mp-delete-btn').style.display = partidoId ? 'flex' : 'none';
+  document.getElementById('mp-save-btn').textContent = partidoId ? 'Guardar cambios' : 'Agregar partido';
+  document.getElementById('modal-partido-manual').style.display = 'flex';
+}
+
+function cerrarModalPartido() {
+  document.getElementById('modal-partido-manual').style.display = 'none';
+  manualEditandoId = null;
+}
+
+// ── Guardar partido desde modal ───────────────────────────────────────
+function guardarPartidoManual() {
+  const jornadaVal = document.getElementById('mp-jornada').value.trim() || 'Jornada 1';
+  const localId    = document.getElementById('mp-local').value;
+  const visitId    = document.getElementById('mp-visitante').value;
+
+  if (localId === visitId) { toast('Un equipo no puede jugar contra sí mismo'); return; }
+
+  if (manualEditandoId) {
+    // Editar partido existente
+    const p = torneoActual.partidos.find(x => x.id === manualEditandoId);
+    if (p && p.estado === 'pendiente') {
+      p.local = localId;
+      p.visitante = visitId;
+      p.fase = jornadaVal;
+      delete p.jornada;
+    } else if (p) {
+      toast('No se puede editar un partido ya iniciado');
+      cerrarModalPartido(); return;
+    }
+  } else {
+    // Nuevo partido
+    const mkP = (loc, vis, extra={}) => ({
+      id: uid(), local: loc, visitante: vis,
+      estado: 'pendiente', sets: [], duracion: null,
+      ganador: null, statsJugadores: {}, ...extra
+    });
+    torneoActual.partidos.push(mkP(localId, visitId, { fase: jornadaVal }));
+  }
+
+  LS.save();
+  cerrarModalPartido();
+  renderManualJornadas();
+  toast('Partido guardado ✓');
+}
+
+// ── Eliminar partido desde modal ──────────────────────────────────────
+function eliminarPartidoManual() {
+  if (!manualEditandoId) return;
+  const p = torneoActual.partidos.find(x => x.id === manualEditandoId);
+  if (p && p.estado !== 'pendiente') {
+    toast('No se puede eliminar un partido ya iniciado'); return;
+  }
+  torneoActual.partidos = torneoActual.partidos.filter(x => x.id !== manualEditandoId);
+  LS.save();
+  cerrarModalPartido();
+  renderManualJornadas();
+  toast('Partido eliminado');
+}
+
+// ── Renombrar jornada ─────────────────────────────────────────────────
+function renombrarJornada(nombreAntiguo, nombreNuevo) {
+  nombreNuevo = nombreNuevo.trim();
+  if (!nombreNuevo || nombreNuevo === nombreAntiguo) return;
+  torneoActual.partidos.forEach(p => {
+    if ((p.fase || `Jornada ${p.jornada}`) === nombreAntiguo) {
+      p.fase = nombreNuevo;
+      delete p.jornada;
+    }
+  });
+  LS.save();
+  renderManualJornadas();
+  toast(`Renombrado a "${nombreNuevo}"`);
+}
+
+// ── Eliminar jornada completa ─────────────────────────────────────────
+function eliminarJornada(nombre) {
+  const partidos = torneoActual.partidos.filter(p => (p.fase || `Jornada ${p.jornada}`) === nombre);
+  const iniciados = partidos.filter(p => p.estado !== 'pendiente');
+  if (iniciados.length) {
+    toast('Esta jornada tiene partidos ya iniciados'); return;
+  }
+  torneoActual.partidos = torneoActual.partidos.filter(p => (p.fase || `Jornada ${p.jornada}`) !== nombre);
+  LS.save();
+  renderManualJornadas();
+  toast(`Jornada "${nombre}" eliminada`);
+}
+
+// ── Guardar y volver al torneo ────────────────────────────────────────
+function guardarOrganizacion() {
+  LS.save();
+  showScreen('screen-torneo');
+  renderCalendario();
+  toast('Organización guardada ✓');
+}
+
+// ── Mover partido a otra jornada (cambiar orden) ──────────────────────
+function moverPartido(partidoId, nuevaJornada) {
+  const p = torneoActual.partidos.find(x => x.id === partidoId);
+  if (!p) return;
+  p.fase = nuevaJornada;
+  delete p.jornada;
+  LS.save();
+  renderManualJornadas();
+}
+
+
+// ══════════════════════════════════════
+// ORGANIZAR GRUPOS ANTES DE CREAR
+// ══════════════════════════════════════
+
+function calcularGruposIniciales(equipos, formato) {
+  formato = formato || (torneoConfigTemp && torneoConfigTemp.formato) || 'liga';
+  const n = equipos.length;
+  let numGrupos, clasificanPorGrupo;
+
+  if(formato === 'liga' || formato === 'eliminacion'){
+    // Un solo grupo = lista de orden de equipos
+    numGrupos = 1;
+    clasificanPorGrupo = n;
+  } else if(formato === 'grupos'){
+    numGrupos = 2;
+    clasificanPorGrupo = n; // todos clasifican en el formato grupos simple
+  } else if(formato === 'grupos_playoffs'){
+    if(n<=5){ numGrupos=1; clasificanPorGrupo=Math.min(4,n-1); }
+    else if(n<=10){ numGrupos=2; clasificanPorGrupo=4; }
+    else if(n<=16){ numGrupos=4; clasificanPorGrupo=2; }
+    else { numGrupos=Math.ceil(n/5); clasificanPorGrupo=2; }
+  } else {
+    numGrupos=1; clasificanPorGrupo=n;
+  }
+
+  // Distribución serpentina
+  const grupos = Array.from({length:numGrupos}, (_,i) => ({
+    letra: String.fromCharCode(65+i),
+    equipos: []
+  }));
+  // Inicialmente en el orden original (no aleatorio) para que el usuario lo vea primero
+  equipos.forEach((eq,i) => {
+    const gi = numGrupos === 1 ? 0 :
+      (Math.floor(i/numGrupos) % 2 === 0 ? i % numGrupos : numGrupos - 1 - (i % numGrupos));
+    grupos[gi].equipos.push({...eq});
+  });
+  return { grupos, clasificanPorGrupo };
+}
+
+function abrirOrganizarGrupos() {
+  if(!torneoConfigTemp) return;
+  const fmt = torneoConfigTemp.formato;
+  const resultado = calcularGruposIniciales(torneoConfigTemp.equipos, fmt);
+  gruposTemp = resultado.grupos;
+  gruposTemp.clasificanPorGrupo = resultado.clasificanPorGrupo;
+  renderOrganizarGrupos();
+  showScreen('screen-grupos-config');
+}
+
+function cancelarOrganizarGrupos() {
+  gruposTemp = null;
+  torneoConfigTemp = null;
+  showScreen('screen-config');
+}
+
+function mezclarGruposAleatorio() {
+  if(!gruposTemp || !torneoConfigTemp) return;
+  // Reunir todos los equipos y redistribuir aleatoriamente
+  const todosEqs = gruposTemp.flatMap(g => g.equipos);
+  const mezclados = [...todosEqs].sort(()=>Math.random()-0.5);
+  gruposTemp.forEach(g => { g.equipos = []; });
+  mezclados.forEach((eq,i) => {
+    const n = gruposTemp.length;
+    const gi = n===1 ? 0 :
+      (Math.floor(i/n) % 2 === 0 ? i % n : n - 1 - (i % n));
+    gruposTemp[gi].equipos.push(eq);
+  });
+  renderOrganizarGrupos();
+  toast('🔀 Orden aleatorio aplicado');
+}
+
+function renderOrganizarGrupos() {
+  if(!gruposTemp || !torneoConfigTemp) return;
+  const clasifican = gruposTemp.clasificanPorGrupo;
+  const numGrupos = gruposTemp.length;
+  const totalEq = torneoConfigTemp.equipos.length;
+
+  // Info bar adaptada al formato
+  const fmt = torneoConfigTemp.formato;
+  const infoBar = document.getElementById('grupos-info-bar');
+  let infoTexto = '';
+  if(fmt==='liga'){
+    infoTexto = `<strong>Liga — ${totalEq} equipos</strong><br>
+    <span style="color:var(--txt3);font-size:11px">Ordena los equipos con ↑ ↓. El orden define el fixture del calendario.</span>`;
+  } else if(fmt==='eliminacion'){
+    infoTexto = `<strong>Eliminación directa — ${totalEq} equipos</strong><br>
+    <span style="color:var(--txt3);font-size:11px">Ordena los equipos con ↑ ↓. Los emparejamientos serán: 1°vs2°, 3°vs4°...</span>`;
+  } else if(fmt==='grupos'){
+    infoTexto = `<strong>Fase de grupos — ${numGrupos} grupos · ${totalEq} equipos</strong><br>
+    <span style="color:var(--txt3);font-size:11px">Usa ↑ ↓ para ordenar dentro del grupo, ← → para cambiar de grupo.</span>`;
+  } else {
+    infoTexto = `<strong>${numGrupos} grupo${numGrupos>1?'s':''}</strong> · ${totalEq} equipos ·
+    <span class="clasifican-badge">✓ Clasifican ${clasifican} por grupo</span>
+    <br><span style="color:var(--txt3);font-size:11px;margin-top:4px;display:block">Usa ↑ ↓ para ordenar dentro del grupo, ← → para cambiar de grupo.</span>`;
+  }
+  infoBar.innerHTML = infoTexto;
+
+  // Colores por grupo
+  const grupoColores = [
+    ['rgba(255,78,106,0.15)','var(--acc)'],
+    ['rgba(78,202,255,0.15)','var(--acc3)'],
+    ['rgba(255,140,66,0.15)','var(--acc2)'],
+    ['rgba(46,204,143,0.15)','var(--green)'],
+    ['rgba(155,109,255,0.15)','var(--purple)'],
+    ['rgba(255,212,60,0.15)','#FFD43B'],
+  ];
+
+  // Titulo dinámico
+  const titulos = {liga:'Ordenar equipos',eliminacion:'Ordenar equipos',grupos:'Organizar grupos',grupos_playoffs:'Organizar grupos'};
+  const btnTextos = {liga:'✓ Confirmar orden y crear torneo',eliminacion:'✓ Confirmar orden y crear torneo',grupos:'✓ Confirmar grupos y crear torneo',grupos_playoffs:'✓ Confirmar grupos y crear torneo'};
+  const topTitle = document.querySelector('#screen-grupos-config .topbar-title');
+  if(topTitle) topTitle.textContent = titulos[fmt] || 'Organizar equipos';
+  const btnConfirmar = document.querySelector('#screen-grupos-config .sheet-bar .btn-acc');
+  if(btnConfirmar) btnConfirmar.textContent = btnTextos[fmt] || '✓ Confirmar y crear torneo';
+
+  // Para liga y eliminación: ocultar botones ← → (solo 1 grupo)
+  const soloUnGrupo = numGrupos === 1;
+
+  const lista = document.getElementById('grupos-config-lista');
+  lista.innerHTML = gruposTemp.map((g, gi) => {
+    const [bg, color] = grupoColores[gi % grupoColores.length];
+    return `
+    <div class="grupo-config-card" id="gcard-${gi}">
+      <div class="grupo-config-header">
+        <div class="grupo-config-letra" style="background:${bg};color:${color}">
+          ${g.letra}
+        </div>
+        <div class="grupo-config-info">
+          <div class="grupo-config-nombre">Grupo ${g.letra}</div>
+          <div class="grupo-config-count">${g.equipos.length} equipo${g.equipos.length!==1?'s':''} · clasifican ${Math.min(clasifican,g.equipos.length)}</div>
+        </div>
+      </div>
+      <div class="grupo-eq-list" id="geq-list-${gi}"
+        ondragover="onDragOverGrupo(event,${gi})"
+        ondrop="onDropEnGrupo(event,${gi})"
+        ondragleave="onDragLeaveGrupo(event,${gi})">
+        ${g.equipos.map((eq,ei) => `
+          <div class="grupo-eq-item" id="geqitem-${gi}-${ei}"
+            draggable="true"
+            ondragstart="onDragStartEq(event,${gi},${ei})"
+            ondragend="onDragEndEq(event)">
+            <span class="grupo-eq-drag">⠿</span>
+            <span class="grupo-eq-name">${eq.nombre}</span>
+            <div class="grupo-eq-move">
+              ${ei > 0 ? `<button class="grupo-move-btn" onclick="reordenarEnGrupo(${gi},${ei},-1)" title="Subir">↑</button>` : '<button class="grupo-move-btn" style="opacity:0.2;cursor:default">↑</button>'}
+              ${ei < g.equipos.length-1 ? `<button class="grupo-move-btn" onclick="reordenarEnGrupo(${gi},${ei},1)" title="Bajar">↓</button>` : '<button class="grupo-move-btn" style="opacity:0.2;cursor:default">↓</button>'}
+              ${!soloUnGrupo && gi > 0 ? `<button class="grupo-move-btn" style="color:var(--acc3)" onclick="moverEqAGrupo(${gi},${ei},${gi-1})" title="Mover al grupo anterior">←</button>` : ''}
+              ${!soloUnGrupo && gi < gruposTemp.length-1 ? `<button class="grupo-move-btn" style="color:var(--acc3)" onclick="moverEqAGrupo(${gi},${ei},${gi+1})" title="Mover al grupo siguiente">→</button>` : ''}
+              ${!soloUnGrupo && numGrupos > 2 ? `<button class="grupo-move-btn" style="color:var(--acc2)" onclick="elegirGrupoDestino(${gi},${ei})" title="Mover a...">⋯</button>` : ''}
+            </div>
+          </div>`).join('')}
+        ${g.equipos.length === 0 ? `<div style="text-align:center;padding:10px;font-size:11px;color:var(--txt3)">Arrastra equipos aquí</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Mover equipo a un grupo destino ─────────────────────────────────────────
+function moverEqAGrupo(giOrigen, eiOrigen, giDestino) {
+  if(giOrigen === giDestino) return;
+  const eq = gruposTemp[giOrigen].equipos[eiOrigen];
+  gruposTemp[giOrigen].equipos.splice(eiOrigen, 1);
+  gruposTemp[giDestino].equipos.push(eq);
+  renderOrganizarGrupos();
+  toast(`${eq.nombre} → Grupo ${gruposTemp[giDestino].letra}`);
+}
+
+function reordenarEnGrupo(gi, ei, dir) {
+  const grupo = gruposTemp[gi].equipos;
+  const nuevaPos = ei + dir;
+  if(nuevaPos < 0 || nuevaPos >= grupo.length) return;
+  // Intercambiar posiciones
+  [grupo[ei], grupo[nuevaPos]] = [grupo[nuevaPos], grupo[ei]];
+  renderOrganizarGrupos();
+}
+
+// ── Elegir grupo destino cuando hay más de 2 grupos ──────────────────────────
+function elegirGrupoDestino(giOrigen, eiOrigen) {
+  const eq = gruposTemp[giOrigen].equipos[eiOrigen];
+  const opciones = gruposTemp
+    .map((g, gi) => gi !== giOrigen
+      ? `<button class="btn btn-ghost btn-full" style="font-size:13px" onclick="moverEqAGrupo(${giOrigen},${eiOrigen},${gi});closeModal()">→ Grupo ${g.letra}</button>`
+      : '').filter(Boolean).join('');
+  // Usar el modal existente
+  document.getElementById('modal-title').textContent = 'Mover: ' + eq.nombre;
+  document.getElementById('modal-msg').textContent = '';
+  document.getElementById('modal-ok').style.display = 'none';
+  document.getElementById('modal-bg').style.display = 'flex';
+  // Inyectar botones en modal-actions
+  const actDiv = document.getElementById('modal-bg').querySelector('.modal-actions');
+  actDiv.innerHTML = opciones + `<button class="btn btn-ghost btn-full" onclick="closeModal()">Cancelar</button>`;
+  modalFn = null;
+}
+
+// ── Drag & Drop ──────────────────────────────────────────────────────────────
+function onDragStartEq(event, gi, ei) {
+  dragSrcGrupoIdx = gi;
+  dragSrcEqId = gruposTemp[gi].equipos[ei].id;
+  event.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => {
+    const el = document.getElementById(`geqitem-${gi}-${ei}`);
+    if(el) el.classList.add('dragging');
+  }, 0);
+}
+
+function onDragEndEq(event) {
+  document.querySelectorAll('.grupo-eq-item').forEach(el => el.classList.remove('dragging'));
+  document.querySelectorAll('.grupo-eq-list').forEach(el => el.classList.remove('active-drop'));
+  dragSrcGrupoIdx = null; dragSrcEqId = null;
+}
+
+function onDragOverGrupo(event, gi) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'move';
+  const el = document.getElementById(`geq-list-${gi}`);
+  if(el && gi !== dragSrcGrupoIdx) el.classList.add('active-drop');
+}
+
+function onDragLeaveGrupo(event, gi) {
+  const el = document.getElementById(`geq-list-${gi}`);
+  if(el) el.classList.remove('active-drop');
+}
+
+function onDropEnGrupo(event, giDestino) {
+  event.preventDefault();
+  if(dragSrcGrupoIdx === null || dragSrcEqId === null) return;
+  if(dragSrcGrupoIdx === giDestino) return;
+  const eiOrigen = gruposTemp[dragSrcGrupoIdx].equipos.findIndex(e => e.id === dragSrcEqId);
+  if(eiOrigen < 0) return;
+  moverEqAGrupo(dragSrcGrupoIdx, eiOrigen, giDestino);
+}
+
+// ── Confirmar y crear el torneo con los grupos definidos ─────────────────────
+function confirmarGruposYCrear() {
+  if(!gruposTemp || !torneoConfigTemp) return;
+  const fmt = torneoConfigTemp.formato;
+
+  // Validar mínimo 2 equipos por grupo (solo formatos con múltiples grupos)
+  if(fmt !== 'liga' && fmt !== 'eliminacion') {
+    const grupoVacio = gruposTemp.find(g => g.equipos.length < 2);
+    if(grupoVacio) { toast(`El Grupo ${grupoVacio.letra} necesita al menos 2 equipos`); return; }
+  }
+
+  torneoActual = torneoConfigTemp;
+  torneoActual.playoffs = null;
+  torneoActual.partidos = [];
+
+  const mkP=(loc,vis,extra={})=>({id:uid(),local:loc,visitante:vis,estado:'pendiente',sets:[],duracion:null,ganador:null,statsJugadores:{},...extra});
+
+  if(fmt === 'liga') {
+    // Orden del usuario define el fixture round-robin
+    const equiposOrdenados = gruposTemp[0].equipos;
+    const partidos = [];
+    for(let i=0;i<equiposOrdenados.length;i++)
+      for(let j=i+1;j<equiposOrdenados.length;j++)
+        partidos.push(mkP(equiposOrdenados[i].id, equiposOrdenados[j].id));
+    let jornada=1; const pendientes=[...partidos];
+    while(pendientes.length){const usados=new Set();let i=0;while(i<pendientes.length){const p=pendientes[i];if(!usados.has(p.local)&&!usados.has(p.visitante)){p.jornada=jornada;usados.add(p.local);usados.add(p.visitante);torneoActual.partidos.push(p);pendientes.splice(i,1);}else i++;}jornada++;}
+
+  } else if(fmt === 'eliminacion') {
+    // Orden del usuario define los emparejamientos: 1°vs2°, 3°vs4°...
+    const eqs = gruposTemp[0].equipos;
+    for(let i=0;i<Math.floor(eqs.length/2);i++)
+      torneoActual.partidos.push(mkP(eqs[i*2].id, eqs[i*2+1].id, {jornada:1, fase:'Primera ronda'}));
+    if(eqs.length%2===1)
+      torneoActual.partidos.push({...mkP(eqs[eqs.length-1].id,null,{jornada:1,fase:'Primera ronda'}),estado:'bye',ganador:eqs[eqs.length-1].id});
+
+  } else {
+    // Grupos (simple o playoffs): generar round-robin por grupo
+    const clasificanPorGrupo = gruposTemp.clasificanPorGrupo;
+    const numGrupos = gruposTemp.length;
+
+    gruposTemp.forEach(g => {
+      let jornada = 1;
+      const partidos = [];
+      for(let i=0;i<g.equipos.length;i++)
+        for(let j=i+1;j<g.equipos.length;j++)
+          partidos.push(mkP(g.equipos[i].id, g.equipos[j].id));
+      const pendientes=[...partidos];
+      while(pendientes.length){const usados=new Set();let i=0;while(i<pendientes.length){const p=pendientes[i];if(!usados.has(p.local)&&!usados.has(p.visitante)){p.jornada=jornada;p.fase=`Grupo ${g.letra}`;usados.add(p.local);usados.add(p.visitante);torneoActual.partidos.push(p);pendientes.splice(i,1);}else i++;}jornada++;}
+    });
+
+    if(fmt === 'grupos_playoffs') {
+      torneoActual.playoffs = {
+        numGrupos, clasificanPorGrupo,
+        grupos: gruposTemp.map(g => ({ letra: g.letra, equipoIds: g.equipos.map(e=>e.id) })),
+        rondas: [], generado: false
+      };
+    }
+  }
+
+  gruposTemp = null; torneoConfigTemp = null;
+  LS.save(); showScreen('screen-torneo');
+  toast('¡Torneo creado! 🏐');
 }
 
 </script>
