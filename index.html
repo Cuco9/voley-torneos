@@ -786,6 +786,7 @@ table.tabla .row-2 td{color:rgba(255,255,255,0.85)}
   <div class="topbar">
     <div class="topbar-back" onclick="volverDePartido()">←</div>
     <div class="topbar-title">En vivo</div>
+    <button class="topbar-action" onclick="toggleTransmision()" style="font-size:18px" title="Transmitir en vivo" id="btn-transmitir">📡</button>
     <button class="topbar-action" onclick="compartirResultadoVivo()" style="font-size:18px" title="Compartir resultado">📲</button>
     <button class="topbar-action" onclick="toggleModoArbitro()" style="font-size:18px" title="Modo árbitro">🟢</button>
     <button class="topbar-action" onclick="undoPunto()" style="font-size:16px" title="Deshacer punto">↩</button>
@@ -2004,7 +2005,7 @@ function renderStats(){
   const durs=terminados.filter(p=>p.duracion).map(p=>p.duracion),durProm=durs.length?Math.round(durs.reduce((a,b)=>a+b,0)/durs.length):0;
   const maxPts=Math.max(...data.map(e=>e.pts),1),lider=data[0];
   let campeon='';if(torneoActual.finalizado&&lider&&lider.pj>0)campeon=`<div class="champion-card"><span class="champion-trophy">🏆</span><div class="champion-label">Campeón del torneo</div><div class="champion-name">${lider.nombre}</div></div>`;
-  document.getElementById('tab-stats').innerHTML=`<div class="stats-wrap">${campeon}<div class="stat-hero"><div class="stat-hero-title">Resumen</div><div class="stat-grid"><div class="stat-item"><div class="stat-val">${terminados.length}</div><div class="stat-lbl">Jugados</div></div><div class="stat-item"><div class="stat-val">${pendientes}</div><div class="stat-lbl">Pendientes</div></div><div class="stat-item"><div class="stat-val" style="color:var(--acc2)">${Math.floor(durProm/60)}:${String(durProm%60).padStart(2,'0')}</div><div class="stat-lbl">Duración prom.</div></div><div class="stat-item"><div class="stat-val" style="color:var(--acc3)">${torneoActual.equipos.length}</div><div class="stat-lbl">Equipos</div></div></div></div><div class="stat-hero"><div class="stat-hero-title">Posiciones</div><div class="rank-list">${data.slice(0,5).map((eq,i)=>`<div class="rank-row"><div class="rank-pos">${i+1}</div><div style="flex:1"><div class="rank-name">${eq.nombre}</div><div class="rank-bar-wrap"><div class="rank-bar" style="width:${Math.round(eq.pts/maxPts*100)}%"></div></div></div><div class="rank-pts">${eq.pts} pts</div></div>`).join('')}</div></div><div style="padding:0 0 8px"><button class="btn ${torneoActual.finalizado?'btn-green':'btn-amber'} btn-full" onclick="marcarFinalizado()">${torneoActual.finalizado?'✓ Torneo finalizado':'🏁 Marcar como finalizado'}</button></div><div style="padding:0 0 20px"><button class="btn ${fbTransmitiendo?'btn-red':'btn-teal'} btn-full" onclick="toggleTransmision()">${fbTransmitiendo?'⏹ Detener transmisión':'📡 Transmitir torneo en vivo'}</button></div></div>`;
+  document.getElementById('tab-stats').innerHTML=`<div class="stats-wrap">${campeon}<div class="stat-hero"><div class="stat-hero-title">Resumen</div><div class="stat-grid"><div class="stat-item"><div class="stat-val">${terminados.length}</div><div class="stat-lbl">Jugados</div></div><div class="stat-item"><div class="stat-val">${pendientes}</div><div class="stat-lbl">Pendientes</div></div><div class="stat-item"><div class="stat-val" style="color:var(--acc2)">${Math.floor(durProm/60)}:${String(durProm%60).padStart(2,'0')}</div><div class="stat-lbl">Duración prom.</div></div><div class="stat-item"><div class="stat-val" style="color:var(--acc3)">${torneoActual.equipos.length}</div><div class="stat-lbl">Equipos</div></div></div></div><div class="stat-hero"><div class="stat-hero-title">Posiciones</div><div class="rank-list">${data.slice(0,5).map((eq,i)=>`<div class="rank-row"><div class="rank-pos">${i+1}</div><div style="flex:1"><div class="rank-name">${eq.nombre}</div><div class="rank-bar-wrap"><div class="rank-bar" style="width:${Math.round(eq.pts/maxPts*100)}%"></div></div></div><div class="rank-pts">${eq.pts} pts</div></div>`).join('')}</div></div><div style="padding:0 0 20px"><button class="btn ${torneoActual.finalizado?'btn-green':'btn-amber'} btn-full" onclick="marcarFinalizado()">${torneoActual.finalizado?'✓ Torneo finalizado':'🏁 Marcar como finalizado'}</button></div></div>`;
 }
 function marcarFinalizado(){torneoActual.finalizado=!torneoActual.finalizado;LS.save();toast(torneoActual.finalizado?'¡Torneo finalizado! 🏆':'Torneo marcado como activo');if(tabActual===3)renderStats();}
 
@@ -3041,6 +3042,7 @@ async function activarTransmision() {
   fbTransmitiendo = true;
   await subirEstadoTorneo();
   mostrarBannerLive();
+  actualizarBtnTransmitir();
   toast('📡 Transmisión activada');
 }
 
@@ -3101,6 +3103,7 @@ function detenerTransmision() {
   if (sbChannel) { try { sbChannel.unsubscribe(); } catch(e){} sbChannel = null; }
   const banner = document.getElementById('live-banner-torneo');
   if (banner) banner.style.display = 'none';
+  actualizarBtnTransmitir();
   toast('Transmisión detenida');
 }
 
@@ -3109,6 +3112,13 @@ function toggleTransmision() {
   const cfg = getSBConfig();
   if (cfg) activarTransmision();
   else abrirConfigFirebase();
+}
+
+function actualizarBtnTransmitir() {
+  const btn = document.getElementById('btn-transmitir');
+  if (!btn) return;
+  btn.textContent = fbTransmitiendo ? '🔴' : '📡';
+  btn.title = fbTransmitiendo ? 'Transmisión activa — toca para detener' : 'Transmitir en vivo';
 }
 
 // ── PANTALLA ESPECTADOR ───────────────────────────────────────────
