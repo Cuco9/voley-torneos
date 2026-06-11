@@ -1668,7 +1668,12 @@ function verificarSiguienteRondaPlayoffs() {
   const maxRonda = Math.max(...Object.keys(rondasPlayoff).map(Number));
   const ultimaRonda = rondasPlayoff[maxRonda];
   if(!ultimaRonda.every(p=>p.estado==='terminado')) return false;
-  if(rondasPlayoff[maxRonda+1]) return false;
+
+  // ¿Ya existe la siguiente ronda (incluyendo bronce)?
+  const yaExisteSiguiente = torneoActual.partidos.some(p =>
+    p.rondaPlayoff === maxRonda+1 || p.esBronce
+  );
+  if(yaExisteSiguiente) return false;
 
   // ══ CASO ESPECIAL: Repechaje terminado → generar Semifinales ══
   const hayRepechaje = ultimaRonda.some(p => p.repechaje);
@@ -1678,26 +1683,23 @@ function verificarSiguienteRondaPlayoffs() {
     const rep2 = ultimaRonda.find(p => p.cruceId === 'rep2');
     const ganRep1 = rep1?.ganador;
     const ganRep2 = rep2?.ganador;
-
-    // Semifinales: 1°G1 vs ganRep2  |  1°G2 vs ganRep1
     const semis = [];
     if(s1 && ganRep2) semis.push(mkP(s1, ganRep2, {fase:'Semifinales', rondaPlayoff: maxRonda+1}));
     if(s2 && ganRep1) semis.push(mkP(s2, ganRep1, {fase:'Semifinales', rondaPlayoff: maxRonda+1}));
-
     semis.forEach(p=>torneoActual.partidos.push(p));
     LS.save();
     return true;
   }
 
-  // ══ CASO GENERAL: Semifinales → Final ══
-  const ganadores = ultimaRonda.map(p=>p.ganador).filter(Boolean);
+  // ══ CASO GENERAL ══
+  const ganadores = ultimaRonda.filter(p=>!p.esBronce).map(p=>p.ganador).filter(Boolean);
   if(ganadores.length < 2) return false;
 
   let faseNombre;
   if(ganadores.length === 2)      faseNombre = 'Final';
   else if(ganadores.length === 4) faseNombre = 'Semifinales';
   else if(ganadores.length === 8) faseNombre = 'Cuartos de final';
-  else                             faseNombre = `Ronda ${maxRonda+1}`;
+  else                             faseNombre = 'Ronda '+(maxRonda+1);
 
   const nuevos = [];
   for(let i=0; i<Math.floor(ganadores.length/2); i++){
@@ -1707,8 +1709,26 @@ function verificarSiguienteRondaPlayoffs() {
     const bye = ganadores[Math.floor(ganadores.length/2)];
     nuevos.push({...mkP(bye,null,{fase:faseNombre,rondaPlayoff:maxRonda+1}), estado:'bye', ganador:bye});
   }
-
   nuevos.forEach(p=>torneoActual.partidos.push(p));
+
+  // ══ Si la ronda actual eran SEMIFINALES → agregar partido por el BRONCE ══
+  const eranSemis = ultimaRonda.some(p => p.fase && p.fase.includes('Semifinal'));
+  if(eranSemis && ultimaRonda.filter(p=>!p.esBronce).length >= 2) {
+    // Perdedores de semifinales
+    const perdedores = ultimaRonda
+      .filter(p => !p.esBronce && p.estado==='terminado' && p.ganador)
+      .map(p => p.local===p.ganador ? p.visitante : p.local)
+      .filter(Boolean);
+    if(perdedores.length === 2) {
+      const bronce = mkP(perdedores[0], perdedores[1], {
+        fase: '3er y 4to lugar 🥉',
+        rondaPlayoff: maxRonda+1,
+        esBronce: true
+      });
+      torneoActual.partidos.push(bronce);
+    }
+  }
+
   LS.save();
   return true;
 }
@@ -1834,10 +1854,11 @@ function renderTabla(){
 
     // Playoffs
     var rondasPO={};
-    torneoActual.partidos.filter(function(p){return p.rondaPlayoff;}).forEach(function(p){
+    torneoActual.partidos.filter(function(p){return p.rondaPlayoff && !p.esBronce;}).forEach(function(p){
       if(!rondasPO[p.rondaPlayoff])rondasPO[p.rondaPlayoff]=[];
       rondasPO[p.rondaPlayoff].push(p);
     });
+    var bronceP = torneoActual.partidos.find(function(p){return p.esBronce;});
     if(Object.keys(rondasPO).length){
       html+='<div style="padding:0 20px 12px"><div style="font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px">Playoffs</div>';
       Object.entries(rondasPO).sort(function(a,b){return a[0]-b[0];}).forEach(function(entry){
@@ -1858,6 +1879,20 @@ function renderTabla(){
         });
         html+='</div>';
       });
+      // Partido por el bronce
+      if(bronceP){
+        var sLb=(bronceP.sets||[]).filter(function(s){return s.local>s.visitante;}).length;
+        var sVb=(bronceP.sets||[]).filter(function(s){return s.visitante>s.local;}).length;
+        var scoreB=bronceP.estado!=='pendiente'?sLb+'\u2013'+sVb:'vs';
+        var wLb=bronceP.ganador===bronceP.local?800:400, wVb=bronceP.ganador===bronceP.visitante?800:400;
+        var cLb=bronceP.ganador===bronceP.local?'var(--acc2)':'var(--txt)', cVb=bronceP.ganador===bronceP.visitante?'var(--acc2)':'var(--txt)';
+        html+='<div style="margin-bottom:8px"><div style="font-size:10px;color:var(--acc2);font-weight:700;margin-bottom:6px;text-transform:uppercase">🥉 3er y 4to lugar</div>';
+        html+='<div style="background:var(--card);border:1px solid rgba(255,140,66,0.25);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;margin-bottom:6px">';
+        html+='<span style="flex:1;font-weight:'+wLb+';color:'+cLb+'">'+nombreEq(bronceP.local)+'</span>';
+        html+='<span style="font-family:Barlow Condensed,sans-serif;font-size:18px;font-weight:900;color:var(--acc2);padding:0 10px">'+scoreB+'</span>';
+        html+='<span style="flex:1;text-align:right;font-weight:'+wVb+';color:'+cVb+'">'+nombreEq(bronceP.visitante)+'</span>';
+        html+='</div></div>';
+      }
       html+='</div>';
     }
     html+='<div class="tabla-legend">\u2713 = Clasifica a playoffs</div>';
@@ -2404,31 +2439,56 @@ function renderBracket() {
 
     // Rondas de playoffs
     const rondasPlayoff = {};
-    torneoActual.partidos.filter(p=>p.rondaPlayoff).forEach(p=>{
+    torneoActual.partidos.filter(p=>p.rondaPlayoff && !p.esBronce).forEach(p=>{
       if(!rondasPlayoff[p.rondaPlayoff])rondasPlayoff[p.rondaPlayoff]=[];
       rondasPlayoff[p.rondaPlayoff].push(p);
     });
+    const broncePartido = torneoActual.partidos.find(p=>p.esBronce);
+
     if(Object.keys(rondasPlayoff).length){
       html += `<div class="bracket-wrap"><div class="bracket-rounds">`;
       Object.entries(rondasPlayoff).sort((a,b)=>a[0]-b[0]).forEach(([r,ps])=>{
         const titulo = ps[0]?.fase || `Ronda ${r}`;
         html += `<div class="bracket-round"><div class="bracket-round-title">${titulo}</div>${ps.map(renderMatch).join('')}</div>`;
       });
+      // Partido por el bronce como columna separada
+      if(broncePartido){
+        html += `<div class="bracket-round"><div class="bracket-round-title" style="color:var(--acc2)">🥉 3er lugar</div>${renderMatch(broncePartido)}</div>`;
+      }
       html += `</div></div>`;
     } else if(pl && !pl.generado){
       html += `<div style="padding:16px 20px;text-align:center;color:var(--txt3);font-size:13px">Los playoffs se generarán automáticamente cuando termine la fase de grupos</div>`;
     }
 
-    // Campeón
+    // Podio final
     const rondasArr = Object.values(rondasPlayoff);
     if(rondasArr.length){
-      const ultima = rondasArr[rondasArr.length-1];
-      if(ultima.every(p=>p.estado==='terminado') && ultima.length===1 && ultima[0].ganador){
-        html = html.replace('<div class="sec-header"><div class="sec-title">Bracket</div></div>',
-          `<div class="sec-header"><div class="sec-title">Bracket</div></div>
-          <div style="padding:0 20px 12px"><div class="champion-card"><span class="champion-trophy">🏆</span>
-          <div class="champion-label">Campeón</div>
-          <div class="champion-name">${nombreEq(ultima[0].ganador)}</div></div></div>`);
+      const finalRonda = rondasArr[rondasArr.length-1].filter(p=>!p.esBronce);
+      const finalPartido = finalRonda.find(p=>p.fase&&p.fase.includes('Final'));
+      if(finalPartido && finalPartido.estado==='terminado'){
+        const campeon = nombreEq(finalPartido.ganador);
+        const subcampeon = nombreEq(finalPartido.local===finalPartido.ganador ? finalPartido.visitante : finalPartido.local);
+        const bronceMedalla = broncePartido && broncePartido.estado==='terminado' ? nombreEq(broncePartido.ganador) : null;
+        const podioHtml = `<div style="padding:0 20px 12px">
+          <div class="champion-card">
+            <span class="champion-trophy">🏆</span>
+            <div class="champion-label">Campeón</div>
+            <div class="champion-name">${campeon}</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <div style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px;text-align:center">
+              <div style="font-size:20px;margin-bottom:4px">🥈</div>
+              <div style="font-size:11px;color:var(--txt3);margin-bottom:2px">Subcampeón</div>
+              <div style="font-size:13px;font-weight:800">${subcampeon}</div>
+            </div>
+            ${bronceMedalla?`<div style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px;text-align:center">
+              <div style="font-size:20px;margin-bottom:4px">🥉</div>
+              <div style="font-size:11px;color:var(--txt3);margin-bottom:2px">3er lugar</div>
+              <div style="font-size:13px;font-weight:800">${bronceMedalla}</div>
+            </div>`:''}
+          </div>
+        </div>`;
+        html = podioHtml + html.replace('<div class="sec-header"><div class="sec-title">Bracket</div></div>','<div class="sec-header"><div class="sec-title">Bracket</div></div>');
       }
     }
 
