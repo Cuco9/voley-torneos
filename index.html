@@ -463,6 +463,25 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);height
 
 /* COLOR EQUIPO */
 .eq-color-picker{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+
+/* PREMIUM */
+.btn-premium{background:linear-gradient(135deg,var(--purple),var(--acc2));color:#fff;border:none;border-radius:var(--r);padding:14px 24px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;transition:transform 0.12s;display:inline-flex;align-items:center;gap:8px}
+.btn-premium:active{transform:scale(0.96)}
+.premium-lock{background:var(--card);border:1px solid rgba(155,109,255,0.2);border-radius:20px;padding:28px 24px;text-align:center;margin:0 0 12px}
+.lock-icon{font-size:48px;margin-bottom:12px}
+.lock-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--purple);margin-bottom:8px}
+.lock-desc{font-size:13px;color:var(--txt3);line-height:1.6;margin-bottom:20px}
+.premium-active-chip{background:rgba(155,109,255,0.12);border:1px solid rgba(155,109,255,0.25);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:700;color:var(--purple)}
+.ind-row{display:flex;align-items:center;gap:12px;padding:10px 20px;border-bottom:1px solid var(--border)}
+.ind-pos{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;width:24px;text-align:center;flex-shrink:0}
+.ind-info{flex:1;min-width:0}
+.ind-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ind-team{font-size:11px;color:var(--txt3);margin-top:1px}
+.ind-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;flex-shrink:0}
+.ind-val.atk{color:var(--acc)}
+.ind-val.blk{color:var(--acc3)}
+.ind-val.def{color:var(--green)}
+.ind-val.srv{color:var(--acc2)}
 .eq-color-dot{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform 0.15s,border-color 0.15s;flex-shrink:0}
 .eq-color-dot.selected{border-color:#fff;transform:scale(1.15)}
 .eq-color-dot:active{transform:scale(0.9)}
@@ -905,6 +924,24 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);height
     <div class="modal-actions" id="modal-actions">
       <button class="btn btn-acc btn-full" id="modal-ok" onclick="closeModal();if(modalFn)modalFn()">Confirmar</button>
       <button class="btn btn-ghost btn-full" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL PREMIUM ══ -->
+<div class="modal-bg" id="modal-premium" style="display:none">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">⭐ Activar Premium</div>
+    <div class="modal-msg">Ingresa tu código de activación para desbloquear las estadísticas individuales y la tabla de líderes.</div>
+    <div style="margin-bottom:16px">
+      <input type="text" class="form-input" id="premium-code-input" placeholder="XXXX-XXXX" maxlength="9" oninput="formatPremiumCode(this)" style="text-transform:uppercase;letter-spacing:2px;font-size:18px;font-weight:800;text-align:center">
+      <div id="code-error" style="display:none;color:var(--acc);font-size:12px;font-weight:600;margin-top:8px;text-align:center">❌ Código inválido. Verifica e intenta de nuevo.</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-acc btn-full" onclick="activarPremium()">✓ Activar</button>
+      <button class="btn btn-ghost btn-full" onclick="mostrarInfoCompra()">💳 ¿Cómo obtener un código?</button>
+      <button class="btn btn-ghost btn-full" onclick="closePremiumModal()">Cancelar</button>
     </div>
   </div>
 </div>
@@ -1980,7 +2017,18 @@ function renderIndStats(){
 // ══════════════════════════════════════
 function renderHistorial(){
   const lista=LS.get(),cont=document.getElementById('historial-lista'),bar=document.getElementById('historial-bar');
-  if(!lista.length){cont.innerHTML=`<div class="historial-empty"><span class="empty-icon">📋</span><div class="empty-text">No hay torneos guardados</div></div>`;bar.style.display='none';return;}
+  if(!lista.length){
+    cont.innerHTML='<div class="historial-empty"><span class="icon">📋</span><div style="font-size:14px;font-weight:600;margin-bottom:8px">No hay torneos guardados</div><div style="font-size:12px;color:var(--txt3);margin-bottom:20px">Crea tu primer torneo o importa uno existente</div></div>';
+    // Show import button even when empty
+    bar.style.display='block';
+    // Hide delete button, only show import
+    const delBtn = bar.querySelector('.btn-red');
+    if(delBtn) delBtn.style.display='none';
+    return;
+  }
+  // Show all buttons when there are tournaments
+  const delBtn = bar.querySelector('.btn-red');
+  if(delBtn) delBtn.style.display='flex';
   bar.style.display='block';
   cont.innerHTML=lista.slice().reverse().map(t=>{
     const tabla=calcTabla(t),lider=tabla.find(e=>e.pj>0),pts=(t.partidos||[]).filter(p=>p.estado==='terminado').length;
