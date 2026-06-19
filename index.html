@@ -187,7 +187,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);height
 .jugadores-count{font-size:12px;color:var(--txt3);padding:4px 20px 0}
 
 /* MARCADOR */
-.marcador-wrap{flex:1;display:flex;flex-direction:column;padding:16px 20px;gap:12px;overflow-y:auto}
+.marcador-wrap{display:flex;flex-direction:column;padding:16px 20px 80px;gap:12px}
 .set-track{background:var(--card);border:1px solid var(--border2);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
 .set-pill{background:var(--bg3);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700}
 .set-pill.win-home{background:rgba(255,78,106,0.12);color:var(--acc)}
@@ -217,7 +217,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);height
 .jscard-name{font-size:11px;font-weight:700;margin-bottom:6px;color:var(--txt2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .jscard-btns{display:flex;flex-direction:column;gap:4px}
 .jstat-row{display:flex;align-items:center;gap:3px}
-.jstat-btn{flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:7px;padding:5px 3px;font-size:10px;font-weight:700;color:var(--txt3);cursor:pointer;text-align:center;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;gap:1px}
+.jstat-btn{flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:7px;padding:5px 3px;font-size:10px;font-weight:700;color:var(--txt3);cursor:pointer;text-align:center;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;gap:1px;min-height:58px}
 .jstat-btn:active{transform:scale(0.9)}
 .jstat-btn.ataque{border-color:rgba(255,78,106,0.3);color:var(--acc)}
 .jstat-btn.bloqueo{border-color:rgba(78,202,255,0.3);color:var(--acc3)}
@@ -1869,13 +1869,15 @@ function renderPanelPremiumMarcador(){
       var sid=partidoActual.id+'_'+j.id;
       var st=partidoActual.statsJugadores[sid]||{ataque:0,bloqueo:0,defensa:0,saque:0};
       var nombre=(j.dorsal?'#'+j.dorsal+' ':'')+j.nombre+(j.capitan?' ★':'');
-      var tipos=[['ataque','🏐 Remate','ataque'],['bloqueo','🙌 Bloqueo','bloqueo'],['defensa','🤸 Defensa','defensa'],['saque','👊 Saque','saque']];
+      var tipos=['ataque','bloqueo','defensa','saque'];
       var btns='';
-      tipos.forEach(function(t){
-        var tipo=t[0],lbl=t[1];
+      tipos.forEach(function(tipo){
         var val=st[tipo]||0;
+        var icon=STAT_ICONS[tipo]||'';
+        var lbl=STAT_LABELS[tipo]||tipo;
         btns+='<div class="jstat-row">'
           +'<button class="jstat-btn '+tipo+'" data-sid="'+sid+'" data-tipo="'+tipo+'" data-delta="1" onclick="statBtn(this)">'
+            +icon
             +'<span class="jstat-val">'+val+'</span>'
             +'<span class="jstat-lbl">'+lbl+'</span>'
           +'</button>'
@@ -1892,6 +1894,16 @@ function renderPanelPremiumMarcador(){
   }
   grid.innerHTML=renderCol(jugL)+renderCol(jugV);
 }
+
+// ══ SVG ICONS PARA ESTADÍSTICAS ══
+var STAT_ICONS = {
+  ataque:  '<svg width="28" height="28" viewBox="0 0 70 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 2px">  <circle cx="54" cy="10" r="7" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="1.8"/>  <path d="M57 16 Q60 50 48 100" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2" opacity="0.4"/>  <circle cx="24" cy="20" r="7" fill="currentColor" opacity="0.12" stroke="currentColor" stroke-width="1.8"/>  <path d="M24 27 Q20 48 18 66" stroke="currentColor" stroke-width="2"/>  <line x1="22" y1="35" x2="50" y2="14" stroke="currentColor" stroke-width="2"/>  <line x1="22" y1="35" x2="8" y2="47" stroke="currentColor" stroke-width="2"/>  <line x1="8" y1="47" x2="6" y2="58" stroke="currentColor" stroke-width="2"/>  <line x1="18" y1="66" x2="10" y2="86" stroke="currentColor" stroke-width="2"/>  <line x1="10" y1="86" x2="18" y2="102" stroke="currentColor" stroke-width="2"/>  <line x1="18" y1="66" x2="28" y2="84" stroke="currentColor" stroke-width="2"/>  <line x1="28" y1="84" x2="36" y2="100" stroke="currentColor" stroke-width="2"/>  <ellipse cx="22" cy="112" rx="14" ry="3" fill="currentColor" opacity="0.1"/></svg>',
+  bloqueo: '<svg width="28" height="28" viewBox="0 0 80 105" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 2px">  <line x1="5" y1="48" x2="75" y2="48" stroke="currentColor" stroke-width="1.5"/>  <line x1="5" y1="48" x2="5" y2="88" stroke="currentColor" stroke-width="1"/>  <line x1="75" y1="48" x2="75" y2="88" stroke="currentColor" stroke-width="1"/>  <circle cx="22" cy="24" r="7" fill="currentColor" opacity="0.12" stroke="currentColor" stroke-width="1.8"/>  <line x1="22" y1="31" x2="22" y2="60" stroke="currentColor" stroke-width="2"/>  <line x1="22" y1="38" x2="12" y2="22" stroke="currentColor" stroke-width="2"/>  <line x1="22" y1="38" x2="34" y2="18" stroke="currentColor" stroke-width="2"/>  <rect x="28" y="9" width="18" height="11" rx="3" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="1.5"/>  <line x1="22" y1="60" x2="14" y2="85" stroke="currentColor" stroke-width="2"/>  <line x1="22" y1="60" x2="30" y2="85" stroke="currentColor" stroke-width="2"/>  <circle cx="58" cy="24" r="7" fill="currentColor" opacity="0.12" stroke="currentColor" stroke-width="1.8"/>  <line x1="58" y1="31" x2="58" y2="60" stroke="currentColor" stroke-width="2"/>  <line x1="58" y1="38" x2="46" y2="18" stroke="currentColor" stroke-width="2"/>  <line x1="58" y1="38" x2="68" y2="22" stroke="currentColor" stroke-width="2"/>  <rect x="34" y="9" width="18" height="11" rx="3" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="1.5"/>  <line x1="58" y1="60" x2="50" y2="85" stroke="currentColor" stroke-width="2"/>  <line x1="58" y1="60" x2="66" y2="85" stroke="currentColor" stroke-width="2"/>  <circle cx="40" cy="5" r="6" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="1.5"/></svg>',
+  defensa: '<svg width="28" height="28" viewBox="0 0 65 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 2px">  <circle cx="34" cy="18" r="7" fill="currentColor" opacity="0.12" stroke="currentColor" stroke-width="1.8"/>  <path d="M34 25 Q30 46 28 56" stroke="currentColor" stroke-width="2"/>  <line x1="31" y1="36" x2="10" y2="56" stroke="currentColor" stroke-width="2"/>  <line x1="31" y1="36" x2="20" y2="58" stroke="currentColor" stroke-width="2"/>  <line x1="10" y1="56" x2="20" y2="58" stroke="currentColor" stroke-width="3.5"/>  <line x1="28" y1="56" x2="16" y2="74" stroke="currentColor" stroke-width="2"/>  <line x1="16" y1="74" x2="10" y2="88" stroke="currentColor" stroke-width="2"/>  <line x1="28" y1="56" x2="44" y2="68" stroke="currentColor" stroke-width="2"/>  <line x1="44" y1="68" x2="52" y2="80" stroke="currentColor" stroke-width="2"/>  <circle cx="4" cy="70" r="7" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="1.8"/>  <path d="M4 70 Q10 62 15 57" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>  <path d="M15 57 Q22 38 44 16" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>  <circle cx="46" cy="13" r="5" fill="currentColor" opacity="0.1" stroke="currentColor" stroke-width="1.2"/></svg>',
+  saque:   '<svg width="28" height="28" viewBox="0 0 80 145" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 2px">  <line x1="0" y1="138" x2="80" y2="138" stroke="currentColor" stroke-width="1.2" opacity="0.3"/>  <circle cx="28" cy="20" r="7" fill="currentColor" opacity="0.12" stroke="currentColor" stroke-width="1.8"/>  <line x1="28" y1="27" x2="26" y2="68" stroke="currentColor" stroke-width="2"/>  <line x1="26" y1="38" x2="60" y2="26" stroke="currentColor" stroke-width="2"/>  <circle cx="67" cy="22" r="8" fill="currentColor" opacity="0.18" stroke="currentColor" stroke-width="1.8"/>  <line x1="26" y1="38" x2="8" y2="28" stroke="currentColor" stroke-width="2"/>  <line x1="8" y1="28" x2="6" y2="16" stroke="currentColor" stroke-width="2"/>  <circle cx="6" cy="12" r="4" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="1.5"/>  <line x1="26" y1="68" x2="36" y2="100" stroke="currentColor" stroke-width="2"/>  <line x1="36" y1="100" x2="42" y2="138" stroke="currentColor" stroke-width="2"/>  <line x1="26" y1="68" x2="16" y2="98" stroke="currentColor" stroke-width="2"/>  <line x1="16" y1="98" x2="10" y2="138" stroke="currentColor" stroke-width="2"/>  <path d="M67 30 Q72 60 68 95 Q65 115 55 135" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.4"/></svg>'
+};
+var STAT_LABELS = {ataque:'Remate', bloqueo:'Bloqueo', defensa:'Defensa', saque:'Saque'};
+
 function statBtn(btn) {
   var sid   = btn.getAttribute('data-sid');
   var tipo  = btn.getAttribute('data-tipo');
@@ -2064,15 +2076,15 @@ function renderIndStats(){
   cont.innerHTML=`<div class="ind-stats-wrap">
     <div class="sec-header"><div class="sec-title">⭐ Líderes</div><span class="premium-active-chip">⭐ Premium</span></div>
     ${mvp?`<div style="padding:0 20px 16px"><div class="champion-card" style="padding:16px 20px"><span class="champion-trophy">🏅</span><div class="champion-label">MVP del torneo</div><div class="champion-name">${mvp.nombre}</div><div style="font-size:12px;color:rgba(255,140,66,0.8);margin-top:4px">${mvp.equipo} · ${mvp.total} acciones totales</div></div></div>`:''}
-    <div class="cat-header"><span class="cat-dot" style="background:var(--acc)"></span>🏐 Mejor Rematador</div>
+    <div class="cat-header"><span class="cat-dot" style="background:var(--acc)"></span>🦵 Mejor Rematador</div>
     <div class="ind-podium">${renderPodio(topAtk,'ataque','atk')}</div>
-    <div class="cat-header"><span class="cat-dot" style="background:var(--acc3)"></span>🙌 Más Bloqueos</div>
+    <div class="cat-header"><span class="cat-dot" style="background:var(--acc3)"></span>🤚 Más Bloqueos</div>
     <div class="ind-podium">${renderPodio(topBlk,'bloqueo','blk')}</div>
-    <div class="cat-header"><span class="cat-dot" style="background:var(--green)"></span>🤸 Mejor Defensor</div>
+    <div class="cat-header"><span class="cat-dot" style="background:var(--green)"></span>🤾 Mejor Defensor</div>
     <div class="ind-podium">${renderPodio(topDef,'defensa','def')}</div>
-    <div class="cat-header"><span class="cat-dot" style="background:var(--acc2)"></span>👊 Mejor Sacador</div>
+    <div class="cat-header"><span class="cat-dot" style="background:var(--acc2)"></span>🫳 Mejor Sacador</div>
     <div class="ind-podium">${renderPodio(topSrv,'saque','srv')}</div>
-    <div style="padding:20px 20px 8px"><div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px"><div style="font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px">Tabla completa</div>${[...conStats].sort((a,b)=>b.total-a.total).map((j,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><div style="width:20px;color:var(--txt3);font-weight:700;text-align:center">${i+1}</div><div style="flex:1;min-width:0"><div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${j.nombre}</div><div style="font-size:11px;color:var(--txt3)">${j.equipo}</div></div><div style="display:flex;gap:8px;font-size:11px;font-weight:700;flex-shrink:0"><span style="color:var(--acc)">🏐${j.ataque}</span><span style="color:var(--acc3)">🙌${j.bloqueo}</span><span style="color:var(--green)">🤸${j.defensa}</span><span style="color:var(--acc2)">👊${j.saque}</span></div></div>`).join('')}</div></div>
+    <div style="padding:20px 20px 8px"><div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px"><div style="font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px">Tabla completa</div>${[...conStats].sort((a,b)=>b.total-a.total).map((j,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><div style="width:20px;color:var(--txt3);font-weight:700;text-align:center">${i+1}</div><div style="flex:1;min-width:0"><div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${j.nombre}</div><div style="font-size:11px;color:var(--txt3)">${j.equipo}</div></div><div style="display:flex;gap:8px;font-size:11px;font-weight:700;flex-shrink:0"><span style="color:var(--acc)">🦵${j.ataque}</span><span style="color:var(--acc3)">🤚${j.bloqueo}</span><span style="color:var(--green)">🤾${j.defensa}</span><span style="color:var(--acc2)">🫳${j.saque}</span></div></div>`).join('')}</div></div>
   </div>`;
 }
 
@@ -2104,7 +2116,7 @@ function verDetalle(id){
   document.getElementById('detalle-title').textContent=histSel.nombre;
   const tabla=calcTabla(histSel),terminados=(histSel.partidos||[]).filter(p=>p.estado==='terminado'),pC=['pos-1','pos-2','pos-3'];
   let indStatsHtml='';
-  if(isPremium()){const indStats=calcStatsIndividuales(histSel).filter(j=>j.total>0);if(indStats.length){const mvp=[...indStats].sort((a,b)=>b.total-a.total)[0];indStatsHtml=`<div class="sec-header"><div class="sec-title">⭐ Líderes</div></div><div style="padding:0 20px 16px"><div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="font-size:20px">🏅</span><div><div style="font-size:13px;font-weight:800">MVP: ${mvp.nombre}</div><div style="font-size:11px;color:var(--txt3)">${mvp.equipo}</div></div></div>${[...indStats].sort((a,b)=>b.total-a.total).slice(0,5).map((j,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border);font-size:12px"><div style="width:18px;color:var(--txt3);font-weight:700">${i+1}</div><div style="flex:1">${j.nombre} <span style="color:var(--txt3)">(${j.equipo})</span></div><span style="color:var(--acc)">🏐${j.ataque}</span><span style="color:var(--acc3)">🙌${j.bloqueo}</span><span style="color:var(--green)">🤸${j.defensa}</span><span style="color:var(--acc2)">👊${j.saque}</span></div>`).join('')}</div></div>`;}}
+  if(isPremium()){const indStats=calcStatsIndividuales(histSel).filter(j=>j.total>0);if(indStats.length){const mvp=[...indStats].sort((a,b)=>b.total-a.total)[0];indStatsHtml=`<div class="sec-header"><div class="sec-title">⭐ Líderes</div></div><div style="padding:0 20px 16px"><div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="font-size:20px">🏅</span><div><div style="font-size:13px;font-weight:800">MVP: ${mvp.nombre}</div><div style="font-size:11px;color:var(--txt3)">${mvp.equipo}</div></div></div>${[...indStats].sort((a,b)=>b.total-a.total).slice(0,5).map((j,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border);font-size:12px"><div style="width:18px;color:var(--txt3);font-weight:700">${i+1}</div><div style="flex:1">${j.nombre} <span style="color:var(--txt3)">(${j.equipo})</span></div><span style="color:var(--acc)">🦵${j.ataque}</span><span style="color:var(--acc3)">🤚${j.bloqueo}</span><span style="color:var(--green)">🤾${j.defensa}</span><span style="color:var(--acc2)">🫳${j.saque}</span></div>`).join('')}</div></div>`;}}
   document.getElementById('detalle-content').innerHTML=`
     <div class="sec-header"><div class="sec-title">Información</div></div>
     <div style="padding:0 20px 16px"><div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px"><div class="info-rows"><div class="info-row"><span class="lbl">Tipo</span><span class="val">${histSel.tipo==='sala'?'Sala':'Playa'}</span></div><div class="info-row"><span class="lbl">Sede</span><span class="val">${histSel.sede}</span></div><div class="info-row"><span class="lbl">Fecha</span><span class="val">${histSel.fecha||'—'}</span></div><div class="info-row"><span class="lbl">Formato</span><span class="val">${histSel.formato}</span></div><div class="info-row"><span class="lbl">Estado</span><span class="val" style="color:${histSel.finalizado?'var(--green)':'var(--acc2)'}">${histSel.finalizado?'✓ Finalizado':'En curso'}</span></div></div></div></div>
@@ -3435,9 +3447,9 @@ function renderEspStats() {
             <div style="font-size:12px;color:var(--txt3)">${mvp.equipo}</div>
             <div style="display:flex;gap:10px;margin-top:6px;font-size:12px;font-weight:700">
               <span style="color:var(--acc)">🏐${mvp.ataque}</span>
-              <span style="color:var(--acc3)">🙌${mvp.bloqueo}</span>
-              <span style="color:var(--green)">🤸${mvp.defensa}</span>
-              <span style="color:var(--acc2)">👊${mvp.saque}</span>
+              <span style="color:var(--acc3)">🤚${mvp.bloqueo}</span>
+              <span style="color:var(--green)">🤾${mvp.defensa}</span>
+              <span style="color:var(--acc2)">🫳${mvp.saque}</span>
             </div>
           </div>
         </div>
@@ -3453,10 +3465,10 @@ function renderEspStats() {
               <div style="font-size:11px;color:var(--txt3)">${j.equipo}</div>
             </div>
             <div style="display:flex;gap:8px;font-size:11px;font-weight:700">
-              <span style="color:var(--acc)">🏐${j.ataque}</span>
-              <span style="color:var(--acc3)">🙌${j.bloqueo}</span>
-              <span style="color:var(--green)">🤸${j.defensa}</span>
-              <span style="color:var(--acc2)">👊${j.saque}</span>
+              <span style="color:var(--acc)">🦵${j.ataque}</span>
+              <span style="color:var(--acc3)">🤚${j.bloqueo}</span>
+              <span style="color:var(--green)">🤾${j.defensa}</span>
+              <span style="color:var(--acc2)">🫳${j.saque}</span>
             </div>
           </div>`).join('')}
       </div>` : ''}
