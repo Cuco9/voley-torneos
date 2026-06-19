@@ -198,8 +198,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);height
 .score-team-name{font-size:13px;font-weight:700;color:var(--txt3);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .score-num{font-family:'Barlow Condensed',sans-serif;font-size:76px;font-weight:900;line-height:1;color:var(--txt)}
 .score-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}
-.score-btn{border:none;border-radius:10px;padding:10px;font-size:20px;cursor:pointer;transition:transform 0.1s;background:var(--bg3)}
-.score-btn.plus{background:rgba(255,78,106,0.1);font-size:28px}
+.score-btn{border:none;border-radius:10px;padding:10px;font-size:20px;cursor:pointer;transition:transform 0.1s;background:rgba(255,255,255,0.08);color:var(--txt2);border:1px solid rgba(255,255,255,0.1)}
+.score-btn.plus{background:rgba(255,78,106,0.18);color:var(--acc);border:1px solid rgba(255,78,106,0.3);font-size:28px}
 .score-btn:active{transform:scale(0.88)}
 .score-separator{display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--txt3);flex-shrink:0;align-self:center}
 .timer-block{background:var(--card);border:1px solid var(--border2);border-radius:var(--rs);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
@@ -1869,56 +1869,58 @@ function renderPanelPremiumMarcador(){
       var sid=partidoActual.id+'_'+j.id;
       var st=partidoActual.statsJugadores[sid]||{ataque:0,bloqueo:0,defensa:0,saque:0};
       var nombre=(j.dorsal?'#'+j.dorsal+' ':'')+j.nombre+(j.capitan?' ★':'');
+      var tipos=[['ataque','🏐 Remate','ataque'],['bloqueo','🙌 Bloqueo','bloqueo'],['defensa','🤸 Defensa','defensa'],['saque','👊 Saque','saque']];
+      var btns='';
+      tipos.forEach(function(t){
+        var tipo=t[0],lbl=t[1];
+        var val=st[tipo]||0;
+        btns+='<div class="jstat-row">'
+          +'<button class="jstat-btn '+tipo+'" data-sid="'+sid+'" data-tipo="'+tipo+'" data-delta="1" onclick="statBtn(this)">'
+            +'<span class="jstat-val">'+val+'</span>'
+            +'<span class="jstat-lbl">'+lbl+'</span>'
+          +'</button>'
+          +'<button class="jstat-minus" data-sid="'+sid+'" data-tipo="'+tipo+'" data-delta="-1" onclick="statBtn(this)">−</button>'
+        +'</div>';
+      });
       html+='<div class="jugador-stat-card">'
         +'<div class="jscard-name">'+nombre+'</div>'
-        +'<div class="jscard-btns">'
-        +'<div class="jstat-row">'
-          +'<button class="jstat-btn ataque" onclick="registrarStatJugador(\''+sid+'\',\'ataque\',1,this)">'
-            +'<span class="jstat-val">'+st.ataque+'</span>'
-            +'<span class="jstat-lbl">🏐 Remate</span>'
-          +'</button>'
-          +'<button class="jstat-minus" onclick="registrarStatJugador(\''+sid+'\',\'ataque\',-1,this.previousElementSibling)">−</button>'
-        +'</div>'
-        +'<div class="jstat-row">'
-          +'<button class="jstat-btn bloqueo" onclick="registrarStatJugador(\''+sid+'\',\'bloqueo\',1,this)">'
-            +'<span class="jstat-val">'+st.bloqueo+'</span>'
-            +'<span class="jstat-lbl">🙌 Bloqueo</span>'
-          +'</button>'
-          +'<button class="jstat-minus" onclick="registrarStatJugador(\''+sid+'\',\'bloqueo\',-1,this.previousElementSibling)">−</button>'
-        +'</div>'
-        +'<div class="jstat-row">'
-          +'<button class="jstat-btn defensa" onclick="registrarStatJugador(\''+sid+'\',\'defensa\',1,this)">'
-            +'<span class="jstat-val">'+st.defensa+'</span>'
-            +'<span class="jstat-lbl">🤸 Defensa</span>'
-          +'</button>'
-          +'<button class="jstat-minus" onclick="registrarStatJugador(\''+sid+'\',\'defensa\',-1,this.previousElementSibling)">−</button>'
-        +'</div>'
-        +'<div class="jstat-row">'
-          +'<button class="jstat-btn saque" onclick="registrarStatJugador(\''+sid+'\',\'saque\',1,this)">'
-            +'<span class="jstat-val">'+st.saque+'</span>'
-            +'<span class="jstat-lbl">👊 Saque</span>'
-          +'</button>'
-          +'<button class="jstat-minus" onclick="registrarStatJugador(\''+sid+'\',\'saque\',-1,this.previousElementSibling)">−</button>'
-        +'</div>'
-        +'</div></div>';
+        +'<div class="jscard-btns">'+btns+'</div>'
+        +'</div>';
     });
     html+='</div>';
     return html;
   }
   grid.innerHTML=renderCol(jugL)+renderCol(jugV);
 }
-function registrarStatJugador(sid,tipo,delta,btn){
-  if(!partidoActual)return;
-  if(!partidoActual.statsJugadores)partidoActual.statsJugadores={};
-  if(!partidoActual.statsJugadores[sid])partidoActual.statsJugadores[sid]={ataque:0,bloqueo:0,defensa:0,saque:0};
-  const nuevo = Math.max(0, (partidoActual.statsJugadores[sid][tipo]||0) + delta);
-  if(delta < 0 && nuevo === partidoActual.statsJugadores[sid][tipo]) return; // ya en 0
+function statBtn(btn) {
+  var sid   = btn.getAttribute('data-sid');
+  var tipo  = btn.getAttribute('data-tipo');
+  var delta = parseInt(btn.getAttribute('data-delta'), 10);
+  if(!partidoActual || !sid || !tipo) return;
+  if(!partidoActual.statsJugadores) partidoActual.statsJugadores = {};
+  if(!partidoActual.statsJugadores[sid]) partidoActual.statsJugadores[sid] = {ataque:0,bloqueo:0,defensa:0,saque:0};
+  var actual = partidoActual.statsJugadores[sid][tipo] || 0;
+  var nuevo  = Math.max(0, actual + delta);
+  if(nuevo === actual && delta < 0) return;
   partidoActual.statsJugadores[sid][tipo] = nuevo;
-  // Actualizar el span del valor dentro del botón +
-  const valSpan = btn.querySelector('.jstat-val');
+  // Actualizar el span del valor: si es botón + tiene .jstat-val directo; si es − buscar el botón + en el mismo row
+  var valSpan = btn.querySelector('.jstat-val');
+  if(!valSpan) {
+    var row = btn.parentElement;
+    if(row) valSpan = row.querySelector('.jstat-val');
+  }
   if(valSpan) valSpan.textContent = nuevo;
-  btn.style.transform='scale(0.88)';setTimeout(()=>{btn.style.transform='';},120);
+  btn.style.transform = 'scale(0.88)';
+  setTimeout(function(){ btn.style.transform = ''; }, 120);
   LS.save();
+}
+function registrarStatJugador(sid,tipo,delta,btn){
+  // Legacy wrapper — redirect to statBtn via data approach
+  if(!btn) return;
+  btn.setAttribute('data-sid', sid);
+  btn.setAttribute('data-tipo', tipo);
+  btn.setAttribute('data-delta', delta);
+  statBtn(btn);
 }
 
 function sumarPunto(lado){
@@ -2029,8 +2031,25 @@ function calcStatsIndividuales(t){
 }
 function renderIndStats(){
   const cont=document.getElementById('tab-ind-stats');
+  if(!cont) return;
   if(!isPremium()){
-    cont.innerHTML=`<div style="padding:40px 20px"><div class="premium-lock"><div class="lock-icon">⭐</div><div class="lock-title">Estadísticas Premium</div><div class="lock-desc">Tabla de líderes individuales: mejor atacante, más bloqueos, mejor defensor, mejor sacador y MVP automático del torneo.</div><button class="btn-premium" onclick="openPremiumModal()">⭐ Activar Premium — $3 USD</button></div></div>`;
+    cont.innerHTML=''
+      +'<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;min-height:60vh">'
+        +'<div style="font-size:56px;margin-bottom:16px">⭐</div>'
+        +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:30px;font-weight:900;color:var(--purple);margin-bottom:10px">Estadísticas Premium</div>'
+        +'<div style="font-size:13px;color:var(--txt3);line-height:1.6;margin-bottom:28px;max-width:280px">'
+          +'Desbloquea la tabla de líderes individuales: mejor rematador, más bloqueos, mejor defensor, mejor sacador y MVP del torneo.'
+        +'</div>'
+        +'<button onclick="openPremiumModal()" style="'
+          +'background:linear-gradient(135deg,var(--purple),var(--acc2));'
+          +'color:#fff;border:none;border-radius:16px;'
+          +'padding:16px 32px;font-size:16px;font-weight:800;'
+          +'cursor:pointer;font-family:Inter,sans-serif;'
+          +'display:flex;align-items:center;gap:10px;'
+          +'box-shadow:0 4px 20px rgba(155,109,255,0.4)'
+        +'">⭐ Activar Premium — $3 USD</button>'
+        +'<div style="font-size:11px;color:var(--txt3);margin-top:16px">Pago único · Sin suscripción</div>'
+      +'</div>';
     return;
   }
   const stats=calcStatsIndividuales(),conStats=stats.filter(j=>j.total>0);
@@ -3793,13 +3812,15 @@ function pedirConfirmarPartido() {
 }
 
 function ejecutarAccionConfirmada() {
-  cerrarConfirmAction();
-  if (accionConfirmadaPendiente) { accionConfirmadaPendiente(); accionConfirmadaPendiente = null; }
+  const fn = accionConfirmadaPendiente;
+  accionConfirmadaPendiente = null;
+  document.getElementById('confirm-action-overlay').style.display = 'none';
+  if (fn) fn();
 }
 
 function cerrarConfirmAction() {
-  document.getElementById('confirm-action-overlay').style.display = 'none';
   accionConfirmadaPendiente = null;
+  document.getElementById('confirm-action-overlay').style.display = 'none';
 }
 
 // ══════════════════════════════════════════════════════════════════
