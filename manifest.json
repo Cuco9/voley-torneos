@@ -1,10 +1,10 @@
 {
+  "id": "/voley-torneos/",
   "name": "VoleyTorneo",
   "short_name": "VoleyTorneo",
   "description": "Gestión de torneos de voleibol local",
-  "id": "com.voleytorneo.app",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/voley-torneos/index.html",
+  "scope": "/voley-torneos/",
   "display": "standalone",
   "background_color": "#0B0E1A",
   "theme_color": "#0B0E1A",
@@ -13,19 +13,19 @@
   "categories": ["sports", "utilities"],
   "icons": [
     {
-      "src": "./icons/icon-192.png",
+      "src": "/voley-torneos/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./icons/icon-512.png",
+      "src": "/voley-torneos/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./icons/icon-512.png",
+      "src": "/voley-torneos/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
