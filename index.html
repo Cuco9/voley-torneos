@@ -709,6 +709,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);height
     <button class="btn btn-acc" style="padding:11px 16px;flex:none;font-size:13px" onclick="agregarJugador()">＋</button>
   </div>
   <div class="jugadores-lista" id="jugadores-lista"></div>
+  <div style="padding:20px">
+    <button class="btn btn-red btn-full" onclick="pedirEliminarEquipoDelTorneo()">🗑 Quitar dupla del torneo</button>
+  </div>
 </div>
 
 <!-- ══ MARCADOR ══ -->
@@ -922,7 +925,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);height
     <div class="modal-title" id="modal-title"></div>
     <div class="modal-msg" id="modal-msg"></div>
     <div class="modal-actions" id="modal-actions">
-      <button class="btn btn-acc btn-full" id="modal-ok" onclick="closeModal();if(modalFn)modalFn()">Confirmar</button>
+      <button class="btn btn-acc btn-full" id="modal-ok" onclick="modalOk()">Confirmar</button>
       <button class="btn btn-ghost btn-full" onclick="closeModal()">Cancelar</button>
     </div>
   </div>
@@ -1301,7 +1304,7 @@ function generarFaseGruposConPlayoffs(equipos, mkP) {
   // Siempre clasifican los 2 primeros por grupo → Semifinales directas
   let numGrupos;
   if(n <= 5)       numGrupos = 1;   // 1 grupo: top 4 a semifinal, último eliminado
-  else if(n <= 10) numGrupos = 2;   // 2 grupos: top 2 de cada uno + repechaje
+  else if(n <= 10) numGrupos = 2;   // 2 grupos: top 2 de cada uno directo a semis
   else if(n <= 16) numGrupos = 4;   // 4 grupos: top 2 de cada uno
   else             numGrupos = Math.ceil(n / 5);
 
@@ -1434,23 +1437,22 @@ function verificarYGenerarPlayoffs() {
       torneoActual.playoffs.directosSemi = null; // sin repechaje
 
     } else {
-      // ── 2 grupos de 4+: 1° directo a Semifinal, 2°-3° Repechaje, 4° eliminado ──
-      // Repechaje cruzado: 2°G1 vs 3°G2  y  2°G2 vs 3°G1
-      if(g1[1] && g2[2]) {
-        playoffPartidos.push(mkP(g1[1].id, g2[2].id, {
-          fase:'Repechaje', rondaPlayoff:1, repechaje:true, cruceId:'rep1'
+      // ── 2 grupos de 4+: 1° y 2° directo a Semifinal (cruzados) ──
+      // 3° y 4° de cada grupo juegan la clasificación ENTRE ELLOS, en su propio grupo (sin cruzar)
+      if(g1[0] && g2[1]) playoffPartidos.push(mkP(g1[0].id, g2[1].id, {fase:'Semifinales', rondaPlayoff:1}));
+      if(g2[0] && g1[1]) playoffPartidos.push(mkP(g2[0].id, g1[1].id, {fase:'Semifinales', rondaPlayoff:1}));
+      if(g1[2] && g1[3]) {
+        playoffPartidos.push(mkP(g1[2].id, g1[3].id, {
+          fase:`Clasificación Grupo ${grupos[0].letra}`, rondaPlayoff:1, esClasificacion:true
         }));
       }
-      if(g2[1] && g1[2]) {
-        playoffPartidos.push(mkP(g2[1].id, g1[2].id, {
-          fase:'Repechaje', rondaPlayoff:1, repechaje:true, cruceId:'rep2'
+      if(g2[2] && g2[3]) {
+        playoffPartidos.push(mkP(g2[2].id, g2[3].id, {
+          fase:`Clasificación Grupo ${grupos[1].letra}`, rondaPlayoff:1, esClasificacion:true
         }));
       }
-      torneoActual.playoffs.directosSemi = {
-        s1: g1[0]?.id,   // 1°G1 → espera ganador rep2
-        s2: g2[0]?.id    // 1°G2 → espera ganador rep1
-      };
-      torneoActual.playoffs.eliminados = [g1[3]?.id, g2[3]?.id].filter(Boolean);
+      torneoActual.playoffs.directosSemi = null;
+      torneoActual.playoffs.eliminados = [g1[4]?.id, g2[4]?.id].filter(Boolean);
     }
 
   } else {
@@ -1491,7 +1493,7 @@ function verificarSiguienteRondaPlayoffs() {
 
   const maxRonda = Math.max(...Object.keys(rondasPlayoff).map(Number));
   const ultimaRonda = rondasPlayoff[maxRonda];
-  if(!ultimaRonda.every(p=>p.estado==='terminado')) return false;
+  if(!ultimaRonda.every(p=>p.estado==='terminado'||p.estado==='bye')) return false;
 
   // ¿Ya existe la siguiente ronda (incluyendo bronce)?
   const yaExisteSiguiente = torneoActual.partidos.some(p =>
@@ -1516,7 +1518,7 @@ function verificarSiguienteRondaPlayoffs() {
   }
 
   // ══ CASO GENERAL ══
-  const ganadores = ultimaRonda.filter(p=>!p.esBronce).map(p=>p.ganador).filter(Boolean);
+  const ganadores = ultimaRonda.filter(p=>!p.esBronce && !p.esClasificacion).map(p=>p.ganador).filter(Boolean);
   if(ganadores.length < 2) return false;
 
   let faseNombre;
@@ -1634,10 +1636,9 @@ function renderTabla(){
         html+='<span style="background:rgba(46,204,143,0.1);border:1px solid rgba(46,204,143,0.2);border-radius:20px;padding:3px 8px;color:var(--green);font-size:10px">Top '+clasifican+' \u2192 Semifinales</span>';
         html+='<span style="background:rgba(226,75,74,0.1);border:1px solid rgba(226,75,74,0.15);border-radius:20px;padding:3px 8px;color:#F09595;font-size:10px">\u00daltimo \u2192 Eliminado</span>';
       } else if(hayRepechaje) {
-        // 2 grupos de 4+: 1° directo, 2°-3° repechaje, 4° eliminado
-        html+='<span style="background:rgba(46,204,143,0.1);border:1px solid rgba(46,204,143,0.2);border-radius:20px;padding:3px 8px;color:var(--green);font-size:10px">1\u00b0 \u2192 Semifinal directa</span>';
-        html+='<span style="background:rgba(78,202,255,0.1);border:1px solid rgba(78,202,255,0.2);border-radius:20px;padding:3px 8px;color:var(--acc3);font-size:10px">2\u00b0 y 3\u00b0 \u2192 Repechaje</span>';
-        html+='<span style="background:rgba(226,75,74,0.1);border:1px solid rgba(226,75,74,0.15);border-radius:20px;padding:3px 8px;color:#F09595;font-size:10px">4\u00b0 \u2192 Eliminado</span>';
+        // 2 grupos de 4+: 1° y 2° directo a Semifinales, 3° y 4° juegan la clasificacion entre ellos
+        html+='<span style="background:rgba(46,204,143,0.1);border:1px solid rgba(46,204,143,0.2);border-radius:20px;padding:3px 8px;color:var(--green);font-size:10px">1\u00b0 y 2\u00b0 \u2192 Semifinales</span>';
+        html+='<span style="background:rgba(78,202,255,0.1);border:1px solid rgba(78,202,255,0.2);border-radius:20px;padding:3px 8px;color:var(--acc3);font-size:10px">3\u00b0 y 4\u00b0 \u2192 Clasificación</span>';
       } else {
         // 2 grupos de 3 (o menos): top 2 directo a semis, 3° eliminado
         html+='<span style="background:rgba(46,204,143,0.1);border:1px solid rgba(46,204,143,0.2);border-radius:20px;padding:3px 8px;color:var(--green);font-size:10px">1\u00b0 y 2\u00b0 \u2192 Semifinales</span>';
@@ -1655,8 +1656,8 @@ function renderTabla(){
           if(clasifica) badge='<span style="background:rgba(46,204,143,0.2);border:1px solid rgba(46,204,143,0.3);border-radius:6px;padding:2px 5px;font-size:9px;font-weight:800;color:var(--green)">'+(i+1)+'\u00b0\u2713</span>';
           else badge='<span style="background:rgba(226,75,74,0.1);border:1px solid rgba(226,75,74,0.15);border-radius:6px;padding:2px 5px;font-size:9px;font-weight:700;color:#F09595">'+(i+1)+'\u00b0\u2715</span>';
         } else if(hayRepechaje) {
-          if(i===0) badge='<span style="background:rgba(46,204,143,0.2);border:1px solid rgba(46,204,143,0.3);border-radius:6px;padding:2px 5px;font-size:9px;font-weight:800;color:var(--green)">1\u00b0\u2713</span>';
-          else if(i===1||i===2) badge='<span style="background:rgba(78,202,255,0.15);border:1px solid rgba(78,202,255,0.25);border-radius:6px;padding:2px 5px;font-size:9px;font-weight:800;color:var(--acc3)">'+(i+1)+'\u00b0\u21ba</span>';
+          if(i===0||i===1) badge='<span style="background:rgba(46,204,143,0.2);border:1px solid rgba(46,204,143,0.3);border-radius:6px;padding:2px 5px;font-size:9px;font-weight:800;color:var(--green)">'+(i+1)+'\u00b0\u2713</span>';
+          else if(i===2||i===3) badge='<span style="background:rgba(78,202,255,0.15);border:1px solid rgba(78,202,255,0.25);border-radius:6px;padding:2px 5px;font-size:9px;font-weight:800;color:var(--acc3)">'+(i+1)+'\u00b0\u21ba</span>';
           else badge='<span style="background:rgba(226,75,74,0.1);border:1px solid rgba(226,75,74,0.15);border-radius:6px;padding:2px 5px;font-size:9px;font-weight:700;color:#F09595">'+(i+1)+'\u00b0\u2715</span>';
         } else {
           if(i<2) badge='<span style="background:rgba(46,204,143,0.2);border:1px solid rgba(46,204,143,0.3);border-radius:6px;padding:2px 5px;font-size:9px;font-weight:800;color:var(--green)">'+(i+1)+'\u00b0\u2713</span>';
@@ -1808,6 +1809,62 @@ function undoAccion(){
   if(equipoActual&&equipoActual.id===accion.eqId){equipoActual=eq;renderListaJugadores();renderScreenEquipo();}
 }
 function actualizarBtnUndo(){const btn=document.getElementById('eq-undo-btn');if(btn)btn.style.opacity=undoStack.length?'1':'0.35';}
+
+// ── Quitar una dupla del torneo (aunque esté en marcha) ──────────────────────
+function pedirEliminarEquipoDelTorneo(){
+  if(!equipoActual||!torneoActual)return;
+  showModal(
+    '¿Quitar esta dupla del torneo?',
+    `Se eliminará "${equipoActual.nombre}" y todos sus partidos jugados o pendientes, como si nunca hubiera participado. Si tenía un cruce sin jugar, su rival pasará directo. Esta acción no se puede deshacer.`,
+    ()=>eliminarEquipoDelTorneo(equipoActual.id)
+  );
+}
+function eliminarEquipoDelTorneo(equipoId){
+  if(!torneoActual)return;
+  const equipo=torneoActual.equipos.find(e=>e.id===equipoId);
+  if(!equipo)return;
+  const nombre=equipo.nombre;
+
+  if(partidoActual&&(partidoActual.local===equipoId||partidoActual.visitante===equipoId))partidoActual=null;
+
+  const aBorrar=torneoActual.partidos.filter(p=>p.local===equipoId||p.visitante===equipoId);
+  const aBorrarIds=new Set(aBorrar.map(p=>p.id));
+  const nuevosWalkover=[];
+
+  aBorrar.forEach(m=>{
+    if(!m.rondaPlayoff)return; // solo hay que resolver cruces en la fase de playoffs
+    const oponenteId=m.local===equipoId?m.visitante:m.local;
+    if(!oponenteId)return; // el bye era de la propia dupla eliminada, no deja a nadie esperando
+    const yaAvanzo=torneoActual.partidos.some(p=>
+      p.id!==m.id&&p.rondaPlayoff&&p.rondaPlayoff>m.rondaPlayoff&&(p.local===oponenteId||p.visitante===oponenteId)
+    );
+    if(yaAvanzo)return; // el rival ya tiene su siguiente partido armado, no hace falta nada
+    nuevosWalkover.push({
+      id:uid(),local:oponenteId,visitante:null,estado:'bye',ganador:oponenteId,
+      sets:[],duracion:null,statsJugadores:{},
+      fase:m.fase,rondaPlayoff:m.rondaPlayoff,
+      ...(m.esBronce?{esBronce:true}:{}),
+      ...(m.esClasificacion?{esClasificacion:true}:{})
+    });
+  });
+
+  torneoActual.partidos=torneoActual.partidos.filter(p=>!aBorrarIds.has(p.id)).concat(nuevosWalkover);
+
+  if(torneoActual.playoffs&&torneoActual.playoffs.grupos){
+    torneoActual.playoffs.grupos.forEach(g=>{g.equipoIds=g.equipoIds.filter(id=>id!==equipoId);});
+    if(torneoActual.playoffs.eliminados)torneoActual.playoffs.eliminados=torneoActual.playoffs.eliminados.filter(id=>id!==equipoId);
+  }
+
+  torneoActual.equipos=torneoActual.equipos.filter(e=>e.id!==equipoId);
+  equipoActual=null;
+
+  verificarYGenerarPlayoffs();
+  verificarSiguienteRondaPlayoffs();
+  LS.save();
+
+  showScreen('screen-torneo');showTab('tab-equipos',2);
+  toast(`${nombre} y todo su historial fueron eliminados`);
+}
 
 // ══════════════════════════════════════
 // MARCADOR
