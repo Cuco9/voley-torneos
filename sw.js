@@ -1,4 +1,4 @@
-const CACHE = 'voleytorneo-v2';
+const CACHE = 'voleytorneo-v3';
 const FILES = [
   './',
   './index.html',
